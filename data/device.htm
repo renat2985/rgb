@@ -1,0 +1,94 @@
+<html>
+ <head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <script type="text/javascript" src="/function.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Страница управления</title>
+  <script>
+   function handleServerResponse(){
+    if(xmlHttp.readyState==4 && xmlHttp.status==200){
+     // XML, ID
+     xml_to_val('timeLed','led');
+     xml_to_val('times1' ,'time1');
+     xml_to_val('times2','time2');
+     document.getElementById('ssdp').innerHTML=xml('SSDP');
+    }
+   }
+   function led(submit){
+    server = "/led";
+    send_request(submit,server);
+   }
+   function set_rgb(submit,r,g,b){
+    server = "/rgb?r="+r+"&g="+g+"&b="+b;
+    document.getElementById('url').innerHTML="http://"+document.domain+server;
+    send_request(submit,server);
+   }
+   function set_time_servo(submit){
+    server = "/TimeLed?t="+val('led');
+    send_request(submit,server);
+   }
+   function set_time1(submit){
+    server = "/times1?time1="+val('time1');
+    send_request(submit,server);
+   }
+   function set_time2(submit){
+    server = "/times2?time2="+val('time2');
+    send_request(submit,server);
+   }
+  </script>
+ </head>
+ <body onload="load();">
+  <div class="container">
+   <div class="row" style="text-align:center;">
+    <h1 style="margin:40px;" id="ssdp"></h1>
+    <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+     <a class="btn btn-block btn-danger" href="/">Страница устройств</a>
+     <hr>
+     <div class="alert alert-dismissible alert-info">Включая LED ниже формируется URL цвета, вы можете скопировать эту ссылку, сделать ярык, и когда вы перейдете по этой ссылки включится свет.</div>
+     <ul id="color" class="inner"></ul>
+     <a href="#" class="btn btn-block btn-default" style="background-color:rgb(0,0,0);" onclick="set_rgb(this,0,0,0)">0,0,0</a>
+     <h4 id="url"></h4>
+     <hr>
+     <div class="alert alert-dismissible alert-warning"><b>Обратите внимание</b> Настраивая время перед одиночными цифрами пишите 0. Пример: 03:09:10, с право в ячейках вы можете указать работу двигателя в секунах.</div>
+
+     <h2>Настройки времи</h2>
+     <div class="row">
+      <div class="col-sm-6">
+       <h4>Таймер 1 (ВКЛ):</h4>
+       <input id="time1" value="" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control">
+       <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time1(this);" type="submit">
+      </div>
+      <div class="col-sm-6">
+       <h4>Таймер 2 (ВКЛ):</h4>
+       <input id="time2" value="" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control">
+       <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time2(this);" type="submit">
+      </div>
+     </div>
+     <div class="row">
+      <h4>Время работы LED</h4>
+      <div class="col-sm-8">
+       <div class="alert alert-dismissible alert-info">После включения LED запускается таймер выключения.</div>
+      </div>
+      <div class="col-sm-4">
+       <input id="led" value="" class="form-control" pattern="[0-9]{1,2}[.]{1}[0-9]{1,2}">
+       <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time_servo2(this);" type="submit">
+      </div>
+     </div>
+     <hr>
+     <a class="btn btn-block btn-default" href="/setup.htm">Доп. настройки</a>
+    </div>
+   </div>
+  </div>
+
+  <script>
+   //var arr = ["26,188,156","46,204,113","52,152,219","155,89,182","52,73,94","241,196,15","230,126,34","231,76,60","236,240,241","149,165,166"];
+   var arr = ["255,255,255","167,25,75","254,39,18","251,153,2","250,188,2","254,254,51","208,234,43","102,176,50","3,145,206","2,71,254","61,1,165","134,1,175"];
+   for (var i = 0; i < arr.length; i++) {
+    document.getElementById('color').innerHTML +='<li class="btn btn-block btn-default" style="background-color:rgb('+arr[i]+');width:25%;display:inline-block" onclick="set_rgb(this,'+arr[i].split(',')[0]+','+arr[i].split(',')[1]+','+arr[i].split(',')[2]+')">'+arr[i]+'</li>';
+   }
+  </script>
+
+ </body>
+</html>

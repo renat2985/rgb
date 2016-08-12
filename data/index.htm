@@ -1,0 +1,83 @@
+<html>
+ <head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="/bootstrap.min.css">
+  <script type="text/javascript" src="/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Страница устройств</title>
+  <script>
+   function load(){
+    if (window.XMLHttpRequest) {
+     xhttp = new XMLHttpRequest();
+    } else {
+     xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    iplocation();
+    document.getElementById('date').innerHTML = new Date().toLocaleString("ru", {day:"numeric",weekday:"long"})+'<br><small>'+new Date().toLocaleString("ru", {year:"numeric",month:"long"})+'<\/small>';
+   }
+
+   function finddevice() {
+    $("#content").html('<div class="alert alert-dismissible alert-info"><strong>Пожалуйста подождите, идет сканирование сети.</strong></div>');
+    $.get("/devices?"+Math.floor(Math.random()*10000), function(data) {
+     setTimeout(function(){iplocation()}, 7000);
+    });
+   }
+
+   function iplocation() {
+    $("#content").html("");
+    xhttp.open("GET", "/iplocation.xml?"+Math.floor(Math.random()*10000), false);
+    xhttp.send();
+    xmlDoc = xhttp.responseXML;
+    var count=xmlDoc.getElementsByTagName("ip").length;
+    for (i = 0; i < count ;i++) {
+     var ipval = xmlDoc.getElementsByTagName("ip")[i].childNodes[0].textContent;
+     $.get("http://"+ipval+"/block?"+Math.floor(Math.random()*10000), function(data) {
+
+      //xhttp2.open("GET", "http://"+ipval+"/config.xml?"+Math.floor(Math.random()*10000), false);
+      //xhttp2.send();
+      //xmlDoc2 = xhttp2.responseXML;
+
+      $(data).prependTo("#content").fadeIn("slow");
+     });
+    }
+   }
+
+   function ajax(blockid, pagename, submit) {
+    old_submit = submit.value;
+    var d = new Date(); // for now
+    datetext = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+    $("#history").prepend('<li>'+datetext+'<span class="history">'+old_submit+'</span></li>');
+    //alert($(submit).parent().attr('class'));
+
+    submit.value = 'Подождите...';
+    $.get("http://"+blockid+"/"+pagename, function(data) {
+     submit.value=data;
+     setTimeout(function(){
+      submit.value=old_submit;
+      $.get("http://"+blockid+"/block?"+Math.floor(Math.random()*10000), function(data2) {
+       $($(submit).parent()).remove();
+       $(data2).prependTo("#content").fadeIn("slow");
+      });
+     }, 1000);
+    });
+   }
+  </script>
+ </head>
+ <body onload="load();">
+  <div class="container device">
+   <div class="header">
+    <h4><small class="pull-right col-md-4 hidden-xs" style="padding:15px 0;">Здесь видны все ваши устройства, скачать прошивки для ESP8266 вы можете на <a href="https://github.com/tretyakovsa/jaluzi" target="_blank">github</a>. Если устройство не появляется попробуйте нажать <b><a href="#" onclick="finddevice();">Найти устройства</a></b>. Появились какие-то вопросы, пишите <a href="https://github.com/tretyakovsa/jaluzi/issues/new" target="_blank">сюда</a>.</small></h4>
+    <h1 id="date"><br><small></small></h1>
+   </div>
+   <div class="row">
+    <div class="col-sm-3">
+     <h5 style="background-color:#C0C7CA">История</h5>
+     <ul id="history">
+     </ul>
+    </div>
+    <div class="col-sm-offset-0 col-sm-9" style="text-align:center;" id="content"></div>
+   </div>
+  </div>
+ </body>
+</html>
