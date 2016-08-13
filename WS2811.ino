@@ -10,6 +10,7 @@ void LedRGB() {
   for (uint16_t i = 0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i, strip.Color(r, g, b));
     strip.show();
+    HTTP.send(200, "text/plain", "OK");
   }
 
 }
