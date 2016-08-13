@@ -1,3 +1,7 @@
+/*
+ * Arduino IDE 1.6.5
+ * ArduinoJson 5.2.0
+ */
 #include <ESP8266WiFi.h>        //Содержится в пакете
 #include <ESP8266WebServer.h>   //Содержится в пакете
 #include <ESP8266SSDP.h>        //Содержится в пакете
@@ -47,6 +51,9 @@ volatile int chaingtime = LOW;
 volatile int chaing = LOW;
 volatile int chaing1 = LOW;
 int state0 = 0;
+int r=0;
+int g=0;
+int b=0;
 unsigned int localPort = 2390;
 unsigned int ssdpPort = 1900;
 
@@ -56,6 +63,7 @@ WiFiUDP udp;
 void setup() {
  Serial.begin(115200);
  pinMode(Tach0, INPUT);
+ pinMode(led_pin, OUTPUT);
  Serial.println("");
  // Параметры памяти ESP справочно можно закаментировать
  CheckFlashConfig();
@@ -94,10 +102,14 @@ void loop() {
   noInterrupts();
   switch (state0) {
    case 0:
-    //Time01();
+   LedON(r, g,  b);
+   chaing=!chaing;
+   state0=1;
     break;
    case 1:
-    //Time02();
+   LedON(0, 0,  0);
+   chaing=!chaing;
+   state0=0;
     break;
   }
   interrupts();
@@ -112,10 +124,10 @@ void loop() {
 void alert() {
  String Time=XmlTime();
  if (times1.compareTo(Time) == 0) {
-  //Time01();
+ Time01();
  }
  if (times2.compareTo(Time) == 0) {
-  //Time02();
+ Time02();
  }
  if (kolibrTime.compareTo(Time) == 0) {
   chaingtime=1;
