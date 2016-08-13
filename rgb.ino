@@ -7,6 +7,7 @@
 #include <WiFiUdp.h>            //Содержится в пакете
 #include <ESP8266HTTPUpdateServer.h> //Содержится в пакете
 #include <ArduinoJson.h>
+#include <Adafruit_NeoPixel.h>
 
 // Web интерфейс для устройства
 ESP8266WebServer HTTP(80);
@@ -22,9 +23,11 @@ Ticker tickerAlert;
 // Кнопка управления
 #define Tach0 0
 
-// Сервопривод на ноге
+// 2811 на ноге в количестве
 #define led_pin 2
+#define led_num 6
 
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(led_num, led_pin, NEO_GRB + NEO_KHZ800);
 // Определяем переменные
 
 String _ssid     = "WiFi"; // Для хранения SSID
@@ -60,8 +63,8 @@ void setup() {
  FS_init();
  // Загружаем настройки из файла
  loadConfig();
- // Подключаем сервомотор
- //myled.attach(led_pin);
+ // Подключаем RGB
+ initRGB();
  // Кнопка будет работать по прерыванию
  attachInterrupt(Tach0, Tach_0, FALLING);
  //Запускаем WIFI
@@ -91,10 +94,10 @@ void loop() {
   noInterrupts();
   switch (state0) {
    case 0:
-    Time01();
+    //Time01();
     break;
    case 1:
-    Time02();
+    //Time02();
     break;
   }
   interrupts();
@@ -109,10 +112,10 @@ void loop() {
 void alert() {
  String Time=XmlTime();
  if (times1.compareTo(Time) == 0) {
-  Time01();
+  //Time01();
  }
  if (times2.compareTo(Time) == 0) {
-  Time02();
+  //Time02();
  }
  if (kolibrTime.compareTo(Time) == 0) {
   chaingtime=1;
