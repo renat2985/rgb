@@ -184,7 +184,7 @@ void handle_ConfigXML() {
 
 void handle_Block() {
  XML = "<div class=\"block col-md-5\">";
- XML += "<h5>";
+ XML += "<h5 class=\"alert-info\">";
  XML += SSDP_Name;
  XML += "</h5>";
  XML += "<div class=\"alert alert-dismissible alert-warning\"><b>Обратите внимание</b>";
