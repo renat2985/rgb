@@ -51,7 +51,7 @@
     //alert($(submit).parent().attr('class'));
 
     submit.value = 'Подождите...';
-    $(submit).prop('disabled', true);
+    $("input").prop('disabled', true);
     $.get("http://"+blockid+"/"+pagename, function(data) {
      submit.value=data;
      setTimeout(function(){
@@ -59,6 +59,7 @@
       $.get("http://"+blockid+"/block?"+Math.floor(Math.random()*10000), function(data2) {
        $($(submit).parent()).remove();
        $(data2).prependTo("#content").fadeIn("slow");
+       $("input").prop('disabled', false);
       });
      }, 1000);
     });

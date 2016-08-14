@@ -1,7 +1,7 @@
 void initRGB() {
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
-  HTTP.on("/rgb", LedRGB);                // запуск мотора напровление храниться в переменной
+  HTTP.on("/rgb", LedRGB);
 }
 void LedRGB() {
   r = HTTP.arg("r").toInt();
