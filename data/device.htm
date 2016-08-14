@@ -26,7 +26,7 @@
     document.getElementById('url').innerHTML="http://"+document.domain+server;
     send_request(submit,server);
    }
-   function set_time_servo(submit){
+   function set_time(submit){
     server = "/TimeLed?t="+val('led');
     send_request(submit,server);
    }
@@ -47,9 +47,10 @@
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
      <a class="btn btn-block btn-danger" href="/">Страница устройств</a>
      <hr>
-     <div class="alert alert-dismissible alert-info">Включая LED ниже формируется URL цвета, вы можете скопировать эту ссылку, сделать ярык, и когда вы перейдете по этой ссылки включится свет.</div>
-     <ul id="color" class="inner"></ul>
-     <a href="#" class="btn btn-block btn-default" style="background-color:rgb(0,0,0);" onclick="set_rgb(this,0,0,0)">0,0,0</a>
+     <div class="alert alert-dismissible alert-info">Включая led ниже формируется URL цвета, вы можете скопировать эту ссылку, сделать ярык, и когда вы перейдете по этой ссылки включится led.</div>
+     <input type="submit" class="btn btn-block btn-primary" onclick="set_rgb(this,255,255,255)" value="Включить белый (255,255,255)">
+     <div id="color" class="inner"></div>
+     <input type="submit" class="btn btn-block btn-primary" onclick="set_rgb(this,0,0,0)" value="Выключить (0,0,0)">
      <h4 id="url"></h4>
      <hr>
      <div class="alert alert-dismissible alert-warning"><b>Обратите внимание</b> Настраивая время перед одиночными цифрами пишите 0. Пример: 03:09:10, с право в ячейках вы можете указать работу двигателя в секунах.</div>
@@ -70,11 +71,11 @@
      <div class="row">
       <h4>Время работы LED</h4>
       <div class="col-sm-8">
-       <div class="alert alert-dismissible alert-info">После включения LED запускается таймер выключения.</div>
+       <div class="alert alert-dismissible alert-info">Здесь вы можете указать время в минутах сколько будит гореть LED.</div>
       </div>
       <div class="col-sm-4">
        <input id="led" value="" class="form-control" pattern="[0-9]{1,2}[.]{1}[0-9]{1,2}">
-       <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time_servo2(this);" type="submit">
+       <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time(this);" type="submit">
       </div>
      </div>
      <hr>
@@ -84,10 +85,10 @@
   </div>
 
   <script>
-   //var arr = ["26,188,156","46,204,113","52,152,219","155,89,182","52,73,94","241,196,15","230,126,34","231,76,60","236,240,241","149,165,166"];
-   var arr = ["255,255,255","167,25,75","254,39,18","251,153,2","250,188,2","254,254,51","208,234,43","102,176,50","3,145,206","2,71,254","61,1,165","134,1,175"];
+   //var arr = ["255,255,255","167,25,75","254,39,18","251,153,2","250,188,2","254,254,51","208,234,43","102,176,50","3,145,206","2,71,254","61,1,165","134,1,175"];
+   var arr = ["100,000,000","100,50,000","100,100,000","50,100,100","000,100,000","000,100,50","000,100,100","000,50,100","000,000,100","50,000,100","100,000,100","100,000,50"];
    for (var i = 0; i < arr.length; i++) {
-    document.getElementById('color').innerHTML +='<li class="btn btn-block btn-default" style="background-color:rgb('+arr[i]+');width:25%;display:inline-block" onclick="set_rgb(this,'+arr[i].split(',')[0]+','+arr[i].split(',')[1]+','+arr[i].split(',')[2]+')">'+arr[i]+'</li>';
+    document.getElementById('color').innerHTML +='<input type="submit" class="btn btn-block btn-default" style="background-color:rgb('+arr[i]+');width:25%;display:inline-block" onclick="set_rgb(this,'+arr[i].split(',')[0]+','+arr[i].split(',')[1]+','+arr[i].split(',')[2]+')" value="'+arr[i]+'">';
    }
   </script>
 
