@@ -51,6 +51,7 @@
     //alert($(submit).parent().attr('class'));
 
     submit.value = 'Подождите...';
+    $(submit).prop('disabled', true);
     $.get("http://"+blockid+"/"+pagename, function(data) {
      submit.value=data;
      setTimeout(function(){

@@ -24,6 +24,7 @@
    function load_time(submit){
     server = "/Time";
     send_request(submit,server);
+    load();
    }
    function time_zone(submit){
     server = "/TimeZone?timezone="+val('timezone');
@@ -32,7 +33,7 @@
    function set_time_zone(submit){
     var set_date = new Date();
     var gmtHours = -set_date.getTimezoneOffset()/60;
-    document.getElementById('timezone') = gmtHours;
+    document.getElementById('timezone').value = gmtHours;
     server = "/TimeZone?timezone="+gmtHours;
     send_request(submit,server);
    }
