@@ -2,7 +2,7 @@
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="/bootstrap.min.css">
-  <script type="text/javascript" src="/jquery.min.js"></script>
+  <!--script type="text/javascript" src="/jquery.min.js"></script -->
   <link rel="stylesheet" type="text/css" href="/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Страница устройств</title>
@@ -13,12 +13,18 @@
     } else {
      xhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    iplocation();
+
+    var script = document.createElement("script");
+    script.src = "/jquery.min.js";
+    script.type = "text/javascript";
+    script.onload = function () {iplocation();};
+    document.getElementsByTagName("head")[0].appendChild(script);
+
     document.getElementById('date').innerHTML = new Date().toLocaleString("ru", {day:"numeric",weekday:"long"})+'<br><small>'+new Date().toLocaleString("ru", {year:"numeric",month:"long"})+'<\/small>';
    }
 
    function finddevice() {
-    $("#content").html('<div class="alert alert-dismissible alert-info"><strong>Пожалуйста подождите, идет сканирование сети.</strong></div>');
+    $("#content").html('<div class="alert alert-dismissible alert-info"><div class="loader"></div><strong>Пожалуйста подождите, идет сканирование сети.</strong></div>');
     $.get("/devices?"+Math.floor(Math.random()*10000), function(data) {
      setTimeout(function(){iplocation()}, 7000);
     });
@@ -32,14 +38,16 @@
     var count=xmlDoc.getElementsByTagName("ip").length;
     for (i = 0; i < count ;i++) {
      var ipval = xmlDoc.getElementsByTagName("ip")[i].childNodes[0].textContent;
-     $.get("http://"+ipval+"/block?"+Math.floor(Math.random()*10000), function(data) {
-
-      //xhttp2.open("GET", "http://"+ipval+"/config.xml?"+Math.floor(Math.random()*10000), false);
-      //xhttp2.send();
-      //xmlDoc2 = xhttp2.responseXML;
-
-      $(data).prependTo("#content").fadeIn("slow");
-     });
+     if (ipval == '0.0.0.0') {
+      location.href = "/setup.htm";
+     } else {
+      $.get("http://"+ipval+"/block?"+Math.floor(Math.random()*10000), function(data) {
+       //xhttp2.open("GET", "http://"+ipval+"/config.xml?"+Math.floor(Math.random()*10000), false);
+       //xhttp2.send();
+       //xmlDoc2 = xhttp2.responseXML;
+       $(data).prependTo("#content");
+      });
+     }
     }
    }
 
@@ -58,7 +66,7 @@
       submit.value=old_submit;
       $.get("http://"+blockid+"/block?"+Math.floor(Math.random()*10000), function(data2) {
        $($(submit).parent()).remove();
-       $(data2).prependTo("#content").fadeIn("slow");
+       $(data2).prependTo("#content");
        $("input").prop('disabled', false);
       });
      }, 1000);
@@ -78,7 +86,9 @@
      <ul id="history">
      </ul>
     </div>
-    <div class="col-sm-offset-0 col-sm-9" style="text-align:center;" id="content"></div>
+    <div class="col-sm-offset-0 col-sm-9" style="text-align:center;" id="content">
+     <div class="loader"></div><p>Загрузка...</p>
+    </div>
    </div>
   </div>
  </body>

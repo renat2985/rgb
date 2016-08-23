@@ -10,28 +10,28 @@ void Tach_0() {
 
 void Time01() {
   tickerSetLow.attach(TimeLed*60, setT1, 0);
-  Serial.println("Time1");
+  //Serial.println("Time1");
   chaing = 1;
 
 }
 
 void Time02() {
   tickerSetLow.attach(TimeLed*60, setT2, 0);
-  Serial.println("Time2");
+  //Serial.println("Time2");
   chaing = 1;
 
 }
 
 void setT1(int state) {
  tickerSetLow.detach();
- Serial.println("Time1-OFF");
+ //Serial.println("Time1-OFF");
  chaing = 1;
 
 }
 
 void setT2(int state) {
  tickerSetLow.detach();
- Serial.println("Time2-OFF");
+ //Serial.println("Time2-OFF");
  chaing = 1;
 
 }

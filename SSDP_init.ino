@@ -39,7 +39,7 @@ void handleUDP() {
       Devices += udp.remoteIP().toString();
       Devices += "</ip>";
       Devices += "\r\n";
-      Serial.println(Devices);
+      //Serial.println(Devices);
     }
   }
 }

@@ -1,13 +1,13 @@
 bool loadConfig() {
   File configFile = SPIFFS.open("/config.json", "r");
   if (!configFile) {
-    Serial.println("Failed to open config file");
+    //Serial.println("Failed to open config file");
     return false;
   }
 
   size_t size = configFile.size();
   if (size > 1024) {
-    Serial.println("Config file size is too large");
+    //Serial.println("Config file size is too large");
     return false;
   }
 
@@ -23,7 +23,7 @@ bool loadConfig() {
   JsonObject& json = jsonBuffer.parseObject(buf.get());
 
   if (!json.success()) {
-    Serial.println("Failed to parse config file");
+    //Serial.println("Failed to parse config file");
     return false;
   }
   String ssidAP = json["ssidAPName"];
@@ -63,7 +63,7 @@ bool saveConfig() {
   json["times2"] = times2;
   File configFile = SPIFFS.open("/config.json", "w");
   if (!configFile) {
-    Serial.println("Failed to open config file for writing");
+    //Serial.println("Failed to open config file for writing");
     return false;
   }
 
@@ -76,17 +76,17 @@ void CheckFlashConfig() {
   uint32_t ideSize = ESP.getFlashChipSize();
   FlashMode_t ideMode = ESP.getFlashChipMode();
 
-  Serial.printf("Flash real id:   %08X\n", ESP.getFlashChipId());
-  Serial.printf("Flash real size: %u\n\n", realSize);
+  //Serial.printf("Flash real id:   %08X\n", ESP.getFlashChipId());
+  //Serial.printf("Flash real size: %u\n\n", realSize);
 
-  Serial.printf("Flash ide  size: %u\n", ideSize);
-  Serial.printf("Flash ide speed: %u\n", ESP.getFlashChipSpeed());
-  Serial.printf("Flash ide mode:  %s\n", (ideMode == FM_QIO ? "QIO" : ideMode == FM_QOUT ? "QOUT" : ideMode == FM_DIO ? "DIO" : ideMode == FM_DOUT ? "DOUT" : "UNKNOWN"));
+  //Serial.printf("Flash ide  size: %u\n", ideSize);
+  //Serial.printf("Flash ide speed: %u\n", ESP.getFlashChipSpeed());
+  //Serial.printf("Flash ide mode:  %s\n", (ideMode == FM_QIO ? "QIO" : ideMode == FM_QOUT ? "QOUT" : ideMode == FM_DIO ? "DIO" : ideMode == FM_DOUT ? "DOUT" : "UNKNOWN"));
 
   if (ideSize != realSize) {
-    Serial.println("Flash Chip configuration wrong!\n");
+    //Serial.println("Flash Chip configuration wrong!\n");
   } else {
-    Serial.println("Flash Chip configuration ok.\n");
+    //Serial.println("Flash Chip configuration ok.\n");
   }
   delay(5000);
 }

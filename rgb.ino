@@ -29,14 +29,14 @@ Ticker tickerAlert;
 
 // 2811 на ноге в количестве
 #define led_pin 2
-#define led_num 6
-
+#define led_num 2
+#define buzer_pin 3
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(led_num, led_pin, NEO_GRB + NEO_KHZ800);
 // Определяем переменные
 
 String _ssid     = "WiFi"; // Для хранения SSID
 String _password = "Pass"; // Для хранения пароля сети
-String _ssidAP = "RGB01";   // SSID AP точки доступа
+String _ssidAP = "RGB".random(500);   // SSID AP точки доступа
 String _passwordAP = ""; // пароль точки доступа
 String XML;              // формирование XML
 String _setAP ="1";           // AP включен
@@ -61,10 +61,11 @@ unsigned int ssdpPort = 1900;
 WiFiUDP udp;
 
 void setup() {
- Serial.begin(115200);
+ //Serial.begin(115200);
  pinMode(Tach0, INPUT);
  pinMode(led_pin, OUTPUT);
- Serial.println("");
+ pinMode(buzer_pin, OUTPUT);
+ //Serial.println("");
  // Параметры памяти ESP справочно можно закаментировать
  CheckFlashConfig();
  // Включаем работу с файловой системой
@@ -80,14 +81,14 @@ void setup() {
  // Закускаем UDP
  udp.begin(localPort);
  //udp.beginMulticast(WiFi.localIP(), ssdpAdress1, ssdpPort);
- Serial.print("Local port: ");
- Serial.println(udp.localPort());
+ //Serial.print("Local port: ");
+ //Serial.println(udp.localPort());
  //настраиваем HTTP интерфейс
  HTTP_init();
- Serial.println("HTTP Ready!");
+ //Serial.println("HTTP Ready!");
  //запускаем SSDP сервис
  SSDP_init();
- Serial.println("SSDP Ready!");
+ //Serial.println("SSDP Ready!");
  // Включаем время из сети
  Time_init(timezone);
  // Будет выполняться каждую секунду проверяя будильники
