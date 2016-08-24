@@ -23,10 +23,13 @@
    }
    function set_rgb(submit,r,g,b){
     server = "/rgb?r="+r+"&g="+b+"&b="+g;
-    document.getElementById('url').innerHTML="http://"+document.domain+server;
-    //var script = document.createElement('script');
-    //script.src = '//ipinfo.io';
-    //alert(document.getElementsByTagName('ip')[1].appendChild(script));
+    url="Local IP: http://"+document.domain+server;
+    if(navigator.onLine) {
+     xmlHttp.open("GET","https://api.ipify.org?format=text",false);
+     xmlHttp.send();
+     url+="<br>Global IP: http://"+xmlHttp.responseText+server;
+    }
+    document.getElementById('url').innerHTML=url;
     send_request(submit,server);
    }
    function set_time(submit){

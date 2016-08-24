@@ -20,7 +20,8 @@
     script.onload = function () {iplocation();};
     document.getElementsByTagName("head")[0].appendChild(script);
 
-    document.getElementById('date').innerHTML = new Date().toLocaleString("ru", {day:"numeric",weekday:"long"})+'<br><small>'+new Date().toLocaleString("ru", {year:"numeric",month:"long"})+'<\/small>';
+    var dt = new Date();
+    document.getElementById('date').innerHTML = dt.getDate()+' '+["Воскресенья","Понидельник","Вторник","Среда","Четверг","Пятница","Суббота"][dt.getDay()]+'<br><small>'+["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"][dt.getMonth()]+' '+dt.getFullYear()+'г.<\/small>';
    }
 
    function finddevice() {

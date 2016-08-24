@@ -36,7 +36,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(led_num, led_pin, NEO_GRB + NEO_KHZ8
 
 String _ssid     = "WiFi"; // Для хранения SSID
 String _password = "Pass"; // Для хранения пароля сети
-String _ssidAP = "RGB".random(500);   // SSID AP точки доступа
+String _ssidAP = "RGB05";   // SSID AP точки доступа
 String _passwordAP = ""; // пароль точки доступа
 String XML;              // формирование XML
 String _setAP ="1";           // AP включен

@@ -84,7 +84,7 @@
      <hr>
      <h2>Подключение к WiFi роутеру</h2>
      <input id="ssid" value="" class="form-control" pattern="[0-9a-zA-Z.]{1,15}" placeholder="Имя WiFi сети">
-     <input id="password" value="" pattern="[0-9a-zA-Z.]{8,15}" class="form-control" placeholder="Пароль">
+     <input id="password" value="" pattern="[0-9a-zA-Z.]{8,15}" onfocus="this.type='text'" type="password" class="form-control" placeholder="Пароль">
      <input class="btn btn-block btn-success" value="Сохранить" onclick="set_ssid(this);" type="submit">
      <hr>
      <h2>Временная зона GMT</h2>
@@ -99,7 +99,7 @@
       <div class="col-sm-6">
        <label class="form-control"><input type="checkbox" id="onOffAP"> <b>Включить <abbr title="Точка доступа">AP</abbr></b></label>
        <input id="ssidap" value="" class="form-control" pattern="[0-9a-zA-Z.]{1,15}" placeholder="Имя WiFi сети">
-       <input id="passwordAp" value="" pattern="[0-9a-zA-Z.]{8,15}" class="form-control" placeholder="Пароль">
+       <input id="passwordAp" value="" pattern="[0-9a-zA-Z.]{8,15}" onfocus="this.type='text'" type="password" class="form-control" placeholder="Пароль">
        <input class="btn btn-block btn-success" value="Сохранить" onclick="set_ssid_ap(this);" type="submit">
       </div>
       <div class="col-sm-6">
