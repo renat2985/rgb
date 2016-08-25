@@ -1,0 +1,21 @@
+<div class="block col-md-5">
+<h5 class="alert-info">
+ XML += SSDP_Name;
+</h5>
+<div class="alert alert-dismissible alert-warning">
+Таймер 1: <b>
+ XML += times1;
+</b><br>Таймер 2: <b>
+ XML += times2;
+</b><br>Время работы: <b>
+ XML += TimeLed;
+</b></div>
+<input type="submit" onclick="ajax('{{ip}}','rgb?r=255&g=255&b=255',this);" value="Включить белый" class="btn btn-block btn-primary">
+<input style="width:33%;display:inline-block" class="btn btn-block btn-default" value="Красный" onclick="ajax('{{ip}}','rgb?r=255&g=0&b=0',this);" type="submit">
+<input style="width:33%;display:inline-block" class="btn btn-block btn-default" value="Зеленый" onclick="ajax('{{ip}}','rgb?r=0&g=255&b=0',this);" type="submit">
+<input style="width:33%;display:inline-block" class="btn btn-block btn-default" value="Синий" onclick="ajax('{{ip}}','rgb?r=0&g=0&b=255',this);" type="submit">
+ <input type="submit" onclick="ajax('{{ip}}','rgb?r=0&g=0&b=0',this);" value="Выключить" class="btn btn-block btn-primary">
+<hr>
+<div class="alert alert-dismissible alert-info">Изменить конфигурацию устройсва вы можете на странице управления</div>
+<a class="btn btn-block btn-default" href="http://{{ip}}/device.htm">Страница управления</a>
+</div>

@@ -99,7 +99,6 @@ void HTTP_init(void) {
  HTTP.on("/Save", handle_saveConfig);      // Сохранить настройки в файл
  HTTP.on("/config.xml", handle_ConfigXML); // формирование config_xml страницы для передачи данных в web интерфейс
  HTTP.on("/iplocation.xml", handle_IplocationXML);  // формирование iplocation_xml страницы для передачи данных в web интерфейс
- HTTP.on("/block", handle_Block);                   // Блок для device.htm
  HTTP.on("/restart", handle_Restart);               // Перезагрузка модуля
  // Запускаем HTTP сервер
  // HTTP.sendHeader("Cache-Control","max-age=2592000, must-revalidate");
@@ -178,45 +177,12 @@ void handle_ConfigXML() {
  XML += "<state>";
  XML += state0;
  XML += "</state>";
+  // IP устройства
+ XML += "<ip>";
+ XML += WiFi.localIP().toString();
+ XML += "</ip>";
  XML += "</Donnees>";
  HTTP.send(200, "text/xml", XML);
-}
-
-void handle_Block() {
- XML = "<div class=\"block col-md-5\">";
- XML += "<h5 class=\"alert-info\">";
- XML += SSDP_Name;
- XML += "</h5>";
- XML += "<div class=\"alert alert-dismissible alert-warning\">";
- XML += "Таймер 1: <b>";
- XML += times1;
- XML += "</b><br>Таймер 2: <b>";
- XML += times2;
- XML += "</b><br>Время работы: <b>";
- XML += TimeLed;
- XML += "</b></div>";
- XML += "<input type=\"submit\" onclick=\"ajax('";
- XML += WiFi.localIP().toString();
- XML += "','rgb?r=255&g=255&b=255',this);\" value=\"Включить белый\" class=\"btn btn-block btn-primary\">";
- XML += "<input style=\"width:33%;display:inline-block\" class=\"btn btn-block btn-default\" value=\"Красный\" onclick=\"ajax('";
- XML += WiFi.localIP().toString();
- XML += "','rgb?r=255&g=0&b=0',this);\" type=\"submit\">";
- XML += "<input style=\"width:33%;display:inline-block\" class=\"btn btn-block btn-default\" value=\"Зеленый\" onclick=\"ajax('";
- XML += WiFi.localIP().toString();
- XML += "','rgb?r=0&g=255&b=0',this);\" type=\"submit\">";
- XML += "<input style=\"width:33%;display:inline-block\" class=\"btn btn-block btn-default\" value=\"Синий\" onclick=\"ajax('";
- XML += WiFi.localIP().toString();
- XML += "','rgb?r=0&g=0&b=255',this);\" type=\"submit\">";
-  XML += "<input type=\"submit\" onclick=\"ajax('";
- XML += WiFi.localIP().toString();
- XML += "','rgb?r=0&g=0&b=0',this);\" value=\"Выключить\" class=\"btn btn-block btn-primary\">";
- XML += "<hr>";
- XML += "<div class=\"alert alert-dismissible alert-info\">Изменить конфигурацию устройсва вы можете на странице управления</div>";
- XML += "<a class=\"btn btn-block btn-default\" href=\"http://";
- XML += WiFi.localIP().toString();
- XML += "/device.htm\">Страница управления</a>";
- XML += "</div>";
- HTTP.send(200, "text/plain", XML);
 }
 
 void handle_IplocationXML() {

@@ -42,11 +42,24 @@
      if (ipval == '0.0.0.0') {
       location.href = "/setup.htm";
      } else {
-      $.get("http://"+ipval+"/block?"+Math.floor(Math.random()*10000), function(data) {
-       //xhttp2.open("GET", "http://"+ipval+"/config.xml?"+Math.floor(Math.random()*10000), false);
-       //xhttp2.send();
-       //xmlDoc2 = xhttp2.responseXML;
-       $(data).prependTo("#content");
+      //xhttp.open("GET", "/block.htm?"+Math.floor(Math.random()*10000), false);
+      //xhttp.send();
+      //data = xhttp.responseText;
+      //xhttp.open("GET", "/config.xml?"+Math.floor(Math.random()*10000), false);
+      //xhttp.send();
+      //data2 = xhttp.responseXML;
+      $.get("http://"+ipval+"/block.htm?"+Math.floor(Math.random()*10000), function(data) {
+       $.get("http://"+ipval+"/config.xml?"+Math.floor(Math.random()*10000), function(data2) {
+        var new_string;
+        var $kids = $(data2).find("Donnees").children();
+        $kids.each(function(){
+         var tagName=this.tagName;
+         var cols = $(data2).find(tagName).contents().eq(0).text();
+         new_string = data.replace(new RegExp('{{'+tagName+'}}', 'g'),cols);
+         data = new_string;
+        });
+        $(new_string).prependTo("#content");
+       });
       });
      }
     }
@@ -58,18 +71,17 @@
     datetext = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
     $("#history").prepend('<li>'+datetext+'<span class="history">'+old_submit+'</span></li>');
     //alert($(submit).parent().attr('class'));
-
     submit.value = 'Подождите...';
     $("input").prop('disabled', true);
     $.get("http://"+blockid+"/"+pagename, function(data) {
      submit.value=data;
      setTimeout(function(){
       submit.value=old_submit;
-      $.get("http://"+blockid+"/block?"+Math.floor(Math.random()*10000), function(data2) {
-       $($(submit).parent()).remove();
-       $(data2).prependTo("#content");
-       $("input").prop('disabled', false);
-      });
+      //$.get("http://"+blockid+"/block.htm?"+Math.floor(Math.random()*10000), function(data2) {
+      // $($(submit).parent()).remove();
+      // $(data2).prependTo("#content");
+      $("input").prop('disabled', false);
+      //});
      }, 1000);
     });
    }
