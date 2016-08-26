@@ -37,33 +37,47 @@
     xhttp.send();
     xmlDoc = xhttp.responseXML;
     var count=xmlDoc.getElementsByTagName("ip").length;
-    for (i = 0; i < count ;i++) {
+    for (i = 0; i < count; i++) {
      var ipval = xmlDoc.getElementsByTagName("ip")[i].childNodes[0].textContent;
      if (ipval == '0.0.0.0') {
       location.href = "/setup.htm";
      } else {
-      //xhttp.open("GET", "/block.htm?"+Math.floor(Math.random()*10000), false);
-      //xhttp.send();
-      //data = xhttp.responseText;
-      //xhttp.open("GET", "/config.xml?"+Math.floor(Math.random()*10000), false);
-      //xhttp.send();
-      //data2 = xhttp.responseXML;
-      $.get("http://"+ipval+"/block.htm?"+Math.floor(Math.random()*10000), function(data) {
-       $.get("http://"+ipval+"/config.xml?"+Math.floor(Math.random()*10000), function(data2) {
-        var new_string;
-        var $kids = $(data2).find("Donnees").children();
-        $kids.each(function(){
-         var tagName=this.tagName;
-         var cols = $(data2).find(tagName).contents().eq(0).text();
-         new_string = data.replace(new RegExp('{{'+tagName+'}}', 'g'),cols);
-         data = new_string;
-        });
-        $(new_string).prependTo("#content");
-       });
-      });
+      loadBlock(ipval);
      }
     }
    }
+
+
+   function loadBlock(ipval) {
+    //xhttp.open("GET", "/block.htm?"+Math.floor(Math.random()*10000), false);
+    //xhttp.send();
+    //data = xhttp.responseText;
+    //xhttp.open("GET", "/config.xml?"+Math.floor(Math.random()*10000), false);
+    //xhttp.send();
+    //data2 = xhttp.responseXML;
+    $.get("http://"+ipval+"/block.htm?"+Math.floor(Math.random()*10000), function(data) {
+     $.get("http://"+ipval+"/config.xml?"+Math.floor(Math.random()*10000), function(data2) {
+      var new_string;
+      var $kids = data2.getElementsByTagName("Donnees")[0].childNodes;
+      [].forEach.call($kids, (el) => {
+       var tagName = el.tagName;
+       var cols = data2.getElementsByTagName(tagName)[0].textContent;
+       new_string = data.replace(new RegExp('{{'+tagName+'}}', 'g'), cols);
+       data = new_string;
+      });
+      //  var new_string;
+      //  var $kids = $(data2).find("Donnees").children();
+      //  $kids.each(function(){
+      //   var tagName=this.tagName;
+      //   var cols = $(data2).find(tagName).contents().eq(0).text();
+      //   new_string = data.replace(new RegExp('{{'+tagName+'}}', 'g'),cols);
+      //   data = new_string;
+      //  });
+      $(new_string).prependTo("#content");
+     });
+    });
+   }
+
 
    function ajax(blockid, pagename, submit) {
     old_submit = submit.value;
@@ -90,7 +104,7 @@
  <body onload="load();">
   <div class="container device">
    <div class="header">
-    <h4><small class="pull-right col-md-4 hidden-xs" style="padding:15px 0;">Здесь видны все ваши устройства, скачать прошивки для ESP8266 вы можете на <a href="https://github.com/tretyakovsa/jaluzi" target="_blank">github</a>. Если устройство не появляется попробуйте нажать <b><a href="#" onclick="finddevice();">Найти устройства</a></b>. Появились какие-то вопросы, пишите <a href="https://github.com/tretyakovsa/jaluzi/issues/new" target="_blank">сюда</a>.</small></h4>
+    <h4><small class="pull-right col-md-4 hidden-xs" style="padding:15px 0;">Здесь видны все ваши устройства, скачать прошивки для ESP8266 вы можете на github <a href="https://github.com/tretyakovsa/jaluzi" target="_blank">Жалюзи</a>, <a href="https://github.com/renat2985/rgb" target="_blank">RGB</a>. Появились какие-то вопросы, пишите <a href="https://github.com/tretyakovsa/jaluzi/issues/new" target="_blank">сюда(жалюзи)</a> или <a href="https://github.com/renat2985/rgb/issues/new" target="_blank">cюда(rgb)</a>.</small></h4>
     <h1 id="date"><br><small></small></h1>
    </div>
    <div class="row">
@@ -98,6 +112,12 @@
      <h5 style="background-color:#C0C7CA">История</h5>
      <ul id="history">
      </ul>
+     <hr>
+     <div class="block col-md-11">
+      <h5 class=" alert-danger">Поиск</h5>
+      <div class="alert alert-dismissible alert-info">Если у вас несколько устройств подключено к сети, вы можете добавить его сюда нажав кнопку ниже:</div>
+      <hr><a onclick="finddevice();" class="btn btn-block btn-default" href="#">Найти устройства</a>
+     </div>
     </div>
     <div class="col-sm-offset-0 col-sm-9" style="text-align:center;" id="content">
      <div class="loader"></div><p>Загрузка...</p>

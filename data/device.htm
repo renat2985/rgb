@@ -8,13 +8,6 @@
   <title>Страница управления</title>
   <script>
    function handleServerResponse(){
-    if(xmlHttp.readyState==4 && xmlHttp.status==200){
-     // XML, ID
-     xml_to_val('timeled','led');
-     xml_to_val('times1' ,'time1');
-     xml_to_val('times2','time2');
-     document.getElementById('ssdp').innerHTML=xml('SSDP');
-    }
    }
    function led(submit){
     server = "/led";
@@ -49,7 +42,7 @@
  <body onload="load();">
   <div class="container">
    <div class="row" style="text-align:center;">
-    <h1 style="margin:40px;" id="ssdp"></h1>
+    <h1 style="margin:40px;">{{SSDP}}</h1>
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
      <a class="btn btn-block btn-danger" href="/">Страница устройств</a>
      <hr>
@@ -65,12 +58,12 @@
      <div class="row">
       <div class="col-sm-6">
        <h4>Таймер 1 (ВКЛ):</h4>
-       <input id="time1" value="" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control">
+       <input id="time1" value="{{times1}}" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control">
        <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time1(this);" type="submit">
       </div>
       <div class="col-sm-6">
        <h4>Таймер 2 (ВКЛ):</h4>
-       <input id="time2" value="" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control">
+       <input id="time2" value="{{times2}}" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control">
        <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time2(this);" type="submit">
       </div>
      </div>
@@ -80,7 +73,7 @@
        <div class="alert alert-dismissible alert-info">Здесь вы можете указать время в минутах сколько будит гореть LED.</div>
       </div>
       <div class="col-sm-4">
-       <input id="led" value="" class="form-control" pattern="[0-9]{1,2}[.]{1}[0-9]{1,2}">
+       <input id="led" value="{{timeled}}" class="form-control" pattern="[0-9]{1,2}[.]{1}[0-9]{1,2}">
        <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time(this);" type="submit">
       </div>
      </div>
