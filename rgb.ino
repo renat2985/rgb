@@ -41,8 +41,8 @@ String _passwordAP = ""; // пароль точки доступа
 String XML;              // формирование XML
 String _setAP ="1";           // AP включен
 String SSDP_Name = "jalousie";      // SSDP
-String times1 = "08:00:00";      // Таймер 1
-String times2 = "21:00:00";    // Таймер 2
+String times1 = "00:00:00";      // Таймер 1
+String times2 = "00:00:00";    // Таймер 2
 String Devices = "";    // IP адреса устройств в сети
 int timezone = 3;        // часовой пояс GTM
 float TimeLed = 10.0;  // Время работы LED

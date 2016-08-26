@@ -49,10 +49,10 @@
 
 
    function loadBlock(ipval) {
-    //xhttp.open("GET", "/block.htm?"+Math.floor(Math.random()*10000), false);
+    //xhttp.open("GET", "http://"+ipval+"/block.htm?"+Math.floor(Math.random()*10000), false);
     //xhttp.send();
     //data = xhttp.responseText;
-    //xhttp.open("GET", "/config.xml?"+Math.floor(Math.random()*10000), false);
+    //xhttp.open("GET", "http://"+ipval+"/config.xml?"+Math.floor(Math.random()*10000), false);
     //xhttp.send();
     //data2 = xhttp.responseXML;
     $.get("http://"+ipval+"/block.htm?"+Math.floor(Math.random()*10000), function(data) {
