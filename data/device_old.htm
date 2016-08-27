@@ -8,73 +8,6 @@
   <title>Страница управления</title>
   <script>
    function handleServerResponse(){
-    var img = _('.thumb img'),
-        canvas = _('#cs'),
-        result = _('.result'),
-        preview = _('.preview'),x = '',y = '';
-    // click function
-    img.addEventListener('click', function(e){
-     // chrome
-     if(e.offsetX) {
-      x = e.offsetX;
-      y = e.offsetY;
-     }
-     // firefox
-     else if(e.layerX) {
-      x = e.layerX;
-      y = e.layerY;
-     }
-     useCanvas(canvas,img,function(){
-      // get image data
-      var p = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
-      set_rgb(this,p[0],p[1],p[2]);
-     });
-    },false);
-    // preview function mousemove
-    img.addEventListener('mousemove', function(e){
-     // chrome
-     if(e.offsetX) {
-      x = e.offsetX;
-      y = e.offsetY;
-     }
-     // firefox
-     else if(e.layerX) {
-      x = e.layerX;
-      y = e.layerY;
-     }
-     useCanvas(canvas,img,function(){
-      var p = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
-      preview.style.background = rgbToHex(p[0],p[1],p[2]);
-     });
-    },false);
-   }
-
-   function useCanvas(el,image,callback){
-    el.width = image.width;
-    el.height = image.height;
-    el.getContext('2d').drawImage(image, 0, 0, image.width, image.height);
-    return callback();
-   }
-   function _(el){
-    return document.querySelector(el);
-   };
-   function componentToHex(c) {
-    var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
-   }
-   function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-   }
-   function findPos(obj) {
-    var curleft = 0, curtop = 0;
-    if (obj.offsetParent) {
-     do {
-      curleft += obj.offsetLeft;
-      curtop += obj.offsetTop;
-     } while (obj = obj.offsetParent);
-     return { x: curleft, y: curtop };
-    }
-    return undefined;
    }
 
    function led(submit){
@@ -83,7 +16,6 @@
     send_request(submit,server);
    }
    function set_rgb(submit,r,g,b){
-    document.body.style.background=rgbToHex(r,g,b);
     server = "/rgb?r="+r+"&g="+b+"&b="+g+"&t="+val('led');
     document.getElementById('url').innerHTML="Local IP: http://"+document.domain+server;
     if(navigator.onLine) {
@@ -119,11 +51,7 @@
      <hr>
      <div class="alert alert-dismissible alert-info">С помощью сервиса <a href="https://ifttt.com/myrecipes/personal" target="_blank">ifttt.com</a> Лампа может включатся по множествам сценариев, наприме, новое сообщение в facebook, twitter, задания в Google calendar, почта и многое другое. Включая led ниже формируется URL цвета, копируйте Global IP ссылку, создавайте новый сценарий на ifttt и вставляйте его в "Make a web request".</div>
      <input type="submit" class="btn btn-block btn-primary" onclick="set_rgb(this,255,255,255)" value="Включить белый (255,255,255)">
-     <div class="thumb">
-      <div class="preview"></div>
-      <img alt="" style="cursor:pointer;width:100%;" src="/swatches.png" />
-     </div>
-     <canvas id="cs" style="display:none;"></canvas>
+     <div id="color" class="inner"></div>
      <input type="submit" class="btn btn-block btn-primary" onclick="set_rgb(this,0,0,0)" value="Выключить (0,0,0)">
      <h4 id="url"></h4>
      <hr>
@@ -158,5 +86,15 @@
     </div>
    </div>
   </div>
+
+  <script>
+   //var arr = ["255,255,255","167,25,75","254,39,18","251,153,2","250,188,2","254,254,51","208,234,43","102,176,50","3,145,206","2,71,254","61,1,165","134,1,175"];
+   var arr = ["255,0,0","255,100,0","255,255,0","100,255,255","0,255,0","0,255,100","0,255,255","0,100,255","0,0,255","100,0,255","255,0,255","255,0,100"];
+   for (var i = 0; i < arr.length; i++) {
+    document.getElementById('color').innerHTML +='<input type="submit" class="btn btn-block btn-default" style="background-color:rgb('+arr[i]+');width:25%;display:inline-block" onclick="set_rgb(this,'+arr[i].split(',')[0]+','+arr[i].split(',')[1]+','+arr[i].split(',')[2]+')" value="'+arr[i]+'">';
+    //document.getElementById('color').innerHTML +='<div class="btn-group"><input type="submit" class="btn btn-block btn-default" style="background-color:rgb('+arr[i]+');width:25%;display:inline-block" onclick="set_rgb(this,'+arr[i].split(',')[0]+','+arr[i].split(',')[1]+','+arr[i].split(',')[2]+')" value="'+arr[i]+'"><a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a><ul class="dropdown-menu"><li><a href="#" onclick="set_rgb(this,'+arr[i].split(',')[0]+','+arr[i].split(',')[1]+','+arr[i].split(',')[2]+',5)">Включить на 5 минут</a></li><li><a href="#" onclick="set_rgb(this,'+arr[i].split(',')[0]+','+arr[i].split(',')[1]+','+arr[i].split(',')[2]+',15)">Включить на 15 минут</a></li><li><a href="#" onclick="set_rgb(this,'+arr[i].split(',')[0]+','+arr[i].split(',')[1]+','+arr[i].split(',')[2]+',30)">Включить на 30 минут</a></li><li><a href="#" onclick="set_rgb(this,'+arr[i].split(',')[0]+','+arr[i].split(',')[1]+','+arr[i].split(',')[2]+',60)">Включить на 60 минут</a></li></ul></div>';
+   }
+  </script>
+  <!-- script src="https://code.jquery.com/jquery-1.10.2.min.js"></script -->
  </body>
 </html>
