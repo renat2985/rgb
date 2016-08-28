@@ -2,7 +2,6 @@
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="/bootstrap.min.css">
-  <!--script type="text/javascript" src="/jquery.min.js"></script -->
   <link rel="stylesheet" type="text/css" href="/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Страница устройств</title>
@@ -13,12 +12,6 @@
     } else {
      xhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-
-    // var script = document.createElement("script");
-    // script.src = "/jquery.min.js";
-    // script.type = "text/javascript";
-    // script.onload = function () {iplocation();};
-    // document.getElementsByTagName("head")[0].appendChild(script);
     iplocation();
 
     var dt = new Date();
@@ -26,10 +19,6 @@
    }
 
    function finddevice() {
-    // $("#content").html('<div class="alert alert-dismissible alert-info"><div class="loader"></div><strong>Пожалуйста подождите, идет сканирование сети.</strong></div>');
-    // $.get("/devices?"+Math.floor(Math.random()*10000), function(data) {
-    //  setTimeout(function(){iplocation()}, 7000);
-    // });
     document.getElementById('content').innerHTML='<div class="alert alert-dismissible alert-info"><div class="loader"></div><strong>Пожалуйста подождите, идет сканирование сети.</strong></div>';
     xhttp.open("GET", "/devices?"+Math.floor(Math.random()*10000), false);
     xhttp.send();
@@ -37,7 +26,6 @@
    }
 
    function iplocation() {
-    //$("#content").html("");
     document.getElementById('content').innerHTML='';
     xhttp.open("GET", "/iplocation.xml?"+Math.floor(Math.random()*10000), false);
     xhttp.send();
@@ -60,8 +48,6 @@
     xhttp.open("GET", "http://"+ipval+"/config.xml?"+Math.floor(Math.random()*10000), false);
     xhttp.send();
     data2 = xhttp.responseXML;
-    // $.get("http://"+ipval+"/block.htm?"+Math.floor(Math.random()*10000), function(data) {
-    //  $.get("http://"+ipval+"/config.xml?"+Math.floor(Math.random()*10000), function(data2) {
     var new_string;
     var $kids = data2.getElementsByTagName("Donnees")[0].childNodes;
     [].forEach.call($kids, (el) => {
@@ -70,45 +56,25 @@
      new_string = data.replace(new RegExp('{{'+tagName+'}}', 'g'), cols);
      data = new_string;
     });
-    //  var new_string;
-    //  var $kids = $(data2).find("Donnees").children();
-    //  $kids.each(function(){
-    //   var tagName=this.tagName;
-    //   var cols = $(data2).find(tagName).contents().eq(0).text();
-    //   new_string = data.replace(new RegExp('{{'+tagName+'}}', 'g'),cols);
-    //   data = new_string;
-    //  });
     document.getElementById('content').innerHTML+=new_string;
-    //$(new_string).prependTo("#content");
-    // });
-    // });
    }
 
    function ajax(blockid, pagename, submit) {
     old_submit = submit.value;
     var d = new Date(); // for now
     datetext = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
-    //$("#history").prepend('<li>'+datetext+'<span class="history">'+old_submit+'</span></li>');
-    document.getElementById('history').innerHTML+='<li>'+datetext+'<span class="history">'+old_submit+'</span></li>';
-    //alert($(submit).parent().attr('class'));
+    parent = submit.parentNode.childNodes[1].innerHTML;
+    document.getElementById('history').insertAdjacentHTML('afterbegin', '<li>'+datetext+'<span class="history"><b>'+parent+'</b><br><em>'+old_submit+'</em></span></li>');
     submit.value = 'Подождите...';
     submit_disabled(true);
     //$("input").prop('disabled', true);
     xhttp.open("GET", "http://"+blockid+"/"+pagename, false);
     xhttp.send();
-    //  $.get("http://"+blockid+"/"+pagename, function(data) {
-    //  submit.value=data;
     submit.value = xhttp.responseText;
     setTimeout(function(){
      submit.value=old_submit;
-     //$.get("http://"+blockid+"/block.htm?"+Math.floor(Math.random()*10000), function(data2) {
-     // $($(submit).parent()).remove();
-     // $(data2).prependTo("#content");
      submit_disabled(false);
-     //$("input").prop('disabled', false);
-     //});
     }, 1000);
-    // });
    }
 
    function submit_disabled(request){
@@ -118,6 +84,16 @@
     }
    }
   </script>
+  <style>
+   ul {
+    text-indent: .5em;
+    border-left: .25em solid #c0c7ca;
+    margin-left: 5px;
+   }
+   li {
+    margin-left: -30px;
+   }
+  </style>
  </head>
  <body onload="load();">
   <div class="container device">
