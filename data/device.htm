@@ -27,7 +27,11 @@
      useCanvas(canvas,img,function(){
       // get image data
       var p = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
-      set_rgb(this,p[0],p[1],p[2]);
+      r_rgb =p[0];
+      g_rgb =p[1];
+      b_rgb =p[2];
+      document.getElementById('set-time').style.display="block";
+      //on_rgb(this,p[0],p[1],p[2]);
      });
     },false);
     // preview function mousemove
@@ -82,19 +86,23 @@
     alert(time2);
     send_request(submit,server);
    }
-   function set_rgb(submit,r,g,b){
+   function set_rgb(submit,r,g,b,t){
     document.body.style.background=rgbToHex(r,g,b);
-    server = "/rgb?r="+r+"&g="+b+"&b="+g+"&t="+val('led');
-    document.getElementById('url').innerHTML="Local IP: http://"+document.domain+server;
+    server = "/rgb?r="+r+"&g="+b+"&b="+g+"&t="+t;
+    document.getElementById('url').innerHTML='<br>Локальная ссылка: http://'+document.domain+server;
     if(navigator.onLine) {
      var oReq = new XMLHttpRequest();
      oReq.open("GET","https://api.ipify.org?format=text",false);
      oReq.send();
      //oReq.onload = function(e) {
-     document.getElementById('url').innerHTML+="<br>Global IP: http://"+oReq.responseText+server;
+     document.getElementById('url').innerHTML+="<br>Глобальная ссылка: http://"+oReq.responseText+server;
      //}
     }
     send_request(submit,server);
+   }
+   function on_rgb(submit,t){
+    document.getElementById('set-time').style.display="none";
+    set_rgb(submit,r_rgb,g_rgb,b_rgb,t);
    }
    function set_time(submit){
     server = "/TimeLed?t="+val('led');
@@ -109,31 +117,66 @@
     send_request(submit,server);
    }
   </script>
+  <style>
+   #set-time {
+    z-index:111;
+    background-color:#fff;
+    box-shadow:0 12px 15px rgba(0, 0, 0, 0.4);
+    padding:20px;
+    margin-top:-45%;
+    position:relative;
+   }
+  </style>
  </head>
  <body onload="load();">
   <div class="container">
    <div class="row" style="text-align:center;">
-    <h1 style="margin:40px;">{{SSDP}}</h1>
+    <h1 style="margin:50px;">Страница управления</h1>
+
+
+
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+     <h5 class="alert-info">{{SSDP}}</h5>
      <a class="btn btn-block btn-danger" href="/">Страница устройств</a>
      <hr>
-     <div class="alert alert-dismissible alert-info">С помощью сервиса <a href="https://ifttt.com/myrecipes/personal" target="_blank">ifttt.com</a> Лампа может включатся по множествам сценариев, наприме, новое сообщение в facebook, twitter, задания в Google calendar, почта и многое другое. Включая led ниже формируется URL цвета, копируйте Global IP ссылку, создавайте новый сценарий на ifttt и вставляйте его в "Make a web request".</div>
-     <input type="submit" class="btn btn-block btn-primary" onclick="set_rgb(this,255,255,255)" value="Включить белый (255,255,255)">
+     <div class="alert alert-dismissible alert-info">С помощью сервиса <a href="https://ifttt.com/myrecipes/personal" target="_blank">ifttt.com</a> Лампа может включатся по множествам сценариев, например: новое сообщение в facebook, twitter, задания в Google calendar, почта и многое другое. Включая led ниже формируется URL цвета, копируйте Global IP ссылку, создавайте новый сценарий на ifttt и вставляйте его в "Make a web request".</div>
      <div class="thumb">
       <div class="preview"></div>
       <img alt="" style="cursor:pointer;width:100%;" src="/swatches.png" />
      </div>
+     <div class="row">
+      <div class="col-sm-offset-3 col-sm-6" id="set-time" style="display:none;">
+       <h5 class="alert-warning">Время</h5>
+       <h4>На сколько минут включить?</h4>
+       <div class="btn-group">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,1)" value="1">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,5)" value="5">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,10)" value="10">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,15)" value="15">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,30)" value="30">
+       </div>
+       <br>
+       <div class="btn-group">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,60)" value="60">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,90)" value="1:30">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,120)" value="2:00">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,180)" value="3:00">
+       </div>
+       <hr>
+       <a href="#" onclick="document.getElementById('set-time').style.display='none';return false" class="btn btn-block btn-default">Отмена</a>
+      </div>
+     </div>
      <canvas id="cs" style="display:none;"></canvas>
-     <input type="submit" class="btn btn-block btn-primary" onclick="set_rgb(this,0,0,0)" value="Выключить (0,0,0)">
-     <h4 id="url"></h4>
+     <input type="submit" class="btn btn-block btn-primary" onclick="set_rgb(this,0,0,0,1)" value="Выключить">
+     <p id="url"></p>
      <hr>
      <div class="row">
       <h2>Время работы LED</h2>
       <div class="col-sm-8">
-       <div class="alert alert-dismissible alert-info">Здесь вы можете указать время в минутах сколько будит гореть LED. В url который появляется выше вы можете менять время изменяя "&t=время"</div>
+       <div class="alert alert-dismissible alert-info">Здесь указается время в минутах как долго будит гореть LED для кнопок на "<a href="/">Страница устройств</a>".</div>
       </div>
       <div class="col-sm-4">
-       <input id="led" value="{{timeled}}" class="form-control" pattern="[0-9]{1,2}[.]{1}[0-9]{1,2}">
+       <input id="led" value="{{timeled}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
        <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time(this);" type="submit">
       </div>
      </div>

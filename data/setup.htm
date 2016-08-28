@@ -8,8 +8,8 @@
   <title>Доп. настройки</title>
   <script>
    function handleServerResponse(){
-     if (xml('onOffAP')=='0') {checkedAP=false;} else {checkedAP=true;}
-     document.getElementById('onOffAP').checked=checkedAP;
+    if (xml('onOffAP')=='0') {checkedAP=false;} else {checkedAP=true;}
+    document.getElementById('onOffAP').checked=checkedAP;
    }
    function load_time(submit){
     server = "/Time";
@@ -38,6 +38,7 @@
    function set_ssdp(submit){
     server = "/ssdp?ssdp="+val('ssdp');
     send_request(submit,server);
+    document.getElementById('ssdp_t').innerHTML = val('ssdp');
    }
    function restart(submit){
     if (confirm("Вы действительно хотите перезагрузить устройство?")) {
@@ -53,8 +54,9 @@
  <body onload="load();">
   <div class="container">
    <div class="row" style="text-align:center;">
-    <h1 style="margin:40px;">Доп. настройки</h1>
+    <h1 style="margin:50px;">Доп. настройки</h1>
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+     <h5 class="alert-info" id="ssdp_t">{{SSDP}}</h5>
      <a class="btn btn-block btn-danger" href="/">Страница устройств</a>
      <hr>
      <div class="alert alert-dismissible alert-warning">Пожалуйста подключитесь к своему роутеру и укажите ниже вашу GMT зону.
