@@ -12,13 +12,15 @@ void Time01() {
   tickerSetLow.attach(TimeLed*60, setT1, 0);
   LedON(r, g, b);
     chaing = 1;
-     digitalWrite(buzer_pin,1);
+     analogWrite(buzer_pin, volume);
+
 
 }
 
 void setT1(int state) {
  tickerSetLow.detach();
-  digitalWrite(buzer_pin,0);
+ analogWrite(buzer_pin, 0);
+
  chaing = 1;
 
 }

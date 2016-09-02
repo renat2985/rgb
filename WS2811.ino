@@ -11,9 +11,7 @@ int LedRGB() {
   tickerSetLow.attach(t * 60, setT1, 0);
   LedON(r, g, b);
   chaing = 1;
-   digitalWrite(buzer_pin,1);
-   delay(500);
-   digitalWrite(buzer_pin,0);
+ sound(buzer_pin, volume, 1000, t*60);
   HTTP.send(200, "text/plain", "OK");
 }
 void LedON(int r, int g, int b) {
@@ -22,4 +20,15 @@ void LedON(int r, int g, int b) {
     strip.setPixelColor(i, strip.Color(r, g, b));
     strip.show();
   }
+}
+void sound(int pin, int volume, int freq, int time_ms) {
+  analogWrite(pin, volume);
+  analogWriteFreq (freq);
+  tickerBizz.attach_ms(time_ms, setPin, 1);
+
+}
+
+void setPin(int state) {
+  tickerBizz.detach();
+  analogWrite(buzer_pin, 0);
 }

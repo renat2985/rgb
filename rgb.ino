@@ -23,6 +23,7 @@ File fsUploadFile;
 // Для тикера
 Ticker tickerSetLow;
 Ticker tickerAlert;
+Ticker tickerBizz;
 
 // Кнопка управления
 #define Tach0 0
@@ -50,6 +51,7 @@ String kolibrTime = "03:00:00"; // Время колибровки часов
 volatile int chaingtime = LOW;
 volatile int chaing = LOW;
 volatile int chaing1 = LOW;
+int volume = 256;
 int state0 = 0;
 int r=0;
 int g=0;
