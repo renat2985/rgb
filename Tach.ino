@@ -9,9 +9,9 @@ void Tach_0() {
 }
 
 void Time01() {
-  tickerSetLow.attach(TimeLed*60, setT1, 0);
+  tickerSetLow.attach(TimeLed, setT1, 0);
   LedON(r, g, b);
-    chaing = 1;
+  state0=1;
      analogWrite(buzer_pin, volume);
 
 
@@ -19,9 +19,7 @@ void Time01() {
 
 void setT1(int state) {
  tickerSetLow.detach();
- analogWrite(buzer_pin, 0);
-
- chaing = 1;
-
+  analogWrite(buzer_pin, 0);
+  digitalWrite(buzer_pin,1);
 }
 
