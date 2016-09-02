@@ -64,7 +64,7 @@
     var d = new Date(); // for now
     datetext = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
     parent = submit.parentNode.childNodes[1].innerHTML;
-    document.getElementById('history').insertAdjacentHTML('afterbegin', '<li>'+datetext+'<span class="history"><b>'+parent+'</b><br><em>'+old_submit+'</em></span></li>');
+    document.getElementById('history').insertAdjacentHTML('afterbegin', '<li>'+datetext+'<span class="history" onclick="this.childNodes[3].className=\'\';"><b>'+parent+'</b><br><em>'+old_submit+'</em><small class="hidden"><hr>URL: http://'+blockid+'/'+pagename+'</small></span></li>');
     submit.value = 'Подождите...';
     submit_disabled(true);
     //$("input").prop('disabled', true);
