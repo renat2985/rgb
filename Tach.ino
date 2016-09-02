@@ -11,7 +11,7 @@ void Tach_0() {
 void Time01() {
   tickerSetLow.attach(TimeLed, setT1, 0);
   LedON(r, g, b);
-  state0=1;
+  state0=3;
      analogWrite(buzer_pin, volume);
 
 

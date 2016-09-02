@@ -68,6 +68,7 @@ void setup() {
  pinMode(Tach0, INPUT);
  pinMode(led_pin, OUTPUT);
  pinMode(buzer_pin, OUTPUT);
+ digitalWrite(buzer_pin,1);
  //Serial.println("");
  // Параметры памяти ESP справочно можно закаментировать
  CheckFlashConfig();
@@ -113,6 +114,11 @@ void loop() {
    case 1:
    LedON(0, 0,  0);
    chaing=!chaing;
+   state0=0;
+    break;
+   case 3:
+  analogWrite(buzer_pin, 0);
+  digitalWrite(buzer_pin,1);
    state0=0;
     break;
   }
