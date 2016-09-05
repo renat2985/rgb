@@ -1,12 +1,13 @@
-<html>
+<!DOCTYPE html>
+<html lang="ru">
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/style.css">
   <script type="text/javascript" src="/function.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Доп. настройки</title>
-  <script>
+  <script type="text/javascript">
    function handleServerResponse(){
     if (xml('onOffAP')=='0') {checkedAP=false;} else {checkedAP=true;}
     document.getElementById('onOffAP').checked=checkedAP;
@@ -59,10 +60,10 @@
      <h5 class="alert-info" id="ssdp_t">{{SSDP}}</h5>
      <a class="btn btn-block btn-danger" href="/">Страница устройств</a>
      <hr>
-     <div class="alert alert-dismissible alert-warning">Пожалуйста подключитесь к своему роутеру и укажите ниже вашу GMT зону.
-      Это позволит унавать время, которое будит синхранизируется 1 раз в сутки в 03:00 используя ваш роутер. Вы так же сможете управлять вашим устройством в локальной сети.</div>
+     <div class="alert alert-dismissible alert-warning"><strong>Пожалуйста подключитесь к своему роутеру и укажите ниже вашу GMT зону.</strong>
+      Это позволит управлять вашим устройством в локальной сети и синхронизировать время используя ваш роутер.</div>
      <div class="alert alert-dismissible alert-info">
-      <b>Здесь вы можете загрузить bin файл в ESP или открыть <a href="/edit" target="_blank">редактор HTML</a></b>
+      <b>Обновление: <a href="/edit" target="_blank">Открыть редактор HTML</a>, загрузить профишвку (bin)</b>
       <form method="POST" action="/update" enctype="multipart/form-data">
        <div class="btn-group">
         <input type="file" class="btn btn-primary btn-xs" name="update" style="height: 33px;">

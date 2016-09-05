@@ -1,12 +1,13 @@
-<html>
+<!DOCTYPE html>
+<html lang="ru">
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/style.css">
   <script type="text/javascript" src="/function.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Страница управления</title>
-  <script>
+  <script type="text/javascript">
    function handleServerResponse(){
     var img = _('.thumb img'),
         canvas = _('#cs'),
@@ -117,7 +118,7 @@
     send_request(submit,server);
    }
   </script>
-  <style>
+  <style type="text/css">
    #set-time {
     z-index:111;
     background-color:#fff;
@@ -133,13 +134,11 @@
    <div class="row" style="text-align:center;">
     <h1 style="margin:50px;">Страница управления</h1>
 
-
-
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
      <h5 class="alert-info">{{SSDP}}</h5>
      <a class="btn btn-block btn-danger" href="/">Страница устройств</a>
      <hr>
-     <div class="alert alert-dismissible alert-info">С помощью сервиса <a href="https://ifttt.com/myrecipes/personal" target="_blank">ifttt.com</a> Лампа может включатся по множествам сценариев, например: новое сообщение в facebook, twitter, задания в Google calendar, почта и многое другое. Включая led ниже формируется URL цвета, копируйте Global IP ссылку, создавайте новый сценарий на ifttt и вставляйте его в "Make a web request".</div>
+     <div class="alert alert-dismissible alert-info">С помощью сервиса <a href="https://ifttt.com/myrecipes/personal" target="_blank">ifttt.com</a> Лампа может включатся по множествам сценариев, например: новое сообщение в facebook, twitter, <a href="#" onclick="toggle('hide')" >подробнее...</a><span id="hide" class="hidden">задания в Google calendar, почта и многое другое. Включая led ниже формируется URL цвета, копируйте Global IP ссылку, создавайте новый сценарий на ifttt и вставляйте его в "Make a web request".</span> </div>
      <div class="thumb">
       <div class="preview"></div>
       <img alt="" style="cursor:pointer;width:100%;" src="/swatches.png" />
@@ -176,7 +175,10 @@
        <div class="alert alert-dismissible alert-info">Здесь указается время в минутах как долго будит гореть LED для кнопок на "<a href="/">Страница устройств</a>".</div>
       </div>
       <div class="col-sm-4">
-       <input id="led" value="{{timeled}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
+       <div class="input-group">
+        <input id="led" value="{{timeled}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
+        <span class="input-group-addon">сек.</span>
+       </div>
        <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time(this);" type="submit">
       </div>
      </div>

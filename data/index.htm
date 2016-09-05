@@ -1,11 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html lang="ru">
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Страница устройств</title>
-  <script>
+  <script type="text/javascript">
    function load(){
     if (window.XMLHttpRequest) {
      xhttp = new XMLHttpRequest();
@@ -15,7 +16,7 @@
     iplocation();
 
     var dt = new Date();
-    document.getElementById('date').innerHTML = dt.getDate()+' '+["Воскресенья","Понидельник","Вторник","Среда","Четверг","Пятница","Суббота"][dt.getDay()]+'<br><small>'+["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"][dt.getMonth()]+' '+dt.getFullYear()+'г.<\/small>';
+    document.getElementById('date').innerHTML = dt.getDate()+' '+["Воскресенья","Понидельник","Вторник","Среда","Четверг","Пятница","Суббота"][dt.getDay()]+'<small class="show">'+["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"][dt.getMonth()]+' '+dt.getFullYear()+'г.<\/small>';
    }
 
    function finddevice() {
@@ -84,16 +85,6 @@
     }
    }
   </script>
-  <style>
-   ul {
-    text-indent: .5em;
-    border-left: .25em solid #c0c7ca;
-    margin-left: 5px;
-   }
-   li {
-    margin-left: -30px;
-   }
-  </style>
  </head>
  <body onload="load();">
   <div class="container device">
