@@ -18,7 +18,7 @@ void LedON(int r, int g, int b) {
   //Serial.println("LedON");
   for (uint16_t i = 0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i, strip.Color(r, g, b));
-    delay(100); //Плавное появление
+    //delay(100); //Плавное появление
     strip.show();
   }
 }
