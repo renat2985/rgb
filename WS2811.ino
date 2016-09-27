@@ -26,7 +26,6 @@ void sound(int pin, int volume, int freq, int time_ms) {
   analogWrite(pin, volume);
   analogWriteFreq (freq);
   tickerBizz.attach_ms(time_ms, setPin, 1);
-
 }
 
 void setPin(int state) {

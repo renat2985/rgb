@@ -134,10 +134,10 @@ void loop() {
 void alert() {
  String Time=XmlTime();
  if (times1.compareTo(Time) == 0 && times1 != "00:00:00") {
- Time01();
+ alarm_clock();
  }
  if (times2.compareTo(Time) == 0 && times2 != "00:00:00") {
- Time01();
+ alarm_clock();
  }
  if (kolibrTime.compareTo(Time) == 0) {
   chaingtime=1;

@@ -8,7 +8,7 @@ void Tach_0() {
  millis_prev = millis();
 }
 
-void Time01() {
+void alarm_clock() {
   tickerSetLow.attach(TimeLed, setT1, 0);
   LedON(r, g, b);
   state0=3;
