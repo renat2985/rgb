@@ -89,7 +89,7 @@
    }
    function set_rgb(submit,r,g,b,t){
     document.body.style.background=rgbToHex(r,g,b);
-    server = "/rgb?r="+r+"&g="+b+"&b="+g+"&t="+t;
+    server = "/rgb?r="+r+"&g="+g+"&b="+b+"&t="+t;
     document.getElementById('url').innerHTML='<br>Локальная ссылка: http://'+document.domain+server;
     if(navigator.onLine) {
      var oReq = new XMLHttpRequest();
@@ -148,18 +148,18 @@
        <h5 class="alert-warning">Время</h5>
        <h4>На сколько минут включить?</h4>
        <div class="btn-group">
-        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,1)" value="1">
-        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,5)" value="5">
-        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,10)" value="10">
-        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,15)" value="15">
-        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,30)" value="30">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,60)" value="1">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,300)" value="5">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,600)" value="10">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,1500)" value="15">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,1800)" value="30">
        </div>
        <br>
        <div class="btn-group">
-        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,60)" value="60">
-        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,90)" value="1:30">
-        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,120)" value="2:00">
-        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,180)" value="3:00">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,3600)" value="60">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,5400)" value="1:30">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,7200)" value="2:00">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,10800)" value="3:00">
        </div>
        <hr>
        <a href="#" onclick="document.getElementById('set-time').style.display='none';return false" class="btn btn-block btn-default">Отмена</a>
@@ -168,20 +168,6 @@
      <canvas id="cs" style="display:none;"></canvas>
      <input type="submit" class="btn btn-block btn-primary" onclick="set_rgb(this,0,0,0,1)" value="Выключить">
      <p id="url"></p>
-     <hr>
-     <div class="row">
-      <h2>Время работы LED</h2>
-      <div class="col-sm-8">
-       <div class="alert alert-dismissible alert-info">Здесь указается время в минутах как долго будит гореть LED для кнопок на "<a href="/">Страница устройств</a>".</div>
-      </div>
-      <div class="col-sm-4">
-       <div class="input-group">
-        <input id="led" value="{{timeled}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
-        <span class="input-group-addon">сек.</span>
-       </div>
-       <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time(this);" type="submit">
-      </div>
-     </div>
      <hr>
      <h2>Будильники</h2>
      <div class="row">
@@ -196,6 +182,20 @@
       <div class="col-sm-6">
        <div class="alert alert-dismissible alert-warning"><b>Обратите внимание</b> Настраивая время перед одиночными цифрами пишите 0. Пример: 03:09:10.
         Будильник будит повторять звонить каждый день. Отключить его можно написав 00:00:00</div>
+      </div>
+     </div>
+     <hr>
+     <div class="row">
+      <h2>Время работы будильника</h2>
+      <div class="col-sm-8">
+       <div class="alert alert-dismissible alert-info">Здесь указается время в секундах как долго будит звенеть будильник и гореть LED.</div>
+      </div>
+      <div class="col-sm-4">
+       <div class="input-group">
+        <input id="led" value="{{timeled}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
+        <span class="input-group-addon">сек.</span>
+       </div>
+       <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time(this);" type="submit">
       </div>
      </div>
      <hr>
