@@ -3,6 +3,7 @@ void Tach_0() {
  static unsigned long millis_prev;
  // Устроняем дребезг контакта
  if (millis() - 500 > millis_prev) {
+  sound(buzer_pin, volume, 1000, 100);
   chaing = 1; // Выстовляем признак нажатия кнопки
  }
  millis_prev = millis();
