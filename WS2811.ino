@@ -11,7 +11,7 @@ int LedRGB() {
   tickerSetLow.attach(t, setT1, 0);
   LedON(r, g, b);
   chaing = 1;
- sound(buzer_pin, volume, 1000, 100);
+  sound(buzer_pin, volume, 1000, 100);
   HTTP.send(200, "text/plain", "OK");
 }
 void LedON(int r, int g, int b) {
