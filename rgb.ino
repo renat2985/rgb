@@ -53,8 +53,8 @@ volatile int chaing = LOW;
 volatile int chaing1 = LOW;
 int volume = 512;// max =1023
 int state0 = 0;
-int r=0;
-int g=0;
+int r=255;
+int g=138;
 int b=0;
 int t=0;
 int s=0;

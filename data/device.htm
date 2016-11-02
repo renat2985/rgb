@@ -85,7 +85,6 @@
 
    function led(submit){
     server = "/led";
-    alert(time2);
     send_request(submit,server);
    }
    function set_rgb(submit,r,g,b,t,s){
@@ -164,13 +163,13 @@
        </div>
        <hr>
        <h4>Время работы сигнала:</h4>
-       <input class="form-control" value="0.5" id="sound">
+       <input class="form-control" value="0.1" id="sound">
        <hr>
        <a href="#" onclick="document.getElementById('set-time').style.display='none';return false" class="btn btn-block btn-default">Отмена</a>
       </div>
      </div>
      <canvas id="cs" style="display:none;"></canvas>
-     <input type="submit" class="btn btn-block btn-primary" onclick="led(this)" value="Включить\Выключить">
+     <input type="submit" class="btn btn-block btn-primary" onclick="led(this);" value="Включить\Выключить">
      <hr>
      <h2>Будильники</h2>
      <div class="row">
