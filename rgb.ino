@@ -51,12 +51,13 @@ String kolibrTime = "03:00:00"; // Время колибровки часов
 volatile int chaingtime = LOW;
 volatile int chaing = LOW;
 volatile int chaing1 = LOW;
-int volume = 256;
+int volume = 512;// max =1023
 int state0 = 0;
 int r=0;
 int g=0;
 int b=0;
 int t=0;
+int s=0;
 unsigned int localPort = 2390;
 unsigned int ssdpPort = 1900;
 
@@ -107,12 +108,12 @@ void loop() {
   noInterrupts();
   switch (state0) {
    case 0:
-   LedON(r, g,  b);
+   LedON(r, g, b);
    chaing=!chaing;
    state0=1;
     break;
    case 1:
-   LedON(0, 0,  0);
+   LedON(0, 0, 0);
    chaing=!chaing;
    state0=0;
     break;

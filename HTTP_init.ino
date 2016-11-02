@@ -1,6 +1,6 @@
 // Перезагрузка модуля
 void handle_Restart() {
-String restart=HTTP.arg("device");
+ String restart=HTTP.arg("device");
  if (restart=="ok") ESP.restart();
 }
 
@@ -86,7 +86,7 @@ void HTTP_init(void) {
   SSDP.schema(HTTP.client());
  });
  // Добавляем функцию Update для перезаписи прошивки по WiFi при 1М(256K SPIFFS) и выше
-  httpUpdater.setup(&HTTP);
+ httpUpdater.setup(&HTTP);
  HTTP.on("/led", LedActiv);                // задать цвет ленты и включить.
  HTTP.on("/TimeLed", handle_TimeLed);      // установка времени работы светодиодов
  HTTP.on("/TimeZone", handle_TimeZone);    // Установка времянной зоны
@@ -177,7 +177,15 @@ void handle_ConfigXML() {
  XML += "<state>";
  XML += state0;
  XML += "</state>";
-  // IP устройства
+ //RGB
+ XML += "<rgb>";
+ XML += r;
+ XML += ",";
+ XML += g;
+ XML += ",";
+ XML += b;
+ XML += "</rgb>";
+ // IP устройства
  XML += "<ip>";
  XML += WiFi.localIP().toString();
  XML += "</ip>";

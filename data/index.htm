@@ -14,7 +14,6 @@
      xhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
     iplocation();
-
     var dt = new Date();
     document.getElementById('date').innerHTML = dt.getDate()+' '+["Воскресенья","Понидельник","Вторник","Среда","Четверг","Пятница","Суббота"][dt.getDay()]+'<small class="show">'+["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"][dt.getMonth()]+' '+dt.getFullYear()+'г.<\/small>';
    }
@@ -69,7 +68,7 @@
     var d = new Date(); // for now
     datetext = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
     parent = submit.parentNode.childNodes[1].innerHTML;
-    document.getElementById('history').insertAdjacentHTML('afterbegin', '<li>'+datetext+'<span class="history" onclick="this.childNodes[3].className=\'\';"><b>'+parent+'</b><br><em>'+old_submit+'</em><small class="hidden"><hr>URL: http://'+blockid+'/'+pagename+'</small></span></li>');
+    document.getElementById('history').insertAdjacentHTML('afterbegin', '<li>'+datetext+'<span class="history" style="cursor:pointer" onclick="toggle(\'hide-'+datetext+'\');return false"><b>'+parent+'</b><br><em>'+old_submit+'</em><small class="hidden" id="hide-'+datetext+'"><hr>URL: http://'+blockid+'/'+pagename+'</small></span></li>');
     submit.value = 'Подождите...';
     submit_disabled(true);
     //$("input").prop('disabled', true);
@@ -88,6 +87,11 @@
      if (inputs[i].type === 'submit') {inputs[i].disabled = request;}
     }
    }
+
+   function toggle(target) {
+    var curVal = document.getElementById(target).className;
+    document.getElementById(target).className = (curVal === 'hidden') ? 'show' : 'hidden';
+   }
   </script>
  </head>
  <body onload="load();">
@@ -98,14 +102,14 @@
    </div>
    <div class="row">
     <div class="col-sm-3">
-     <h5 style="background-color:#C0C7CA">История</h5>
+     <h5 style="background-color:#C0C7CA;cursor:pointer" onclick="toggle('history');return false">История</h5>
      <ul id="history">
      </ul>
      <hr>
      <div class="block col-md-11">
       <h5 class=" alert-danger">Поиск</h5>
       <div class="alert alert-dismissible alert-info">Если у вас несколько устройств подключено к сети, вы можете добавить его сюда нажав кнопку ниже:</div>
-      <hr><a onclick="finddevice();" class="btn btn-block btn-default" href="#">Найти устройства</a>
+      <a onclick="finddevice();" class="btn btn-block btn-default" href="#">Найти устройства</a>
      </div>
     </div>
     <div class="col-sm-offset-0 col-sm-9" style="text-align:center;" id="content">

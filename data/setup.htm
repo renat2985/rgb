@@ -8,9 +8,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Доп. настройки</title>
   <script type="text/javascript">
+   var set_real_time;
    function handleServerResponse(){
     if (xml('onOffAP')=='0') {checkedAP=false;} else {checkedAP=true;}
     document.getElementById('onOffAP').checked=checkedAP;
+    clearTimeout(set_real_time);
+    var res = xml('time').split(":");
+    real_time(hours=res[0],min=res[1],sec=res[2]);
+    document.body.style.backgroundColor="rgb("+xml('rgb')+")";
+   }
+   function real_time(hours,min,sec) {
+   sec=Number(sec)+1;
+    if (sec>=60){min=Number(min)+1;sec=0;}
+    if (min>=60){hours=Number(hours)+1;min=0;}
+    if (hours>=24){hours=0};
+    document.getElementById("time").innerHTML = hours+":"+min+":"+sec;
+    set_real_time = setTimeout("real_time("+hours+","+min+","+sec+");", 1000);
    }
    function load_time(submit){
     server = "/Time";

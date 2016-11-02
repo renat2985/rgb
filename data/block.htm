@@ -8,16 +8,18 @@
  <hr>
  <div class="alert alert-dismissible alert-info">
   Нажимая ниже на кнопки цвета, он будит гореть
-  <select id="work-time" class="form-control input-sm" style="width: 50px; display: inline;">
+  <select id="work-time-{{ip}}" class="form-control input-sm" style="width:60px;display:inline;">
    <option value="60">1</option><option value="300" selected>5</option><option value="600">10</option><option value="1500">15</option><option value="1800">30</option><option value="3600">60</option><option value="5400">1:30</option><option value="7200">2:00</option><option value="10800">3:00</option>
   </select> минут.
  </div>
- <input type="color" value="#ffffff" onchange="ajax('{{ip}}','rgb?r='+parseInt((this.value).substring(1,3),16)+'&g='+parseInt((this.value).substring(3,5),16)+'&b='+parseInt((this.value).substring(5,7),16)+'&t='+document.getElementById('work-time').value,this);" class="btn btn-block btn-primary" style="height:40px;">
- <input type="submit" onclick="ajax('{{ip}}','rgb?r=255&g=255&b=255&t='+document.getElementById('work-time').value,this);" value="Включить белый" class="btn btn-block btn-primary">
- <input style="width:32%;display:inline-block" class="btn btn-block btn-default" value="Красный" onclick="ajax('{{ip}}','rgb?r=255&g=0&b=0&t='+document.getElementById('work-time').value,this);" type="submit">
- <input style="width:32%;display:inline-block" class="btn btn-block btn-default" value="Зеленый" onclick="ajax('{{ip}}','rgb?r=0&g=255&b=0&t='+document.getElementById('work-time').value,this);" type="submit">
- <input style="width:32%;display:inline-block" class="btn btn-block btn-default" value="Синий" onclick="ajax('{{ip}}','rgb?r=0&g=0&b=255&t='+document.getElementById('work-time').value,this);" type="submit">
- <input type="submit" onclick="ajax('{{ip}}','rgb?r=0&g=0&b=0&t=1',this);" value="Выключить" class="btn btn-block btn-primary">
+ <div class="input-group btn-block">
+  <span class="input-group-addon" style="margin-bottom:5px;">Выбрите цвет:</span>
+  <input type="color" style="height:40px;" id="color-{{ip}}" class="form-control btn-primary" onchange="ajax('{{ip}}','rgb?s=1&r='+parseInt((this.value).substring(1,3),16)+'&amp;g='+parseInt((this.value).substring(3,5),16)+'&amp;b='+parseInt((this.value).substring(5,7),16)+'&amp;t='+document.getElementById('work-time-{{ip}}').value,this);" value="#ffffff">
+ </div>
+ <input style="width:32%;display:inline-block" class="btn btn-block btn-danger" value="Красный" onclick="ajax('{{ip}}','rgb?s=1&r=255&g=0&b=0&t='+document.getElementById('work-time-{{ip}}').value,this);document.getElementById('color-{{ip}}').value='#FF0000';" type="submit">
+ <input style="width:32%;display:inline-block" class="btn btn-block btn-success" value="Зеленый" onclick="ajax('{{ip}}','rgb?s=1&r=0&g=255&b=0&t='+document.getElementById('work-time-{{ip}}').value,this);document.getElementById('color-{{ip}}').value='#00FF00';" type="submit">
+ <input style="width:32%;display:inline-block" class="btn btn-block btn-info" value="Синий" onclick="ajax('{{ip}}','rgb?s=1&r=0&g=0&b=255&t='+document.getElementById('work-time-{{ip}}').value,this);document.getElementById('color-{{ip}}').value='#0000FF';" type="submit">
+ <input type="submit" onclick="ajax('{{ip}}','led',this);document.getElementById('color-{{ip}}').value='#000000';" value="Включить\Выключить" class="btn btn-block btn-primary">
  <hr>
  <div class="alert alert-dismissible alert-info">Изменить конфигурацию устройсва вы можете на странице управления</div>
  <a class="btn btn-block btn-default" href="http://{{ip}}/device.htm">Страница управления</a>

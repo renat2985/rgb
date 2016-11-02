@@ -52,6 +52,7 @@
       preview.style.background = rgbToHex(p[0],p[1],p[2]);
      });
     },false);
+    document.body.style.backgroundColor="rgb("+xml('rgb')+")";
    }
 
    function useCanvas(el,image,callback){
@@ -87,16 +88,16 @@
     alert(time2);
     send_request(submit,server);
    }
-   function set_rgb(submit,r,g,b,t){
-    document.body.style.background=rgbToHex(r,g,b);
-    server = "/rgb?r="+r+"&g="+g+"&b="+b+"&t="+t;
-    document.getElementById('url').innerHTML='<br>Локальная ссылка: http://'+document.domain+server;
+   function set_rgb(submit,r,g,b,t,s){
+    document.body.style.background=rgbToHex(r,g,b,s);
+    server = "/rgb?r="+r+"&g="+g+"&b="+b+"&t="+t+"&s="+val('sound')*10;
+    document.getElementById('url1').innerHTML='http://'+document.domain+server;
     if(navigator.onLine) {
      var oReq = new XMLHttpRequest();
      oReq.open("GET","https://api.ipify.org?format=text",false);
      oReq.send();
      //oReq.onload = function(e) {
-     document.getElementById('url').innerHTML+="<br>Глобальная ссылка: http://"+oReq.responseText+server;
+     document.getElementById('url2').innerHTML="http://"+oReq.responseText+server;
      //}
     }
     send_request(submit,server);
@@ -133,13 +134,12 @@
   <div class="container">
    <div class="row" style="text-align:center;">
     <h1 style="margin:50px;">Страница управления</h1>
-
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
      <h5 class="alert-info">{{SSDP}}</h5>
      <a class="btn btn-block btn-danger" href="/">Страница устройств</a>
      <hr>
-     <div class="alert alert-dismissible alert-info">С помощью сервиса <a href="https://ifttt.com/myrecipes/personal" target="_blank">ifttt.com</a> Лампа может включатся по множествам сценариев, например: новое сообщение в facebook, twitter, <a href="#" onclick="toggle('hide');return false">подробнее...</a><span id="hide" class="hidden">задания в Google calendar, почта и многое другое. Включая led ниже формируется URL цвета, копируйте Global IP ссылку, создавайте новый сценарий на ifttt и вставляйте его в "Make a web request".<strong id="url"><br>Локальная ссылка: Выберите цвет<br>Глобальная ссылка: Выберите цвет</strong></span>
-       </div>
+     <div class="alert alert-dismissible alert-info">С помощью сервиса <a href="https://ifttt.com/myrecipes/personal" target="_blank">ifttt.com</a> Лампа может включатся по множествам сценариев, например: новое сообщение в facebook, twitter, <a href="#" onclick="toggle('hide');return false">подробнее...</a><span id="hide" class="hidden">задания в Google calendar, почта и многое другое. Включая led ниже формируется URL цвета, копируйте Global IP ссылку, создавайте новый сценарий на ifttt и вставляйте его в "Make a web request".<strong><br>Локальная ссылка: <u id="url1">Выберите цвет</u><br>Глобальная ссылка: <u id="url2">Выберите цвет</u></strong></span>
+     </div>
      <div class="thumb">
       <div class="preview"></div>
       <img alt="" style="cursor:pointer;width:100%;" src="/swatches.png" />
@@ -163,11 +163,14 @@
         <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,10800)" value="3:00">
        </div>
        <hr>
+       <h4>Время работы сигнала:</h4>
+       <input class="form-control" value="0.5" id="sound">
+       <hr>
        <a href="#" onclick="document.getElementById('set-time').style.display='none';return false" class="btn btn-block btn-default">Отмена</a>
       </div>
      </div>
      <canvas id="cs" style="display:none;"></canvas>
-     <input type="submit" class="btn btn-block btn-primary" onclick="set_rgb(this,0,0,0,1)" value="Выключить">
+     <input type="submit" class="btn btn-block btn-primary" onclick="led(this)" value="Включить\Выключить">
      <hr>
      <h2>Будильники</h2>
      <div class="row">

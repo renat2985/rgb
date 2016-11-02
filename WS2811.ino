@@ -8,11 +8,12 @@ int LedRGB() {
   g = HTTP.arg("g").toInt();
   b = HTTP.arg("b").toInt();
   t = HTTP.arg("t").toInt();
+  s = HTTP.arg("s").toInt();
   tickerSetLow.attach(t, setT1, 0);
   //LedON(r, g, b);
   state0=0;
   chaing = 1;
-  sound(buzer_pin, volume, 1000, 100);
+  sound(buzer_pin, volume, 1000, s*100);
   HTTP.send(200, "text/plain", "OK");
 }
 void LedON(int r, int g, int b) {
