@@ -30,7 +30,7 @@ Ticker tickerBizz;
 
 // 2811 на ноге в количестве
 #define led_pin 2
-#define led_num 10 //Количество лед огней
+#define led_num 15 //Количество лед огней
 #define buzer_pin 3
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(led_num, led_pin, NEO_GRB + NEO_KHZ800);
 // Определяем переменные

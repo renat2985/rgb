@@ -11,8 +11,9 @@ void Tach_0() {
 
 void alarm_clock() {
   tickerSetLow.attach(TimeLed, setT1, 0);
-  LedON(r, g, b);
-  state0=3;
+  //LedON(r, g, b);
+  state0=0;
+  chaing = 1;
   analogWrite(buzer_pin, volume);
 }
 
@@ -20,6 +21,7 @@ void setT1(int state) {
   tickerSetLow.detach();
   analogWrite(buzer_pin, 0);
   digitalWrite(buzer_pin,1);
+  state0=1;
   chaing = 1;
 }
 

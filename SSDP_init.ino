@@ -1,4 +1,6 @@
 void SSDP_init(void) {
+  //Если версия 2.3.0 раскаментируйте следующую строчку
+  //SSDP.setDeviceType("upnp:rootdevice");
   SSDP.setSchemaURL("description.xml");
   SSDP.setHTTPPort(80);
   SSDP.setName(SSDP_Name);

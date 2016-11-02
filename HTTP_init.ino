@@ -4,7 +4,7 @@ String restart=HTTP.arg("device");
  if (restart=="ok") ESP.restart();
 }
 
-// Меняет флаг для запуска
+// Меняет флаг для включения выключения Led
 void LedActiv() {
  chaing = 1;
  HTTP.send(200, "text/plain", "OK");
@@ -87,8 +87,8 @@ void HTTP_init(void) {
  });
  // Добавляем функцию Update для перезаписи прошивки по WiFi при 1М(256K SPIFFS) и выше
   httpUpdater.setup(&HTTP);
- HTTP.on("/led", LedActiv);                // запуск мотора напровление храниться в переменной
- HTTP.on("/TimeLed", handle_TimeLed);      // установка времени вращения сервопривода
+ HTTP.on("/led", LedActiv);                // задать цвет ленты и включить.
+ HTTP.on("/TimeLed", handle_TimeLed);      // установка времени работы светодиодов
  HTTP.on("/TimeZone", handle_TimeZone);    // Установка времянной зоны
  HTTP.on("/Time", handle_Time);            // Синхронизировать время из сети
  HTTP.on("/times1", handle_Time_1);        // Установить время 1

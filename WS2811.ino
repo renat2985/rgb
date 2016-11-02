@@ -9,7 +9,7 @@ int LedRGB() {
   b = HTTP.arg("b").toInt();
   t = HTTP.arg("t").toInt();
   tickerSetLow.attach(t, setT1, 0);
-  LedON(r, g, b);
+  //LedON(r, g, b);
   state0=0;
   chaing = 1;
   sound(buzer_pin, volume, 1000, 100);
