@@ -40,6 +40,13 @@ void handle_Set_Ssid() {
  saveConfig();
  HTTP.send(200, "text/plain", "OK");
 }
+// Установка параметров сети
+void handle_ddns() {
+ DDNS = HTTP.arg("url");
+ ip_wan();
+ saveConfig();
+ HTTP.send(200, "text/plain", "OK");
+}
 
 // Установка параметров сети
 void handle_Set_Ssdp() {
@@ -102,6 +109,7 @@ void HTTP_init(void) {
  HTTP.on("/config.xml", handle_ConfigXML); // формирование config_xml страницы для передачи данных в web интерфейс
  HTTP.on("/iplocation.xml", handle_IplocationXML);  // формирование iplocation_xml страницы для передачи данных в web интерфейс
  HTTP.on("/restart", handle_Restart);               // Перезагрузка модуля
+ HTTP.on("/ddns", handle_ddns);               // Перезагрузка модуля
  // Запускаем HTTP сервер
  // HTTP.sendHeader("Cache-Control","max-age=2592000, must-revalidate");
  HTTP.on("/devices", inquirySSDP);         // Блок для

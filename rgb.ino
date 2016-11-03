@@ -10,6 +10,7 @@
 #include <Ticker.h>             //Содержится в пакете
 #include <WiFiUdp.h>            //Содержится в пакете
 #include <ESP8266HTTPUpdateServer.h> //Содержится в пакете
+#include <ESP8266HTTPClient.h>
 #include <DNSServer.h>
 #include <ArduinoJson.h>
 #include <Adafruit_NeoPixel.h>
@@ -17,6 +18,7 @@
 const byte DNS_PORT = 53;
 IPAddress apIP(192, 168, 4, 1);
 DNSServer dnsServer;
+int httpPort = 80;
 // Web интерфейс для устройства
 ESP8266WebServer HTTP(80);
 ESP8266HTTPUpdateServer httpUpdater;
@@ -49,6 +51,7 @@ String SSDP_Name = "jalousie";      // SSDP
 String times1 = "00:00:00";      // Таймер 1
 String times2 = "00:00:00";    // Таймер 2
 String Devices = "";    // IP адреса устройств в сети
+String DDNS ="";      // адрес сайта DDNS
 int timezone = 3;        // часовой пояс GTM
 int TimeLed = 60;  // Время работы будильника
 String kolibrTime = "03:00:00"; // Время колибровки часов
@@ -109,6 +112,7 @@ void setup() {
  Time_init(timezone);
  // Будет выполняться каждую секунду проверяя будильники
  tickerAlert.attach(1, alert);
+ ip_wan();
 }
 
 void loop() {
