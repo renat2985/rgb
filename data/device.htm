@@ -87,17 +87,21 @@
     server = "/led";
     send_request(submit,server);
    }
-   function set_rgb(submit,r,g,b,t,s){
-    document.body.style.background=rgbToHex(r,g,b,s);
+   function set_rgb(submit,r,g,b,t){
+    document.body.style.background=rgbToHex(r,g,b);
     server = "/rgb?r="+r+"&g="+g+"&b="+b+"&t="+t+"&s="+val('sound')*10;
     document.getElementById('url1').innerHTML='http://'+document.domain+server;
     if(navigator.onLine) {
-     var oReq = new XMLHttpRequest();
-     oReq.open("GET","https://api.ipify.org?format=text",false);
-     oReq.send();
-     //oReq.onload = function(e) {
-     document.getElementById('url2').innerHTML="http://"+oReq.responseText+server;
-     //}
+     xhr = new XMLHttpRequest();
+     xhr.open("GET","https://api.ipify.org?format=text",true);
+     xhr.onload = function () {
+      if (xhr.readyState === xhr.DONE) {
+       if (xhr.status === 200) {
+        document.getElementById('url2').innerHTML="http://"+xhr.responseText+server;
+       }
+      }
+     };
+     xhr.send(null);
     }
     send_request(submit,server);
    }
