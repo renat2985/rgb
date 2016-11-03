@@ -9,25 +9,23 @@ function createXmlHttpObject(){
 }
 function load(){
  if(xmlHttp.readyState==0 || xmlHttp.readyState==4){
-  xmlHttp.open('PUT','/config.xml',true);
+  xmlHttp.open('PUT','/config.json',true);
   xmlHttp.send(null);
   xmlHttp.onload = function(e) {
+   jsonResponse=JSON.parse(xmlHttp.responseText);
    loadBlock();
   }
  }
 }
 
 function loadBlock(data2) {
- data2 = xmlHttp.responseXML;
+ data2 = JSON.parse(xmlHttp.responseText);
  data = document.getElementsByTagName('body')[0].innerHTML;
  var new_string;
- var $kids = data2.getElementsByTagName("Donnees")[0].childNodes;
- [].forEach.call($kids, (el) => {
-  var tagName = el.tagName;
-  var cols = data2.getElementsByTagName(tagName)[0].textContent;
-  new_string = data.replace(new RegExp('{{'+tagName+'}}', 'g'), cols);
-  data = new_string;
- });
+for (var key in data2) {
+ new_string = data.replace(new RegExp('{{'+key+'}}', 'g'), data2[key]);
+ data = new_string;
+}
  document.getElementsByTagName('body')[0].innerHTML = new_string;
  handleServerResponse();
 }
@@ -35,15 +33,6 @@ function loadBlock(data2) {
 function val(id){
  var v = document.getElementById(id).value;
  return v;
-}
-function xml(id){
- xmlResponse=xmlHttp.responseXML;
- var n = xmlResponse.getElementsByTagName(id)[0].firstChild.nodeValue;
- return n;
-}
-function xml_to_val(xml, val){
- xmlResponse=xmlHttp.responseXML;
- document.getElementById(val).value = xmlResponse.getElementsByTagName(xml)[0].firstChild.nodeValue;
 }
 function send_request(submit,server){
  request = new XMLHttpRequest();

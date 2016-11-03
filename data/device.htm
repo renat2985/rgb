@@ -52,7 +52,7 @@
       preview.style.background = rgbToHex(p[0],p[1],p[2]);
      });
     },false);
-    document.body.style.backgroundColor="rgb("+xml('rgb')+")";
+    document.body.style.backgroundColor="rgb("+jsonResponse.rgb+")";
    }
 
    function useCanvas(el,image,callback){
