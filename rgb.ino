@@ -58,6 +58,13 @@ int g=138;
 int b=0;
 int t=0;
 int s=0;
+
+int step=0;
+int ledon=0;
+int ledState = LOW;
+long previousTime = 0;
+long interval = 100;
+
 unsigned int localPort = 2390;
 unsigned int ssdpPort = 1900;
 
@@ -108,19 +115,21 @@ void loop() {
   noInterrupts();
   switch (state0) {
    case 0:
-   LedON(r, g, b);
-   chaing=!chaing;
-   state0=1;
+    ledon=1;
+    //LedON(r, g, b);
+    chaing=!chaing;
+    state0=1;
     break;
    case 1:
-   LedON(0, 0, 0);
-   chaing=!chaing;
-   state0=0;
+    ledon=1;
+    // LedON(0, 0, 0);
+    chaing=!chaing;
+    state0=0;
     break;
    case 3:
-  analogWrite(buzer_pin, 0);
-  digitalWrite(buzer_pin,1);
-   state0=0;
+    analogWrite(buzer_pin, 0);
+    digitalWrite(buzer_pin,1);
+    state0=0;
     break;
   }
   interrupts();
@@ -129,18 +138,37 @@ void loop() {
   Time_init(timezone);
   chaingtime=0;
  }
+
+ if (ledon) {
+  unsigned long currentTime = millis();
+  if(currentTime - previousTime > interval) {
+   previousTime = currentTime;
+   if (ledState == LOW) ledState = HIGH; else ledState = LOW;
+   if (state0) {
+    strip.setPixelColor(step, strip.Color(r, g, b));
+   } else {
+    strip.setPixelColor(step, strip.Color(0, 0, 0));
+   }
+   strip.show();
+   step++;
+   if (strip.numPixels() == step) { ledon=0; step=0; }
+  }
+ }
+
 }
 
 // Вызывается каждую секунду в обход основного циклу.
 void alert() {
  String Time=XmlTime();
  if (times1.compareTo(Time) == 0 && times1 != "00:00:00") {
- alarm_clock();
+  alarm_clock();
  }
  if (times2.compareTo(Time) == 0 && times2 != "00:00:00") {
- alarm_clock();
+  alarm_clock();
  }
  if (kolibrTime.compareTo(Time) == 0) {
   chaingtime=1;
  }
 }
+
+
