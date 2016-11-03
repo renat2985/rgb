@@ -7,6 +7,7 @@ void handle_Restart() {
 // Меняет флаг для включения выключения Led
 void LedActiv() {
  chaing = 1;
+ sound(buzer_pin, volume, 1000, 100);
  HTTP.send(200, "text/plain", "OK");
 }
 

@@ -59,9 +59,9 @@ int volume = 512;// max =1023
 int state0 = 0;
 int r=255;
 int g=138;
-int b=0;
-int t=0;
-int s=0;
+int b=10;
+int t=300;
+int s=5;
 
 int step=0;
 int ledon=0;

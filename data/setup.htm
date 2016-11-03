@@ -10,8 +10,6 @@
   <script type="text/javascript">
    var set_real_time;
    function handleServerResponse(){
-    if (xml('onOffAP')=='0') {checkedAP=false;} else {checkedAP=true;}
-    document.getElementById('onOffAP').checked=checkedAP;
     clearTimeout(set_real_time);
     var res = xml('time').split(":");
     real_time(hours=res[0],min=res[1],sec=res[2]);
@@ -46,7 +44,7 @@
     send_request(submit,server);
    }
    function set_ssid_ap(submit){
-    server = "/ssidap?ssidAP="+val('ssidap')+"&passwordAP="+val('passwordAp')+"&onOffAP="+document.getElementById('onOffAP').checked;
+    server = "/ssidap?ssidAP="+val('ssidap')+"&passwordAP="+val('passwordAp');
     send_request(submit,server);
    }
    function set_ssdp(submit){
@@ -103,7 +101,6 @@
      <h2>Точка доступа</h2>
      <div class="row">
       <div class="col-sm-6">
-       <label class="form-control"><input type="checkbox" id="onOffAP"> <b>Включить <abbr title="Точка доступа">AP</abbr></b></label>
        <input id="ssidap" value="{{ssidAP}}" class="form-control" pattern="[0-9a-zA-Z.]{1,15}" placeholder="Имя WiFi сети">
        <input id="passwordAp" value="{{passwordAP}}" pattern="[0-9a-zA-Z.]{8,15}" onfocus="this.type='text'" type="password" class="form-control" placeholder="Пароль">
        <input class="btn btn-block btn-success" value="Сохранить" onclick="set_ssid_ap(this);" type="submit">
