@@ -10,9 +10,13 @@
 #include <Ticker.h>             //Содержится в пакете
 #include <WiFiUdp.h>            //Содержится в пакете
 #include <ESP8266HTTPUpdateServer.h> //Содержится в пакете
+#include <DNSServer.h>
 #include <ArduinoJson.h>
 #include <Adafruit_NeoPixel.h>
 
+const byte DNS_PORT = 53;
+IPAddress apIP(192, 168, 4, 1);
+DNSServer dnsServer;
 // Web интерфейс для устройства
 ESP8266WebServer HTTP(80);
 ESP8266HTTPUpdateServer httpUpdater;
@@ -108,8 +112,9 @@ void setup() {
 }
 
 void loop() {
+ dnsServer.processNextRequest();
  HTTP.handleClient();
- delay(1);
+  delay(1);
  handleUDP();
  if (chaing && !chaing1) {
   noInterrupts();

@@ -1,34 +1,29 @@
 void WIFIAP_Client() {
- if (_setAP == "0") {
+  Serial.println("");
+  Serial.println(_setAP);
   WiFi.mode(WIFI_STA);
-  //Serial.println("WIFI_STA");
-  WiFi.begin(_ssid.c_str(), _password.c_str());
-  connectSTA();
-  //Serial.println("");
-  //Serial.println(WiFi.status());
-  if (WiFi.status()==6){
-   connectAP();
+    byte tries = 11;
+    WiFi.begin(_ssid.c_str(), _password.c_str());
+    Serial.println("start in STA mode");
+    while (--tries && WiFi.status() != WL_CONNECTED)
+    {
+      Serial.print(".");
+      delay(1000);
+    }
+
+    if (WiFi.status() != WL_CONNECTED)
+    {
+      StartAPMode();
+    }
   }
- } else {
-  connectAP();
-  connectSTA();
- }
-}
 
-void connectSTA(){
- int i = 0;
- int statusAP = 0;
- while (WiFi.status() != WL_CONNECTED && i < 50) {
-  delay(500);
-  i++;
-  //Serial.print(".");
- }
-}
-
-void connectAP(){
- WiFi.softAP(_ssidAP.c_str(), _passwordAP.c_str());
- IPAddress myIP = WiFi.softAPIP();
- //Serial.print("AP IP address: ");
- //Serial.println(myIP);
- //Serial.println("WIFI_AP_STA");
+bool StartAPMode()
+{
+  Serial.println("start in AP mode");
+  WiFi.disconnect();
+  WiFi.mode(WIFI_AP);
+  WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
+  WiFi.softAP(_ssidAP.c_str(), _passwordAP.c_str());
+  dnsServer.start(DNS_PORT, "*", apIP);
+  return true;
 }
