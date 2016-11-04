@@ -37,9 +37,13 @@ bool loadConfig() {
   String SSDPName = json["SSDPName"];
   SSDP_Name = SSDPName;
   String ssid = json["ssidName"];
+   Serial.println(ssid);
   _ssid = ssid;
+   Serial.println(_ssid);
   String password = json["ssidPassword"];
+  Serial.println(password);
   _password = password;
+  Serial.println(_password);
   int setAP = json["onOffAP"];
   _setAP=setAP;
   String _times1 = json["times1"];

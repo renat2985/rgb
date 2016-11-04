@@ -130,8 +130,11 @@ String XmlTime(void) {
 
 void handle_ConfigXML() {
  XML = "{";
+  // Имя DDNS
+ XML += "\"DDNS\":\"";
+ XML += DDNS;
  // Имя SSDP
- XML += "\"SSDP\":\"";
+ XML += "\",\"SSDP\":\"";
  XML += SSDP_Name;
  // Статус AP
  XML += "\",\"onOffAP\":\"";
