@@ -85,8 +85,6 @@ void setup() {
  pinMode(buzer_pin, OUTPUT);
  digitalWrite(buzer_pin,1);
  //Serial.println("");
- // Параметры памяти ESP справочно можно закаментировать
- CheckFlashConfig();
  // Включаем работу с файловой системой
  FS_init();
  // Загружаем настройки из файла
