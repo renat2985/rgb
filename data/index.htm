@@ -75,7 +75,7 @@
     xhttp.open("GET", "http://"+ipval+"/block.htm?"+Math.floor(Math.random()*10000), false);
     xhttp.send();
     data = xhttp.responseText;
-    xhttp.open("GET", "http://"+ipval+"/config.json?"+Math.floor(Math.random()*10000), false);
+    xhttp.open("GET", "http://"+ipval+"/configs.json?"+Math.floor(Math.random()*10000), false);
     xhttp.send();
     data2 = xhttp.responseXML;
     data2 = JSON.parse(xhttp.responseText);

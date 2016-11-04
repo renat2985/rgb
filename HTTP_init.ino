@@ -106,7 +106,7 @@ void HTTP_init(void) {
  HTTP.on("/ssid", handle_Set_Ssid);        // Установить имя и пароль роутера
  HTTP.on("/ssidap", handle_Set_Ssidap);    // Установить имя и пароль для точки доступа
  HTTP.on("/Save", handle_saveConfig);      // Сохранить настройки в файл
- HTTP.on("/config.json", handle_ConfigXML); // формирование config_xml страницы для передачи данных в web интерфейс
+ HTTP.on("/configs.json", handle_ConfigXML); // формирование config_xml страницы для передачи данных в web интерфейс
  HTTP.on("/iplocation.xml", handle_IplocationXML);  // формирование iplocation_xml страницы для передачи данных в web интерфейс
  HTTP.on("/restart", handle_Restart);               // Перезагрузка модуля
  HTTP.on("/ddns", handle_ddns);               // Перезагрузка модуля
