@@ -46,14 +46,15 @@
    function set_ssid_ap(submit){
     server = "/ssidap?ssidAP="+val('ssidap')+"&passwordAP="+val('passwordAp');
     send_request(submit,server);
+    restart(this,"Вам необходимо перезагрузить устройство, что бы Wifi имя и пароль вступили в силу.");
    }
    function set_ssdp(submit){
     server = "/ssdp?ssdp="+val('ssdp');
     send_request(submit,server);
     document.getElementById('ssdp_t').innerHTML = val('ssdp');
    }
-   function restart(submit){
-    if (confirm("Вы действительно хотите перезагрузить устройство?")) {
+   function restart(submit,texts){
+    if (confirm(texts)) {
      server = "/restart?device=ok";
      send_request(submit,server);
      return true;
@@ -107,11 +108,11 @@
        <input class="btn btn-block btn-success" value="Сохранить" onclick="set_ssid_ap(this);" type="submit">
       </div>
       <div class="col-sm-6">
-       <div class="alert alert-dismissible alert-warning">Здесь вы можете указать новое название WiFi жалюзи, пароль или отключить его. После сохранения необходимо перезагрузить ESP, имена WiFi не могут быть оденаковыми! </div>
+       <div class="alert alert-dismissible alert-warning">Здесь вы можете указать новое название WiFi жалюзи и пароль.</div>
       </div>
      </div>
      <hr>
-     <input class="btn btn-block btn-warning" value="Перезагрузить устройство" onclick="restart(this);" type="submit">
+     <input class="btn btn-block btn-warning" value="Перезагрузить устройство" onclick="restart(this,'Вы действительно хотите перезагрузить устройство?');" type="submit">
      <a class="btn btn-block btn-default" href="/device.htm">Страница управления</a>
     </div>
    </div>

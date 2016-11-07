@@ -185,17 +185,22 @@
       <div class="col-sm-6">
        <h4>Будильник 1:</h4>
        <input id="time1" value="{{times1}}" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control">
-       <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time1(this);" type="submit">
+       <div class="btn-group" style="width:100%;">
+        <input class="btn btn-success" style="width:70%;" value="Сохранить" onclick="set_time1(this);" type="submit">
+        <input class="btn btn-default" style="width:30%;" value="Выкл." onclick="document.getElementById('time1').value='';set_time1(this);" type="submit">
+       </div>
        <h4>Будильник 2:</h4>
        <input id="time2" value="{{times2}}" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control">
-       <input class="btn btn-block btn-success" value="Сохранить" onclick="set_time2(this);" type="submit">
+       <div class="btn-group" style="width:100%;">
+        <input class="btn btn-success" style="width:70%;" value="Сохранить" onclick="set_time2(this);" type="submit">
+        <input class="btn btn-default" style="width:30%;" value="Выкл." onclick="document.getElementById('time2').value='';set_time2(this);" type="submit">
+       </div>
       </div>
       <div class="col-sm-6">
        <div class="alert alert-dismissible alert-warning"><b>Обратите внимание</b> Настраивая время перед одиночными цифрами пишите 0. Пример: 03:09:10.
-        Будильник будит повторять звонить каждый день. Отключить его можно написав 00:00:00</div>
+        Будильник будит повторять звонить каждый день.</div>
       </div>
      </div>
-     <hr>
      <div class="row">
       <h2>Время работы будильника</h2>
       <div class="col-sm-8">
