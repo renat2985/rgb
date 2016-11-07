@@ -79,7 +79,7 @@ unsigned int ssdpPort = 1900;
 WiFiUDP udp;
 
 void setup() {
- //Serial.begin(115200);
+ Serial.begin(115200);
  pinMode(Tach0, INPUT);
  pinMode(led_pin, OUTPUT);
  pinMode(buzer_pin, OUTPUT);
@@ -138,6 +138,11 @@ void loop() {
     digitalWrite(buzer_pin,1);
     state0=0;
     break;
+   case 4:
+   ip_wan();
+   chaing=0;
+   state0=0;
+    break;
   }
   interrupts();
  }
@@ -172,6 +177,12 @@ void alert() {
  }
  if (times2.compareTo(Time) == 0 && times2 != "00:00:00") {
   alarm_clock();
+ }
+  Time = Time.substring(3, 8); // Выделяем из строки минуты секунды
+  // Каждые 15 минут делаем запрос на сервер DDNS
+ if (Time == "00:00" || Time == "15:00" || Time == "30:00"|| Time == "45:00") {
+  chaing=1;
+  state0=4;
  }
  if (kolibrTime.compareTo(Time) == 0) {
   chaingtime=1;
