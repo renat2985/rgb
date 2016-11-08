@@ -42,11 +42,12 @@
    function set_ssid(submit){
     server = "/ssid?ssid="+val('ssid')+"&password="+val('password');
     send_request(submit,server);
+    restart(this,"Измененя вступят в силу после перезагрузки.\nПерезагрузить?");
    }
    function set_ssid_ap(submit){
     server = "/ssidap?ssidAP="+val('ssidap')+"&passwordAP="+val('passwordAp');
     send_request(submit,server);
-    restart(this,"Вам необходимо перезагрузить устройство, что бы Wifi имя и пароль вступили в силу.");
+    restart(this,"Измененя вступят в силу после перезагрузки.\nПерезагрузить?");
    }
    function set_ssdp(submit){
     server = "/ssdp?ssdp="+val('ssdp');
