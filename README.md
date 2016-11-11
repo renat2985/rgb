@@ -10,7 +10,11 @@
 
 ##Видео youtube
 
-###Загрузка
+###Загрузка (Windows)
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/jMK9mySGHio/0.jpg)](https://www.youtube.com/watch?v=jMK9mySGHio)
+
+###Загрузка, урезанная версия (Linux)
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/1TAHlRqZ46k/0.jpg)](https://www.youtube.com/watch?v=1TAHlRqZ46k)
 
