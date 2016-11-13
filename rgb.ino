@@ -18,10 +18,10 @@
 const byte DNS_PORT = 53;
 IPAddress apIP(192, 168, 4, 1);
 DNSServer dnsServer;
-int httpPort = 80;
+int DDNSPort=8080; // порт для обращение к устройству с wan
 // Web интерфейс для устройства
 ESP8266WebServer HTTP(80);
-ESP8266WebServer HTTPWAN(8080);
+ESP8266WebServer HTTPWAN(DDNSPort);
 ESP8266HTTPUpdateServer httpUpdater;
 // Для файловой системы
 File fsUploadFile;

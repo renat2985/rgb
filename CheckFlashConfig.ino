@@ -54,6 +54,8 @@ bool loadConfig() {
   DDNS = _DDNS;
   String _DDNSName = json["DDNSName"];
   DDNSName = _DDNSName;
+   String _DDNSPort = json["_DDNSPort"];
+  DDNSPort = _DDNSPort.toInt();
   return true;
 }
 
@@ -71,6 +73,7 @@ bool saveConfig() {
   json["times2"] = times2;
   json["DDNS"] = DDNS;
   json["DDNSName"] = DDNSName;
+  json["DDNSPort"] = DDNSPort;
   File configFile = SPIFFS.open("/config.json", "w");
   if (!configFile) {
     //Serial.println("Failed to open config file for writing");
