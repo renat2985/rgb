@@ -19,7 +19,7 @@
  <input style="width:32%;display:inline-block" class="btn btn-block btn-danger" value="Красный" onclick="ajax('{{ip}}','rgb?s=1&r=255&g=0&b=0&t='+document.getElementById('work-time-{{ip}}').value,this);document.getElementById('color-{{ip}}').value='#FF0000';" type="submit">
  <input style="width:32%;display:inline-block" class="btn btn-block btn-success" value="Зеленый" onclick="ajax('{{ip}}','rgb?s=1&r=0&g=255&b=0&t='+document.getElementById('work-time-{{ip}}').value,this);document.getElementById('color-{{ip}}').value='#00FF00';" type="submit">
  <input style="width:32%;display:inline-block" class="btn btn-block btn-info" value="Синий" onclick="ajax('{{ip}}','rgb?s=1&r=0&g=0&b=255&t='+document.getElementById('work-time-{{ip}}').value,this);document.getElementById('color-{{ip}}').value='#0000FF';" type="submit">
- <input type="submit" onclick="ajax('{{ip}}','led',this);document.getElementById('color-{{ip}}').value='#000000';" value="Включить\Выключить" class="btn btn-block btn-primary">
+ <input type="submit" onclick="ajax('{{ip}}','led',this);" value="Включить\Выключить" class="btn btn-block btn-primary">
  <hr>
  <div class="alert alert-dismissible alert-info">Изменить конфигурацию устройсва вы можете на странице управления</div>
  <a class="btn btn-block btn-default" href="http://{{ip}}/device.htm">Страница управления</a>
