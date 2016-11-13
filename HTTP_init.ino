@@ -43,6 +43,9 @@ void handle_Set_Ssid() {
 // Установка параметров сети
 void handle_ddns() {
  DDNS = HTTP.arg("url");
+ DDNSName = HTTP.arg("wanurl");
+ Serial.println(HTTP.arg("url"));
+ Serial.println(HTTP.arg("wanurl"));
  ip_wan();
  saveConfig();
  HTTP.send(200, "text/plain", "OK");
@@ -133,6 +136,9 @@ void handle_ConfigXML() {
   // Имя DDNS
  XML += "\"DDNS\":\"";
  XML += DDNS;
+ // Имя DDNSName
+ XML += "\",\"DDNSName\":\"";
+ XML += DDNSName;
  // Имя SSDP
  XML += "\",\"SSDP\":\"";
  XML += SSDP_Name;

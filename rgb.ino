@@ -51,7 +51,8 @@ String SSDP_Name = "jalousie";      // SSDP
 String times1 = "00:00:00";      // Таймер 1
 String times2 = "00:00:00";    // Таймер 2
 String Devices = "";    // IP адреса устройств в сети
-String DDNS ="";      // адрес сайта DDNS
+String DDNS ="";      // url страницы тестирования WanIP
+String DDNSName ="";  // адрес сайта DDNS
 int timezone = 3;        // часовой пояс GTM
 int TimeLed = 60;  // Время работы будильника
 String kolibrTime = "03:00:00"; // Время колибровки часов
@@ -79,7 +80,7 @@ unsigned int ssdpPort = 1900;
 WiFiUDP udp;
 
 void setup() {
- // Serial.begin(115200);
+ Serial.begin(115200);
  pinMode(Tach0, INPUT);
  pinMode(led_pin, OUTPUT);
  pinMode(buzer_pin, OUTPUT);
