@@ -97,7 +97,7 @@
      xhr.onload = function () {
       if (xhr.readyState === xhr.DONE) {
        if (xhr.status === 200) {
-        document.getElementById('url2').innerHTML='<a href="http://'+xhr.responseText+server+'" target="_blank">http://'+xhr.responseText+server+'</a>';
+        document.getElementById('url2').innerHTML='<a href="http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+server):xhr.responseText+server)+'" target="_blank">http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+server):xhr.responseText+server)+'</a>';
        }
       }
      };
