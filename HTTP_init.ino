@@ -44,6 +44,7 @@ void handle_Set_Ssid() {
 void handle_ddns() {
  DDNS = HTTP.arg("url");
  DDNSName = HTTP.arg("wanurl");
+ DDNSPort = HTTP.arg("wanport").toInt();
  Serial.println(HTTP.arg("url"));
  Serial.println(HTTP.arg("wanurl"));
  ip_wan();
@@ -140,6 +141,9 @@ void handle_ConfigXML() {
  // Имя DDNSName
  XML += "\",\"DDNSName\":\"";
  XML += DDNSName;
+  // Имя DDNSPort
+ XML += "\",\"DDNSPort\":\"";
+ XML += DDNSPort;
  // Имя SSDP
  XML += "\",\"SSDP\":\"";
  XML += SSDP_Name;
