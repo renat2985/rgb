@@ -118,6 +118,7 @@ void HTTP_init(void) {
  HTTP.on("/devices", inquirySSDP);         // Блок для
  // Запускаем HTTP сервер
  HTTP.begin();
+ HTTPWAN.begin();
 }
 
 // Получение текущего времени

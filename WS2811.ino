@@ -2,6 +2,7 @@ void initRGB() {
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   HTTP.on("/rgb", LedRGB);
+  HTTPWAN.on("/rgb", LedRGBwan);
 }
 int LedRGB() {
   r = HTTP.arg("r").toInt();
@@ -15,6 +16,19 @@ int LedRGB() {
   chaing = 1;
   sound(buzer_pin, volume, 1000, s*100);
   HTTP.send(200, "text/plain", "OK");
+}
+int LedRGBwan() {
+  r = HTTPWAN.arg("r").toInt();
+  g = HTTPWAN.arg("g").toInt();
+  b = HTTPWAN.arg("b").toInt();
+  t = HTTPWAN.arg("t").toInt();
+  s = HTTPWAN.arg("s").toInt();
+  tickerSetLow.attach(t, setT1, 0);
+  //LedON(r, g, b);
+  state0=0;
+  chaing = 1;
+  sound(buzer_pin, volume, 1000, s*100);
+  HTTPWAN.send(200, "text/plain", "OK");
 }
 void LedON(int r, int g, int b) {
   //Serial.println("LedON");

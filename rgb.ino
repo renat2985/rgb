@@ -21,6 +21,7 @@ DNSServer dnsServer;
 int httpPort = 80;
 // Web интерфейс для устройства
 ESP8266WebServer HTTP(80);
+ESP8266WebServer HTTPWAN(8080);
 ESP8266HTTPUpdateServer httpUpdater;
 // Для файловой системы
 File fsUploadFile;
@@ -117,6 +118,8 @@ void setup() {
 void loop() {
  dnsServer.processNextRequest();
  HTTP.handleClient();
+ delay(1);
+ HTTPWAN.handleClient();
   delay(1);
  handleUDP();
  if (chaing && !chaing1) {
