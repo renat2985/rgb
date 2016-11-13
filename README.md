@@ -31,3 +31,9 @@
 
 ###schematic
 ![alt](https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/schematic.gif)
+
+##Смотрите так же
+
+Жалюзи: [https://github.com/tretyakovsa/jaluzi](https://github.com/tretyakovsa/jaluzi)
+
+Sonoff: [https://github.com/tretyakovsa/Sonoff_WiFi_switch](https://github.com/tretyakovsa/Sonoff_WiFi_switch)
