@@ -73,6 +73,9 @@
    function language(set,submit){
     server = "/lang?set="+set;
     send_request(submit,server);
+    setTimeout(function(){
+     location.reload();
+    }, 1000);
    }
   </script>
  </head>
@@ -86,9 +89,9 @@
      <a class="btn btn-block btn-default" href="/device.htm">{{LangOptions1}}</a>
      <hr>
      <div class="btn-group">
-      <input type="submit" onclick="language('ru',this)"  value="По-Русски" class="btn btn-default">
-      <input type="submit" onclick="language('en',this)"  value="English"  class="btn btn-default">
-      <input type="submit" onclick="language('lv',this)"  value="Latviski"  class="btn btn-default">
+      <input type="submit" onclick="language('ru',this)" value="По-Русски" class="btn btn-default">
+      <input type="submit" onclick="language('en',this)" value="English" class="btn btn-default">
+      <input type="submit" onclick="language('lv',this)" value="Latviski" class="btn btn-default">
      </div>
      <hr>
      <div class="alert alert-dismissible alert-info">
