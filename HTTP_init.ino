@@ -32,7 +32,12 @@ void handle_TimeZone() {
  saveConfig();
  HTTP.send(200, "text/plain", "OK");
 }
-
+// Установка языка
+void handle_SetLeng() {
+ Language = HTTP.arg("set");
+ saveConfig();
+ HTTP.send(200, "text/plain", "OK");
+}
 // Установка параметров сети
 void handle_Set_Ssid() {
  _ssid = HTTP.arg("ssid");
@@ -113,7 +118,8 @@ void HTTP_init(void) {
  HTTP.on("/configs.json", handle_ConfigXML); // формирование config_xml страницы для передачи данных в web интерфейс
  HTTP.on("/iplocation.xml", handle_IplocationXML);  // формирование iplocation_xml страницы для передачи данных в web интерфейс
  HTTP.on("/restart", handle_Restart);               // Перезагрузка модуля
- HTTP.on("/ddns", handle_ddns);               // Перезагрузка модуля
+ HTTP.on("/ddns", handle_ddns);               // Установить DDNS
+ HTTP.on("/lang", handle_SetLeng);               // Установить язык
  // Запускаем HTTP сервер
  // HTTP.sendHeader("Cache-Control","max-age=2592000, must-revalidate");
  HTTP.on("/devices", inquirySSDP);         // Блок для
@@ -188,6 +194,9 @@ void handle_ConfigXML() {
  // Статус
  XML += "\",\"state\":\"";
  XML += state0;
+ // Язык
+ XML += "\",\"lang\":\"";
+ XML += Language;
  //RGB
  XML += "\",\"rgb\":\"";
  XML += r;

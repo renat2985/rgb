@@ -37,20 +37,16 @@ bool loadConfig() {
   String SSDPName = json["SSDPName"];
   SSDP_Name = SSDPName;
   String ssid = json["ssidName"];
-   Serial.println(ssid);
   _ssid = ssid;
-   Serial.println(_ssid);
   String password = json["ssidPassword"];
-  Serial.println(password);
   _password = password;
-  Serial.println(_password);
-  int setAP = json["onOffAP"];
-  _setAP=setAP;
   String _times1 = json["times1"];
   times1 = _times1;
   String _times2 = json["times2"];
   times2 = _times2;
-    String _DDNS = json["DDNS"];
+  String lang = json["lang"];
+  Language = lang;
+  String _DDNS = json["DDNS"];
   DDNS = _DDNS;
   String _DDNSName = json["DDNSName"];
   DDNSName = _DDNSName;
@@ -74,6 +70,7 @@ bool saveConfig() {
   json["DDNS"] = DDNS;
   json["DDNSName"] = DDNSName;
   json["DDNSPort"] = DDNSPort;
+  json["Lang"] = Language;
   File configFile = SPIFFS.open("/config.json", "w");
   if (!configFile) {
     //Serial.println("Failed to open config file for writing");
