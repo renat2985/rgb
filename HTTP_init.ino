@@ -196,7 +196,11 @@ void handle_ConfigXML() {
  XML += state0;
  // Язык
  XML += "\",\"lang\":\"";
- XML += Language;
+ if (Language == NULL) {
+  XML += "ru";
+ } else {
+  XML += Language;
+ }
  //RGB
  XML += "\",\"rgb\":\"";
  XML += r;
