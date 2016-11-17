@@ -74,3 +74,11 @@ function toggle(target) {
   curVal.add('hidden');
  }
 }
+
+function language(set,submit){
+ server = "/lang?set="+set;
+ send_request(submit,server);
+ setTimeout(function(){
+  location.reload();
+ }, 1000);
+}

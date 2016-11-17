@@ -18,6 +18,7 @@
  "LangDay":"'Sunday','Ponidelnik','Tuesday','Wednesday','Thursday','Friday','Saturday'",
  "LangMonth":"'January','February','March','April','may','June','July','August','September','October','November','December'",
  "LangOptions2":"Change the configuration of the device, you can Options page,",
+ "LangLanguage":"English",
 
  "_comment": "---SETUP.HTM---",
  "LangDevice":"Device Name",

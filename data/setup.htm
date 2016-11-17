@@ -70,13 +70,6 @@
      return false;
     }
    }
-   function language(set,submit){
-    server = "/lang?set="+set;
-    send_request(submit,server);
-    setTimeout(function(){
-     location.reload();
-    }, 1000);
-   }
   </script>
  </head>
  <body onload="load();">
@@ -85,14 +78,14 @@
     <h1 style="margin:50px;">{{LangSetting3}}</h1>
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
      <h5 class="alert-info" id="ssdp_t">{{SSDP}}</h5>
+     <select class="btn btn-default" name="language" style="margin-top:-45px;float:right">
+      <option value="en">{{LangLanguage}}</option>
+      <option value="ru" onclick="language('ru',this)">Русский</option>
+      <option value="en" onclick="language('en',this)">English</option>
+      <option value="lv" onclick="language('lv',this)">Latviski</option>
+     </select>
      <a class="btn btn-block btn-danger" href="/">{{LangDevices}}</a>
      <a class="btn btn-block btn-default" href="/device.htm">{{LangOptions1}}</a>
-     <hr>
-     <div class="btn-group">
-      <input type="submit" onclick="language('ru',this)" value="По-Русски" class="btn btn-default">
-      <input type="submit" onclick="language('en',this)" value="English" class="btn btn-default">
-      <input type="submit" onclick="language('lv',this)" value="Latviski" class="btn btn-default">
-     </div>
      <hr>
      <div class="alert alert-dismissible alert-info">
       {{LangSetting4}}
