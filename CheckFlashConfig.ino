@@ -44,9 +44,8 @@ bool loadConfig() {
   times1 = _times1;
   String _times2 = json["times2"];
   times2 = _times2;
-  String lang = json["lang"];
+  String lang = json["Lang"];
   Language = lang;
-  Serial.println(Language);
   String _DDNS = json["DDNS"];
   DDNS = _DDNS;
   String _DDNSName = json["DDNSName"];
