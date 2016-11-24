@@ -3,7 +3,7 @@
  "LangInfo":"Здесь видны все ваши устройства, скачать прошивки для ESP8266 вы можете на github: <a href=\"https://github.com/tretyakovsa/jaluzi\" target=\"_blank\">Жалюзи</a>, <a href=\"https://github.com/renat2985/rgb\" target=\"_blank\">RGB</a>, <a href=\"https://github.com/tretyakovsa/Sonoff_WiFi_switch\" target=\"_blank\">Sonoff</a>. Если появились какие-то вопросы, пишите сюда: <a href=\"https://github.com/tretyakovsa/jaluzi/issues/new\" target=\"_blank\">Жалюзи</a>, <a href=\"https://github.com/renat2985/rgb/issues/new\" target=\"_blank\">RGB</a>, <a href=\"https://github.com/tretyakovsa/Sonoff_WiFi_switch/issues/new\" target=\"_blank\">Sonoff</a>.",
  "LangDevices":"Ierīces lapa",
  "LangOptions1":"Vadības lapa",
- "LangSetting3":"Ekstras. iestatījumi",
+ "LangSetting3":"Ekstras iestatījumi",
  "LangExample":"Piemērs",
  "LangSec":"Sek.",
  "LangOff":"Izsl.",
