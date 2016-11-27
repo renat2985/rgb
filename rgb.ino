@@ -145,7 +145,6 @@ void loop() {
     break;
    case 4:
    ip_wan();
-   chaing=0;
    state0=0;
     break;
   }
