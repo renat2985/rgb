@@ -49,8 +49,8 @@ String _passwordAP = ""; // пароль точки доступа
 String XML;              // формирование XML
 String _setAP ="1";           // AP включен
 String SSDP_Name = "jalousie";      // SSDP
-String times1 = "00:00:00";      // Таймер 1
-String times2 = "00:00:00";    // Таймер 2
+String times1 = "";      // Таймер 1
+String times2 = "";    // Таймер 2
 String Devices = "";    // IP адреса устройств в сети
 String DDNS ="";      // url страницы тестирования WanIP
 String DDNSName ="";  // адрес сайта DDNS
@@ -172,10 +172,10 @@ void loop() {
 // Вызывается каждую секунду в обход основного цикла.
 void alert() {
  String Time=XmlTime();
- if (times1.compareTo(Time) == 0 && times1 != "00:00:00") {
+ if (times1.compareTo(Time) == 0) {
   alarm_clock();
  }
- if (times2.compareTo(Time) == 0 && times2 != "00:00:00") {
+ if (times2.compareTo(Time) == 0) {
   alarm_clock();
  }
  Time = Time.substring(3, 8); // Выделяем из строки минуты секунды
