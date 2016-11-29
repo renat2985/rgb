@@ -16,7 +16,7 @@
     if (window.location.hash == '#wifi-connect') {
      toggle('wifi-info');
     }
-    document.body.style.backgroundColor="rgb("+jsonResponse.rgb+")";
+    document.body.style.backgroundColor="#"+jsonResponse.color;
    }
    function real_time(hours,min,sec) {
     sec=Number(sec)+1;

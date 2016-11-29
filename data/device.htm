@@ -49,10 +49,10 @@
      }
      useCanvas(canvas,img,function(){
       var p = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
-      preview.style.background = rgbToHex(p[0],p[1],p[2]);
+      preview.style.background = "#"+rgbToHex(p[0],p[1],p[2]);
      });
     },false);
-    document.body.style.backgroundColor="rgb("+jsonResponse.rgb+")";
+    document.body.style.backgroundColor="#"+jsonResponse.color;
    }
 
    function useCanvas(el,image,callback){
@@ -69,7 +69,7 @@
     return hex.length == 1 ? "0" + hex : hex;
    }
    function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    return componentToHex(r) + componentToHex(g) + componentToHex(b);
    }
    function findPos(obj) {
     var curleft = 0, curtop = 0;
@@ -88,8 +88,13 @@
     send_request(submit,server);
    }
    function set_rgb(submit,r,g,b,t){
-    document.body.style.background=rgbToHex(r,g,b);
-    server = "/rgb?r="+r+"&g="+g+"&b="+b+"&t="+t+"&s="+val('sound')*10;
+    document.body.style.background="#"+rgbToHex(r,g,b);
+    //server = "/rgb?r="+r+"&g="+g+"&b="+b+"&t="+t+"&s="+val('sound')*10;
+    // if (mode == 'off') {
+    server = "/set?c="+rgbToHex(r, g, b)+"&time="+t+"&sound="+val('sound')*10;
+    // } else {
+    //  server = "/set?m="+mode+"&time="+t+"&sound="+val('sound')*10;
+    //  }
     document.getElementById('url1').innerHTML='<a href="'+document.domain+':'+jsonResponse.DDNSPort+server+'" target="_blank">'+document.domain+':'+jsonResponse.DDNSPort+server+'</a>';
     if(navigator.onLine) {
      xhr = new XMLHttpRequest();
@@ -119,6 +124,12 @@
    }
    function set_time2(submit){
     server = "/times2?time2="+val('time2');
+    send_request(submit,server);
+   }
+   function set_mode(mode,submit){
+    // toggle('pop-up');
+    server = "/set?m="+mode+"&time=10&sound="+val('sound')*10;
+    // set_rgb(submit,0,0,0,t,mode);
     send_request(submit,server);
    }
   </script>
@@ -171,7 +182,58 @@
       <img alt="" style="cursor:pointer;width:100%;" src="/swatches.png" />
      </div>
      <canvas id="cs" style="display:none;"></canvas>
+
+     <select class="btn btn-block btn-default" onchange="set_mode(this.value,this);">
+      <option value="0">Select Mode</option>
+      <option value="0">Static</option>
+      <option value="1">Blink</option>
+      <option value="2">Breath</option>
+      <option value="3">Color Wipe</option>
+      <option value="4">Color Wipe Random</option>
+      <option value="5">Random Color</option>
+      <option value="6">Single Dynamic</option>
+      <option value="7">Multi Dynamic</option>
+      <option value="8">Rainbow</option>
+      <option value="9">Rainbow Cycle</option>
+      <option value="10">Scan</option>
+      <option value="11">Dual Scan</option>
+      <option value="12">Fade</option>
+      <option value="13">Theater Chase</option>
+      <option value="14">Theater Chase Rainbow</option>
+      <option value="15">Running Lights</option>
+      <option value="16">Twinkle</option>
+      <option value="17">Twinkle Random</option>
+      <option value="18">Twinkle Fade</option>
+      <option value="19">Twinkle Fade Random</option>
+      <option value="20">Sparkle</option>
+      <option value="21">Flash Sparkle</option>
+      <option value="22">Hyper Sparkle</option>
+      <option value="23">Strobe</option>
+      <option value="24">Strobe Rainbow</option>
+      <option value="25">Multi Strobe</option>
+      <option value="26">Blink Rainbow</option>
+      <option value="27">Chase White</option>
+      <option value="28">Chase Color</option>
+      <option value="29">Chase Random</option>
+      <option value="30">Chase Rainbow</option>
+      <option value="31">Chase Flash</option>
+      <option value="32">Chase Flash Random</option>
+      <option value="33">Chase Rainbow White</option>
+      <option value="34">Chase Blackout</option>
+      <option value="35">Chase Blackout Rainbow</option>
+      <option value="36">Color Sweep Random</option>
+      <option value="37">Running Color</option>
+      <option value="38">Running Red Blue</option>
+      <option value="39">Running Random</option>
+      <option value="40">Larson Scanner</option>
+      <option value="41">Fireworks</option>
+      <option value="42">Fireworks Random</option>
+     </select>
+
      <input type="submit" class="btn btn-block btn-primary" onclick="led(this);" value="{{LangOnOff}}">
+
+
+
      <hr>
      <h2>{{LangTime3}}</h2>
      <div class="row">

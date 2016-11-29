@@ -1,7 +1,3 @@
-/*
- * Arduino IDE 1.6.5
- * ArduinoJson 5.2.0
- */
 #include <ESP8266WiFi.h>        //Содержится в пакете
 #include <ESP8266WebServer.h>   //Содержится в пакете
 #include <ESP8266SSDP.h>        //Содержится в пакете
@@ -14,6 +10,7 @@
 #include <DNSServer.h>
 #include <ArduinoJson.h>
 #include <Adafruit_NeoPixel.h>
+#include <WS2812FX.h>           //https://github.com/kitesurfer1404/WS2812FX
 
 const byte DNS_PORT = 53;
 IPAddress apIP(192, 168, 4, 1);
@@ -36,12 +33,22 @@ Ticker tickerBizz;
 #define Tach0 0
 
 // 2811 на ноге в количестве
-#define led_pin 2
-#define led_num 15 //Количество лед огней
 #define buzer_pin 3
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(led_num, led_pin, NEO_GRB + NEO_KHZ800);
-// Определяем переменные
+#define LED_COUNT 15 //Количество лед огней
+#define LED_PIN 2
 
+#define DEFAULT_COLOR 0xFF5900
+#define DEFAULT_BRIGHTNESS 255
+#define DEFAULT_SPEED 200
+#define DEFAULT_MODE FX_MODE_STATIC
+
+#define BRIGHTNESS_STEP 15              // in/decrease brightness by this amount per click
+#define SPEED_STEP 10                   // in/decrease brightness by this amount per click
+
+String modes = "";
+WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+
+// Определяем переменные
 String _ssid     = "WiFi"; // Для хранения SSID
 String _password = "Pass"; // Для хранения пароля сети
 String _ssidAP = "RGB05";   // SSID AP точки доступа
@@ -63,11 +70,9 @@ volatile int chaing = LOW;
 volatile int chaing1 = LOW;
 int volume = 512;// max =1023
 int state0 = 0;
-int r=255;
-int g=138;
-int b=10;
 int t=300;
 int s=5;
+String color ="ff6600";
 
 int step=0;
 int ledon=0;
@@ -84,7 +89,7 @@ WiFiUDP udp;
 void setup() {
  Serial.begin(115200);
  pinMode(Tach0, INPUT);
- pinMode(led_pin, OUTPUT);
+ pinMode(LED_PIN, OUTPUT);
  pinMode(buzer_pin, OUTPUT);
  digitalWrite(buzer_pin,1);
  // Serial.println("");
@@ -127,16 +132,14 @@ void loop() {
   noInterrupts();
   switch (state0) {
    case 0:
-    ledon=1;
-    //LedON(r, g, b);
     chaing=!chaing;
     state0=1;
+    ws2812fx.start();
     break;
    case 1:
-    ledon=1;
-    // LedON(0, 0, 0);
     chaing=!chaing;
     state0=0;
+    ws2812fx.stop();
     break;
    case 3:
     analogWrite(buzer_pin, 0);
@@ -151,22 +154,7 @@ void loop() {
   chaingtime=0;
  }
 
- if (ledon) {
-  unsigned long currentTime = millis();
-  if(currentTime - previousTime > interval) {
-   previousTime = currentTime;
-   if (ledState == LOW) ledState = HIGH; else ledState = LOW;
-   if (state0) {
-    strip.setPixelColor(step, strip.Color(r, g, b));
-   } else {
-    strip.setPixelColor(step, strip.Color(0, 0, 0));
-   }
-   strip.show();
-   step++;
-   if (strip.numPixels() == step) { ledon=0; step=0; }
-  }
- }
-
+ ws2812fx.service();
 }
 
 // Вызывается каждую секунду в обход основного цикла.

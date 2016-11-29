@@ -141,13 +141,13 @@ String XmlTime(void) {
 
 void handle_ConfigXML() {
  XML = "{";
-  // Имя DDNS
+ // Имя DDNS
  XML += "\"DDNS\":\"";
  XML += DDNS;
  // Имя DDNSName
  XML += "\",\"DDNSName\":\"";
  XML += DDNSName;
-  // Имя DDNSPort
+ // Имя DDNSPort
  XML += "\",\"DDNSPort\":\"";
  XML += DDNSPort;
  // Имя SSDP
@@ -202,12 +202,8 @@ void handle_ConfigXML() {
   XML += Language;
  }
  //RGB
- XML += "\",\"rgb\":\"";
- XML += r;
- XML += ",";
- XML += g;
- XML += ",";
- XML += b;
+ XML += "\",\"color\":\"";
+ XML += color;
  // IP устройства
  XML += "\",\"ip\":\"";
  XML += WiFi.localIP().toString();
