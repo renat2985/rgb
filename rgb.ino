@@ -121,7 +121,7 @@ void loop() {
  HTTP.handleClient();
  delay(1);
  HTTPWAN.handleClient();
-  delay(1);
+ delay(1);
  handleUDP();
  if (chaing && !chaing1) {
   noInterrupts();
@@ -142,11 +142,6 @@ void loop() {
     analogWrite(buzer_pin, 0);
     digitalWrite(buzer_pin,1);
     state0=0;
-    break;
-   case 4:
-   ip_wan();
-   chaing=!chaing;
-   state0=0;
     break;
   }
   interrupts();
@@ -183,11 +178,10 @@ void alert() {
  if (times2.compareTo(Time) == 0 && times2 != "00:00:00") {
   alarm_clock();
  }
-  Time = Time.substring(3, 8); // Выделяем из строки минуты секунды
-  // Каждые 15 минут делаем запрос на сервер DDNS
+ Time = Time.substring(3, 8); // Выделяем из строки минуты секунды
+ // В 15, 30, 45 минут каждого часа идет запрос на сервер DDNS
  if (Time == "00:00" || Time == "15:00" || Time == "30:00"|| Time == "45:00") {
-  chaing=1;
-  state0=4;
+  ip_wan();
  }
  if (kolibrTime.compareTo(Time) == 0) {
   chaingtime=1;
