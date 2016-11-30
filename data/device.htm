@@ -8,6 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Options page</title>
   <script type="text/javascript">
+   var mode = 'off';
+   var nex_color = 'ff6600'
    function handleServerResponse(){
     var img = _('.thumb img'),
         canvas = _('#cs'),
@@ -28,9 +30,7 @@
      useCanvas(canvas,img,function(){
       // get image data
       var p = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
-      r_rgb =p[0];
-      g_rgb =p[1];
-      b_rgb =p[2];
+      nex_color = rgbToHex(p[0],p[1],p[2]);
       toggle('pop-up');
       //on_rgb(this,p[0],p[1],p[2]);
      });
@@ -87,32 +87,33 @@
     server = "/led";
     send_request(submit,server);
    }
-   function set_rgb(submit,r,g,b,t){
-    document.body.style.background="#"+rgbToHex(r,g,b);
+   function set_rgb(submit,t){
+    document.body.style.background="#"+nex_color;
     //server = "/rgb?r="+r+"&g="+g+"&b="+b+"&t="+t+"&s="+val('sound')*10;
-    // if (mode == 'off') {
-    server = "/set?c="+rgbToHex(r, g, b)+"&time="+t+"&sound="+val('sound')*10;
-    // } else {
-    //  server = "/set?m="+mode+"&time="+t+"&sound="+val('sound')*10;
-    //  }
-    document.getElementById('url1').innerHTML='<a href="'+document.domain+':'+jsonResponse.DDNSPort+server+'" target="_blank">'+document.domain+':'+jsonResponse.DDNSPort+server+'</a>';
+    if (mode == 'off') {
+     server = "/set?c="+nex_color+"&time="+t+"&sound="+val('sound')*10;
+    } else {
+     server = "/set?m="+mode+"&time="+t+"&sound="+val('sound')*10;
+    }
+    document.getElementById('url1').innerHTML='<a href="http://'+document.domain+server+'" target="_blank">http://'+document.domain+server+'</a>';
     if(navigator.onLine) {
      xhr = new XMLHttpRequest();
      xhr.open("GET","https://api.ipify.org?format=text",true);
      xhr.onload = function () {
       if (xhr.readyState === xhr.DONE) {
        if (xhr.status === 200) {
-        document.getElementById('url2').innerHTML='<a href="'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhr.responseText+':'+jsonResponse.DDNSPort+server)+'" target="_blank">'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhr.responseText+':'+jsonResponse.DDNSPort+server)+'</a>';
+        document.getElementById('url2').innerHTML='<a href="http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhr.responseText+':'+jsonResponse.DDNSPort+server)+'" target="_blank">http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhr.responseText+':'+jsonResponse.DDNSPort+server)+'</a>';
        }
       }
      };
      xhr.send(null);
     }
     send_request(submit,server);
+    mode = 'off';
    }
    function on_rgb(submit,t){
     toggle('pop-up');
-    set_rgb(submit,r_rgb,g_rgb,b_rgb,t);
+    set_rgb(submit,t,'off');
    }
    function set_time(submit){
     server = "/TimeLed?t="+val('led');
@@ -126,11 +127,9 @@
     server = "/times2?time2="+val('time2');
     send_request(submit,server);
    }
-   function set_mode(mode,submit){
-    // toggle('pop-up');
-    server = "/set?m="+mode+"&time=10&sound="+val('sound')*10;
-    // set_rgb(submit,0,0,0,t,mode);
-    send_request(submit,server);
+   function set_mode(mod,submit){
+    toggle('pop-up');
+    mode = mod;
    }
   </script>
  </head>

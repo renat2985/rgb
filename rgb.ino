@@ -1,16 +1,16 @@
-#include <ESP8266WiFi.h>        //Содержится в пакете
-#include <ESP8266WebServer.h>   //Содержится в пакете
-#include <ESP8266SSDP.h>        //Содержится в пакете
-#include <FS.h>                 //Содержится в пакете
-#include <time.h>               //Содержится в пакете
-#include <Ticker.h>             //Содержится в пакете
-#include <WiFiUdp.h>            //Содержится в пакете
+#include <ESP8266WiFi.h>             //Содержится в пакете
+#include <ESP8266WebServer.h>        //Содержится в пакете
+#include <ESP8266SSDP.h>             //Содержится в пакете
+#include <FS.h>                      //Содержится в пакете
+#include <time.h>                    //Содержится в пакете
+#include <Ticker.h>                  //Содержится в пакете
+#include <WiFiUdp.h>                 //Содержится в пакете
 #include <ESP8266HTTPUpdateServer.h> //Содержится в пакете
 #include <ESP8266HTTPClient.h>
 #include <DNSServer.h>
 #include <ArduinoJson.h>
 #include <Adafruit_NeoPixel.h>
-#include <WS2812FX.h>           //https://github.com/kitesurfer1404/WS2812FX
+#include <WS2812FX.h>                //https://github.com/kitesurfer1404/WS2812FX
 
 const byte DNS_PORT = 53;
 IPAddress apIP(192, 168, 4, 1);
@@ -37,7 +37,7 @@ Ticker tickerBizz;
 #define LED_COUNT 15 //Количество лед огней
 #define LED_PIN 2
 
-#define DEFAULT_COLOR 0xFF5900
+#define DEFAULT_COLOR 0xff6600
 #define DEFAULT_BRIGHTNESS 255
 #define DEFAULT_SPEED 200
 #define DEFAULT_MODE FX_MODE_STATIC
@@ -49,21 +49,21 @@ String modes = "";
 WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // Определяем переменные
-String _ssid     = "WiFi"; // Для хранения SSID
-String _password = "Pass"; // Для хранения пароля сети
-String _ssidAP = "RGB05";   // SSID AP точки доступа
-String _passwordAP = ""; // пароль точки доступа
-String XML;              // формирование XML
-String _setAP ="1";           // AP включен
-String SSDP_Name = "jalousie";      // SSDP
-String times1 = "";      // Таймер 1
-String times2 = "";    // Таймер 2
-String Devices = "";    // IP адреса устройств в сети
-String DDNS ="";      // url страницы тестирования WanIP
-String DDNSName ="";  // адрес сайта DDNS
-String Language ="ru";  // язык web интерфейса
-int timezone = 3;        // часовой пояс GTM
-int TimeLed = 60;  // Время работы будильника
+String _ssid     = "WiFi";      // Для хранения SSID
+String _password = "Pass";      // Для хранения пароля сети
+String _ssidAP = "RGB05";       // SSID AP точки доступа
+String _passwordAP = "";        // пароль точки доступа
+String XML;                     // формирование XML
+String _setAP ="1";             // AP включен
+String SSDP_Name = "jalousie";  // SSDP
+String times1 = "";             // Таймер 1
+String times2 = "";             // Таймер 2
+String Devices = "";            // IP адреса устройств в сети
+String DDNS ="";                // url страницы тестирования WanIP
+String DDNSName ="";            // адрес сайта DDNS
+String Language ="ru";          // язык web интерфейса
+int timezone = 3;               // часовой пояс GTM
+int TimeLed = 60;               // Время работы будильника
 String kolibrTime = "03:00:00"; // Время колибровки часов
 volatile int chaingtime = LOW;
 volatile int chaing = LOW;
@@ -72,13 +72,7 @@ int volume = 512;// max =1023
 int state0 = 0;
 int t=300;
 int s=5;
-String color ="ff6600";
-
-int step=0;
-int ledon=0;
-int ledState = LOW;
-long previousTime = 0;
-long interval = 100;
+String color = "ff6600";
 
 unsigned int localPort = 2390;
 unsigned int ssdpPort = 1900;

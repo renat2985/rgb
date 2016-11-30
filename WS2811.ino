@@ -1,16 +1,13 @@
 void initRGB() {
  HTTP.on("/set", LedRGB);
  modes.reserve(5000);
-
  ws2812fx.init();
  ws2812fx.setMode(DEFAULT_MODE);
  ws2812fx.setColor(DEFAULT_COLOR);
  ws2812fx.setSpeed(DEFAULT_SPEED);
  ws2812fx.setBrightness(DEFAULT_BRIGHTNESS);
- ws2812fx.start();
+ // ws2812fx.start();
 }
-
-
 
 void LedRGB() {
  for (uint8_t i=0; i < HTTP.args(); i++){
@@ -43,6 +40,11 @@ void LedRGB() {
   }
  }
 
+
+
+ if (HTTP.arg("c").toInt()){
+  color = HTTP.arg("c").toInt();
+ }
  t = HTTP.arg("time").toInt();
  s = HTTP.arg("sound").toInt();
  tickerSetLow.attach(t, setT1, 0);
@@ -52,8 +54,6 @@ void LedRGB() {
 
  HTTP.send(200, "text/plain", "OK");
 }
-
-
 
 
 int LedRGBwan() {
@@ -95,7 +95,6 @@ int LedRGBwan() {
  chaing = 1;
 
  HTTPWAN.send(200, "text/plain", "OK");
-
 }
 
 
