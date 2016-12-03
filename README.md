@@ -1,4 +1,4 @@
-# esp8266 and RGB WS2812b, WS2812 (Arduino)
+# esp8266 and WS2811/WS2812/NeoPixel LEDs (Arduino)
 
 ![alt](https://raw.githubusercontent.com/tretyakovsa/jaluzi/master/tutorial/screen.png)
 
@@ -6,24 +6,22 @@
 - R2 	1 	Resistor Resist the flow of electrical energy in a circuit, changing the voltage and current as a result. 	0617/17 	1 kohm
 - P1 	1 	Power Supply This is the component used to represent the power supply in the Electronics Workbench (the breadboard simulator). There are multiple footprints so if you are designing a PCB be sure to choose which footprint works best for your design. 	Power Header 0.1" through hole 2 	12 , 5
 - U2 	1 	3.3V Regulator [LD1117V33] 	TO220
-- LED1 	1 	NeoPixel 	WS2812b, WS2812 breadboard
+- LED1 	1 	WS2811/WS2812/NeoPixel LEDs
 
-##Видео youtube
+##Video youtube
 
-###Загрузка (Windows)
+###Upload (Windows)
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/jMK9mySGHio/0.jpg)](https://www.youtube.com/watch?v=jMK9mySGHio)
 
-###Загрузка, урезанная версия (Linux)
+###Upload, small version (Linux)
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/1TAHlRqZ46k/0.jpg)](https://www.youtube.com/watch?v=1TAHlRqZ46k)
 
-###Пример работы
+###Example
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/LZI4Yu47LZI/0.jpg)](https://www.youtube.com/watch?v=LZI4Yu47LZI)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/LZI4Yu47LZI/0.jpg)](https://www.youtube.com/watch?v=LZI4Yu47LZI&index=3&list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
 
-
-##Схемы
 
 ###breadboard
 
@@ -32,8 +30,8 @@
 ###schematic
 ![alt](https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/schematic.gif)
 
-##Смотрите так же
+##Othe...
 
 Жалюзи: [https://github.com/tretyakovsa/jaluzi](https://github.com/tretyakovsa/jaluzi)
 
-Sonoff: [https://github.com/tretyakovsa/Sonoff_WiFi_switch](https://github.com/tretyakovsa/Sonoff_WiFi_switch)
+RGB: [https://github.com/renat2985/rgb](https://github.com/renat2985/rgb)
