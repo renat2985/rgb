@@ -14,6 +14,7 @@ void LedRGB() {
   if(HTTP.argName(i) == "c") {
    uint32_t tmp = (uint32_t) strtol(&HTTP.arg(i)[0], NULL, 16);
    if(tmp >= 0x000000 && tmp <= 0xFFFFFF) {
+    color= String(tmp, HEX);
     ws2812fx.setColor(tmp);
    }
   }
@@ -42,9 +43,10 @@ void LedRGB() {
 
 
 
- if (HTTP.arg("c").toInt()){
-  color = HTTP.arg("c").toInt();
- }
+ //if (HTTP.arg("c").toInt()){
+ // color = HTTP.arg("c").toInt();
+ // Serial.println(color);
+ //}
  t = HTTP.arg("time").toInt();
  s = HTTP.arg("sound").toInt();
  tickerSetLow.attach(t, setT1, 0);
