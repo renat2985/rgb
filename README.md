@@ -8,6 +8,7 @@
 - U2 	1 	3.3V Regulator [LD1117V33] 	TO220
 - LED1 	1 	WS2811/WS2812/NeoPixel LEDs
 
+
 ##Video youtube
 
 ###Upload (Windows)
@@ -32,6 +33,9 @@
 
 ##Othe...
 
-Жалюзи: [https://github.com/tretyakovsa/jaluzi](https://github.com/tretyakovsa/jaluzi)
+Jalousie: [https://github.com/tretyakovsa/jaluzi](https://github.com/tretyakovsa/jaluzi)
 
 RGB: [https://github.com/renat2985/rgb](https://github.com/renat2985/rgb)
+
+
+###Themes you can download here: [http://bootswatch.com/](http://bootswatch.com/)
