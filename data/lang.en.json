@@ -6,7 +6,7 @@
  "LangSetting3":"Settings page",
  "LangExample":"Example",
  "LangSec":"Sec.",
- "LangOff":"Off",
+ "LangOff.":"Off",
  "LangSave":"Save",
  "LangCancel":"Cencel",
  "LangHistory":"History",
@@ -46,6 +46,8 @@
  "LangIfttt2":"setting in Google calendar, mail, etc. More information how to do this, you can see in the video <a target=\"_blank\" href=\"https://youtu.be/3PVQYLQ-XDQ\">here</a>.<br>Local link: <span id=\"url1\">Select the color</span><br>Global link: <span id=\"url2\">Select the color</span>",
 
  "LangOnOff":"On / Off",
+ "LangOn":"On",
+ "LangOff":"Off",
  "LangTime3":"Alarms",
  "LangTime4":"Alarm clock",
  "LangTime5":"Alarm time work",

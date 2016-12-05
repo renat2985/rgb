@@ -6,7 +6,7 @@
  "LangSetting3":"Ekstras iestatījumi",
  "LangExample":"Piemērs",
  "LangSec":"Sek.",
- "LangOff":"Izsl.",
+ "LangOff.":"Izsl.",
  "LangSave":"Saglabāt",
  "LangCancel":"Atcelt",
  "LangHistory":"Vēsture",
@@ -46,6 +46,8 @@
  "LangIfttt2":"pasākums Google kalendārā, e-pasts un daudz ko citu. Vairāk informācijas par to, kā to izdarīt, jūs varat redzēt video <a target=\"_blank\" href=\"https://youtu.be/3PVQYLQ-XDQ\">šeit</a>.<br>Local saite: <span id=\"url1\">Izvēlieties krāsu</span><br>Global saite: <span id=\"url2\">Izvēlieties krāsu</span>",
 
  "LangOnOff":"Ieslēgt / Izslēgt",
+ "LangOn":"Ieslēgt",
+ "LangOff":"Izslēgt",
  "LangTime3":"Modinātāji",
  "LangTime4":"Modinātājs",
  "LangTime5":"Signāla darba laiks",
