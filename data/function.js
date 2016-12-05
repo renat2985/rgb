@@ -58,7 +58,7 @@ function save_status(submit,request){
    submit_disabled(false);
   }, 1000);
  }
- submit.value = 'Подождите...';
+ submit.value = 'Loading...';
  submit_disabled(true);
 }
 function submit_disabled(request){
