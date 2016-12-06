@@ -1,5 +1,5 @@
 #!/bin/bash
-gzip -vrkf *.css
+gzip -vrkf css/*.css
 gzip -vrkf *.htm
-gzip -vrkf *.js
-gzip -vrkf lang.*.json
+gzip -vrkf js/*.js
+gzip -vrkf lang/lang.*.json

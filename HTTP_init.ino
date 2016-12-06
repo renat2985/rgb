@@ -105,6 +105,9 @@ void HTTP_init(void) {
  });
  // Добавляем функцию Update для перезаписи прошивки по WiFi при 1М(256K SPIFFS) и выше
  httpUpdater.setup(&HTTP);
+ HTTP.serveStatic("/css/", SPIFFS, "/css/", "max-age=31536000"); // кеширование на 1 год
+ HTTP.serveStatic("/lang/", SPIFFS, "/lang/", "max-age=31536000"); // кеширование на 1 год
+ HTTP.serveStatic("/js/", SPIFFS, "/js/", "max-age=31536000"); // кеширование на 1 год
  HTTP.on("/led", LedActiv);                // задать цвет ленты и включить.
  HTTP.on("/TimeLed", handle_TimeLed);      // установка времени работы светодиодов
  HTTP.on("/TimeZone", handle_TimeZone);    // Установка времянной зоны

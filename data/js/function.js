@@ -13,7 +13,7 @@ function load(first){
   xmlHttp.send(null);
   xmlHttp.onload = function(e) {
    jsonResponse1=JSON.parse(xmlHttp.responseText);
-   xmlHttp.open('PUT','/lang.'+jsonResponse1.lang+'.json',true);
+   xmlHttp.open('GET','/lang/lang.'+jsonResponse1.lang+'.json',true);
    xmlHttp.send(null);
    xmlHttp.onload = function(e) {
     jsonResponse2=JSON.parse(xmlHttp.responseText);
