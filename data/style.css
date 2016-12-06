@@ -77,6 +77,16 @@ h5 {
 #date {
  text-transform:capitalize;
 }
+#content {
+ text-align:center;
+}
+#title {
+ margin:50px;
+}
+#language {
+ margin-top:-45px;
+ float:right;
+}
 
 /* loader */
 .loader {
