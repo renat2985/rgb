@@ -1,7 +1,9 @@
 void webUpdateSpiffs(){
-
+  String refresh = "<html><head><meta http-equiv=\"refresh\" content=\"1;http://";
+      refresh += WiFi.localIP().toString();
+      refresh += "\"></head></html>";
+      HTTP.send(200, "text/html", refresh);
 t_httpUpdate_return ret = ESPhttpUpdate.updateSpiffs("http://backup.privet.lv/rgb_spiffs_1m_256k.bin");
- HTTP.send(200, "text/plain", "OK");
 }
 
 
