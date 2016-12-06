@@ -6,6 +6,7 @@
 #include <Ticker.h>                  //Содержится в пакете
 #include <WiFiUdp.h>                 //Содержится в пакете
 #include <ESP8266HTTPUpdateServer.h> //Содержится в пакете
+#include <ESP8266httpUpdate.h>
 #include <ESP8266HTTPClient.h>
 #include <DNSServer.h>
 #include <ArduinoJson.h>
