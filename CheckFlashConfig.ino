@@ -50,7 +50,7 @@ bool loadConfig() {
   DDNS = _DDNS;
   String _DDNSName = json["DDNSName"];
   DDNSName = _DDNSName;
-   String _DDNSPort = json["_DDNSPort"];
+  String _DDNSPort = json["_DDNSPort"];
   DDNSPort = _DDNSPort.toInt();
   return true;
 }
