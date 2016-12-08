@@ -151,31 +151,33 @@
      <hr>
      <div class="alert alert-dismissible alert-info">{{LangIfttt1}}<span id="hide" class="hidden">{{LangIfttt2}}</span>
      </div>
-     <div class="col-sm-offset-3 col-sm-6 pop-up hidden" id="pop-up">
-      <h5 class="alert-warning">{{LangTime10}}</h5>
-      <h4>{{LangTime8}}</h4>
-      <div class="btn-group">
-       <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,60)" value="1">
-       <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,300)" value="5">
-       <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,600)" value="10">
-       <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,1500)" value="15">
-       <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,1800)" value="30">
+     <div class="row hidden" id="pop-up">
+      <div class="col-sm-offset-3 col-sm-6 pop-up">
+       <h5 class="alert-warning">{{LangTime10}}</h5>
+       <h4>{{LangTime8}}</h4>
+       <div class="btn-group">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,60)" value="1">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,300)" value="5">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,600)" value="10">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,1500)" value="15">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,1800)" value="30">
+       </div>
+       <br>
+       <div class="btn-group">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,3600)" value="60">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,5400)" value="1:30">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,7200)" value="2:00">
+        <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,10800)" value="3:00">
+       </div>
+       <hr>
+       <h4>{{LangTime5}}</h4>
+       <div class="input-group">
+        <input class="form-control" value="0.1" pattern="[-+]?[0-9]*[.]?[0-9]+" id="sound">
+        <span class="input-group-addon">{{LangSec}}</span>
+       </div>
+       <hr>
+       <a href="#" onclick="toggle('pop-up');return false" class="btn btn-block btn-default">{{LangCancel}}</a>
       </div>
-      <br>
-      <div class="btn-group">
-       <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,3600)" value="60">
-       <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,5400)" value="1:30">
-       <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,7200)" value="2:00">
-       <input type="submit" class="btn btn-primary btn-sm" onclick="on_rgb(this,10800)" value="3:00">
-      </div>
-      <hr>
-      <h4>{{LangTime5}}</h4>
-      <div class="input-group">
-       <input class="form-control" value="0.1" pattern="[-+]?[0-9]*[.]?[0-9]+" id="sound">
-       <span class="input-group-addon">{{LangSec}}</span>
-      </div>
-      <hr>
-      <a href="#" onclick="toggle('pop-up');return false" class="btn btn-block btn-default">{{LangCancel}}</a>
      </div>
      <div class="thumb">
       <div class="preview"></div>
