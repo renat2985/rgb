@@ -1,3 +1,31 @@
+void handle_wifiScan() {
+  int n = WiFi.scanNetworks();
+  String wifiScan = "[";
+  if (n == 0)
+    wifiScan = "{\"ssid\":\"none\"}";
+  else
+  {
+    for (int i = 0; i < n - 1; ++i)
+    {
+      wifiScan += "{";
+      wifiScan += "\"ssid\":\"";
+      wifiScan += WiFi.SSID(i);
+      wifiScan += "\",";
+      wifiScan += "\"dbm\":";
+      wifiScan +=WiFi.RSSI(i);
+      wifiScan += ",";
+      wifiScan += "\"pass\":\"";
+      wifiScan += (WiFi.encryptionType(i) == ENC_TYPE_NONE)?"":"*";
+      //wifiScan += WiFi.encryptionType(i);
+      wifiScan += "\"}";
+      if (i != n - 2) wifiScan += ",";
+      delay(10);
+    }
+    wifiScan += "]";
+  }
+  HTTP.send(200, "text/json", wifiScan);
+}
+
 void webUpdateSpiffs() {
   String refresh = "<html><head><meta http-equiv=\"refresh\" content=\"1;http://";
   refresh += WiFi.localIP().toString();
@@ -128,6 +156,7 @@ void HTTP_init(void) {
   //HTTP.serveStatic("/lang/", SPIFFS, "/lang/", "max-age=31536000"); // кеширование на 1 год
   HTTP.on("/led", LedActiv);                // задать цвет ленты и включить.
   HTTP.on("/TimeLed", handle_TimeLed);      // установка времени работы светодиодов
+  HTTP.on("/wifiscan.json", handle_wifiScan);      // сканирование ssid
   HTTP.on("/TimeZone", handle_TimeZone);    // Установка времянной зоны
   HTTP.on("/Time", handle_Time);            // Синхронизировать время из сети
   HTTP.on("/times1", handle_Time_1);        // Установить время 1
