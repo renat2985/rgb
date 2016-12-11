@@ -42,6 +42,7 @@
  "LangReset1":"Pārlādēt šo ierīci",
  "LangReset2":"Izmaiņas stāsies spēkā pēc restarta. Lūdzu, restartējiet ierīci.",
  "LangReset3":"Vai jūs tiešām vēlaties restartēt ierīci?",
+ "LangHiddenWifi":"Savienojumu ar slēpto WiFi tīklam",
 
  "_comment": "---DEVICE.HTM---",
  "LangTime6":"Svarigi. Norādot laiku, rakstīt \"0\" pirms vienciparu skaitļa. Piemērs: 03:09:10. Modinātājs zvana katru dienu.",
