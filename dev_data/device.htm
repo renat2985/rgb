@@ -31,7 +31,7 @@
       // get image data
       var p = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
       nex_color = rgbToHex(p[0],p[1],p[2]);
-      toggle('pop-up');
+      toggle('pop-up','hidden');
       //on_rgb(this,p[0],p[1],p[2]);
      });
     },false);
