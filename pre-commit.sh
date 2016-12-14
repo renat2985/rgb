@@ -14,8 +14,8 @@ FILE_SUM=`md5sum rgb.ino.generic.bin`
 COPY_SUM=`md5sum ./build/$(ls -lt ./build | head -n2 |tail -n1 | awk '{print $9}')`
 if [ "$FILE_SUM" != "$COPY_SUM" ]
 then
-cp rgb.ino.generic.bin build/build.0x00000_flash_size_1Mb.254Kb_`date '+%G.%m.%d'`.bin
+cp rgb.ino.generic.bin build/build.0x00000_flash_size_1Mb.256Kb_`date '+%G.%m.%d'`.bin
 fi
 
 
-cp /tmp/buil*.spiffs/rgb.spiffs.bin ./build/spiffs.0xBB000_flash_size_1Mb.254Kb_`date '+%G.%m.%d'`.bin
+cp /tmp/buil*.spiffs/rgb.spiffs.bin ./build/spiffs.0xBB000_flash_size_1Mb.257Kb_`date '+%G.%m.%d'`.bin
