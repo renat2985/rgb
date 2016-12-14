@@ -55,6 +55,7 @@
     document.body.style.backgroundColor="#"+jsonResponse.color;
     if (jsonResponse.state=='0') {blockval=jsonResponse.LangOn;} else {blockval=jsonResponse.LangOff;}
     document.getElementById('off-on').value = blockval;
+    LoadLang(jsonResponse.lang);
    }
    function useCanvas(el,image,callback){
     el.width = image.width;
@@ -92,9 +93,9 @@
     document.body.style.background="#"+nex_color;
     //server = "/rgb?r="+r+"&g="+g+"&b="+b+"&t="+t+"&s="+val('sound')*10;
     if (mode == 'off') {
-     server = "/set?c="+nex_color+"&time="+t+"&sound="+val('sound')*10;
+     server = "/set?c="+nex_color+"&time="+t+"&sound="+val('sound')*10+"&s="+val('speed');
     } else {
-     server = "/set?m="+mode+"&time="+t+"&sound="+val('sound')*10;
+     server = "/set?m="+mode+"&time="+t+"&sound="+val('sound')*10+"&s="+val('speed');
     }
     document.getElementById('url1').innerHTML='<a href="http://'+document.domain+server+'" target="_blank">http://'+document.domain+server+'</a>';
     if(navigator.onLine) {
@@ -141,10 +142,7 @@
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
      <h5 class="alert-info">{{SSDP}}</h5>
      <select class="btn btn-default" id="language" onchange="language(this.value,this);">
-      <option value="en">{{LangLanguage}}</option>
-      <option value="ru">Русский</option>
-      <option value="en">English</option>
-      <option value="lv">Latviski</option>
+      <option value="en">{{lang}}</option>
      </select>
      <a class="btn btn-block btn-danger" href="/">{{LangDevices}}</a>
      <a class="btn btn-block btn-default" href="/setup.htm">{{LangSetting3}}</a>
@@ -175,6 +173,8 @@
         <input class="form-control" value="0.1" pattern="[-+]?[0-9]*[.]?[0-9]+" id="sound">
         <span class="input-group-addon">{{LangSec}}</span>
        </div>
+       <h4>{{LangSpeed}}</h4>
+        <input id="speed" type="range" min="0" max="255" step="1" value="100">
        <hr>
        <a href="#" onclick="toggle('pop-up');return false" class="btn btn-block btn-default">{{LangCancel}}</a>
       </div>

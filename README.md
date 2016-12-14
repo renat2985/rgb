@@ -2,11 +2,14 @@
 
 ![alt](https://raw.githubusercontent.com/tretyakovsa/jaluzi/master/tutorial/screen.png)
 
+- IDs 	# 	Component 	Footprint 	Properties
 - U1 	1 	ESP8266 (beta) 	ESP8266
 - R2 	1 	Resistor Resist the flow of electrical energy in a circuit, changing the voltage and current as a result. 	0617/17 	1 kohm
 - P1 	1 	Power Supply This is the component used to represent the power supply in the Electronics Workbench (the breadboard simulator). There are multiple footprints so if you are designing a PCB be sure to choose which footprint works best for your design. 	Power Header 0.1" through hole 2 	12 , 5
 - U2 	1 	3.3V Regulator [LD1117V33] 	TO220
 - LED1 	1 	WS2811/WS2812/NeoPixel LEDs
+- S1 	1 	Pushbutton Momentary switches that close a circuit when pressed. 	TACTILE-PTH
+- PIEZO1 	1 	Buzzer [Piezo small] This is the Piezo buzzer included in the DFRobot Kit. It is 12mm in diameter. See datasheet for frequency response. 	PIEZO 12mm DIAMETER
 
 
 ##Video youtube

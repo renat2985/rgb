@@ -40,7 +40,7 @@ Ticker tickerBizz;
 
 #define DEFAULT_COLOR 0xff6600
 #define DEFAULT_BRIGHTNESS 255
-#define DEFAULT_SPEED 200
+#define DEFAULT_SPEED 100
 #define DEFAULT_MODE FX_MODE_STATIC
 
 #define BRIGHTNESS_STEP 15              // in/decrease brightness by this amount per click
@@ -63,6 +63,7 @@ String Devices = "";            // IP адреса устройств в сет�
 String DDNS = "";               // url страницы тестирования WanIP
 String DDNSName = "";           // адрес сайта DDNS
 String Language = "ru";         // язык web интерфейса
+String Lang = "";  // файлы языка web интерфейса
 int timezone = 3;               // часовой пояс GTM
 int TimeLed = 60;               // Время работы будильника
 String kolibrTime = "03:00:00"; // Время колибровки часов

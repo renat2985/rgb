@@ -33,11 +33,7 @@ void LedRGB() {
     }
 
     if (HTTP.argName(i) == "s") {
-      if (HTTP.arg(i)[0] == '-') {
-        ws2812fx.decreaseSpeed(SPEED_STEP);
-      } else {
-        ws2812fx.increaseSpeed(SPEED_STEP);
-      }
+       ws2812fx.setSpeed(HTTP.arg("s").toInt());
     }
   }
 
@@ -80,12 +76,8 @@ int LedRGBwan() {
       }
     }
 
-    if (HTTPWAN.argName(i) == "s") {
-      if (HTTPWAN.arg(i)[0] == '-') {
-        ws2812fx.decreaseSpeed(SPEED_STEP);
-      } else {
-        ws2812fx.increaseSpeed(SPEED_STEP);
-      }
+    if (HTTP.argName(i) == "s") {
+       ws2812fx.setSpeed(HTTP.arg("s").toInt());
     }
   }
 

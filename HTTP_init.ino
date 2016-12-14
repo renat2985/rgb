@@ -168,6 +168,7 @@ void HTTP_init(void) {
   HTTP.on("/configs.json", handle_ConfigXML); // формирование config_xml страницы для передачи данных в web интерфейс
   HTTP.on("/iplocation.xml", handle_IplocationXML);  // формирование iplocation_xml страницы для передачи данных в web интерфейс
   HTTP.on("/restart", handle_Restart);               // Перезагрузка модуля
+  HTTP.on("/lang.json", handle_Leng);               // Установить язык
   HTTP.on("/ddns", handle_ddns);               // Установить DDNS
   HTTP.on("/lang", handle_SetLeng);               // Установить язык
   // Запускаем HTTP сервер
@@ -264,4 +265,8 @@ void handle_IplocationXML() {
   XML += "</location>";
   XML += "</List>";
   HTTP.send(200, "text/xml", XML);
+}
+
+void handle_Leng(){
+  HTTP.send(200, "text/json", Lang);
 }
