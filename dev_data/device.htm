@@ -99,16 +99,16 @@
     }
     document.getElementById('url1').innerHTML='<a href="http://'+document.domain+server+'" target="_blank">http://'+document.domain+server+'</a>';
     if(navigator.onLine) {
-     xhr = new XMLHttpRequest();
-     xhr.open("GET","https://api.ipify.org?format=text",true);
-     xhr.onload = function () {
-      if (xhr.readyState === xhr.DONE) {
-       if (xhr.status === 200) {
-        document.getElementById('url2').innerHTML='<a href="http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhr.responseText+':'+jsonResponse.DDNSPort+server)+'" target="_blank">http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhr.responseText+':'+jsonResponse.DDNSPort+server)+'</a>';
+     var xhttp=createXmlHttpObject();
+     xhttp.open("GET", "https://api.ipify.org?format=text", true);
+     xhttp.send(null);
+     xhttp.onload = function(e) {
+      if (xhttp.readyState === xhttp.DONE) {
+       if (xhttp.status === 200) {
+        document.getElementById('url2').innerHTML='<a href="http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhttp.responseText+':'+jsonResponse.DDNSPort+server)+'" target="_blank">http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhttp.responseText+':'+jsonResponse.DDNSPort+server)+'</a>';
        }
       }
-     };
-     xhr.send(null);
+     }
     }
     send_request(submit,server);
     mode = 'off';
@@ -174,7 +174,7 @@
         <span class="input-group-addon">{{LangSec}}</span>
        </div>
        <h4>{{LangSpeed}}</h4>
-        <input id="speed" type="range" min="0" max="255" step="1" value="100">
+       <input id="speed" type="range" min="0" max="255" step="1" value="100">
        <hr>
        <a href="#" onclick="toggle('pop-up');return false" class="btn btn-block btn-default">{{LangCancel}}</a>
       </div>

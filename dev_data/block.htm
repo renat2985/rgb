@@ -38,7 +38,7 @@
  <input style="width:32%;display:inline-block;margin-top:5px;" class="btn btn-block btn-danger" value="{{LangColor1}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=ff0000';document.getElementById('color-{{ip}}').value='#FF0000';thisId=this;return false" type="submit">
  <input style="width:32%;display:inline-block" class="btn btn-block btn-success" value="{{LangColor2}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=00ff00';document.getElementById('color-{{ip}}').value='#00FF00';thisId=this;return false" type="submit">
  <input style="width:32%;display:inline-block" class="btn btn-block btn-info" value="{{LangColor3}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=0000ff';document.getElementById('color-{{ip}}').value='#0000FF';thisId=this;return false" type="submit">
- <input type="submit" onclick="ajax('{{ip}}','led',this);" value="{{LangOnOff}} {{state}}" class="btn btn-block btn-primary">
+ <input type="submit" onclick="ajax('{{ip}}','led',this);" value="{{state}}" class="btn btn-block btn-primary">
  <hr>
  <div class="alert alert-dismissible alert-info">{{LangOptions2}}</div>
  <a class="btn btn-block btn-default" href="http://{{ip}}/device.htm">{{LangOptions1}}</a>
