@@ -166,7 +166,7 @@ void HTTP_init(void) {
   HTTP.on("/ssidap", handle_Set_Ssidap);    // Установить имя и пароль для точки доступа
   HTTP.on("/Save", handle_saveConfig);      // Сохранить настройки в файл
   HTTP.on("/configs.json", handle_ConfigXML); // формирование config_xml страницы для передачи данных в web интерфейс
-  HTTP.on("/iplocation.xml", handle_IplocationXML);  // формирование iplocation_xml страницы для передачи данных в web интерфейс
+  HTTP.on("/iplocation.json", handle_Iplocation);  // формирование iplocation_xml страницы для передачи данных в web интерфейс
   HTTP.on("/restart", handle_Restart);               // Перезагрузка модуля
   HTTP.on("/lang.json", handle_Leng);               // Установить язык
   HTTP.on("/ddns", handle_ddns);               // Установить DDNS
@@ -254,16 +254,19 @@ void handle_ConfigXML() {
   HTTP.send(200, "text/json", XML);
 }
 
-void handle_IplocationXML() {
-  XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-  XML += "<List>";
-  XML += "<location>";
-  XML += "<ip>";
+void handle_Iplocation() {
+  XML = "[";
+  //int a = module.length();
+  int a=3;
+  for (int i=0; i <= a; i++){
+  XML += "{\"ip\":\"";
   XML += WiFi.localIP().toString();
-  XML += "</ip>";
-  XML += Devices;
-  XML += "</location>";
-  XML += "</List>";
+  XML += "\",\"module\":\"";
+  XML += module[i];
+  XML += "\"";
+  XML += "}";
+  }
+  XML += "]";
   HTTP.send(200, "text/xml", XML);
 }
 

@@ -50,6 +50,7 @@ String modes = "";
 WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // Определяем переменные
+String module[] = {"rbg","sonoff","jalousie"};
 String _ssid     = "WiFi";      // Для хранения SSID
 String _password = "Pass";      // Для хранения пароля сети
 String _ssidAP = "RGB05";       // SSID AP точки доступа
