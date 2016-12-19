@@ -255,21 +255,26 @@ void handle_ConfigXML() {
 }
 
 void handle_Iplocation() {
-  XML = "[";
-  //int a = module.length();
-  int a=3;
+  String json = "";
+  if (Devices!=""){
+    json = Devices;
+      json += ",";
+    }
+  //int a = module.length-1;
+  int a=1-1;
   for (int i=0; i <= a; i++){
-  XML += "{\"ip\":\"";
-  XML += WiFi.localIP().toString();
-  XML += "\",\"module\":\"";
-  XML += module[i];
-  XML += "\"";
-  XML += "}";
+  json += "{\"ip\":\"";
+  json += WiFi.localIP().toString();
+  json += "\",\"module\":\"";
+  json += module[i];
+  json += "\"";
+  json += "}";
+  if (i!=a) json += ",";
   }
-  XML += "]";
-  HTTP.send(200, "text/xml", XML);
+  HTTP.send(200, "text/json", json);
 }
 
 void handle_Leng(){
   HTTP.send(200, "text/json", Lang);
 }
+
