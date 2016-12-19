@@ -271,7 +271,7 @@ void handle_Iplocation() {
   json += "}";
   if (i!=a) json += ",";
   }
-  HTTP.send(200, "text/json", json);
+  HTTP.send(200, "text/json", "["+json+"]");
 }
 
 void handle_Leng(){
