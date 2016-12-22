@@ -6,11 +6,11 @@
 #include <Ticker.h>                  //Содержится в пакете
 #include <WiFiUdp.h>                 //Содержится в пакете
 #include <ESP8266HTTPUpdateServer.h> //Содержится в пакете
-#include <ESP8266httpUpdate.h>
-#include <ESP8266HTTPClient.h>
-#include <DNSServer.h>
-#include <ArduinoJson.h>
-#include <Adafruit_NeoPixel.h>
+#include <ESP8266httpUpdate.h>       //Содержится в пакете
+#include <ESP8266HTTPClient.h>       //Содержится в пакете
+#include <DNSServer.h>               //Содержится в пакете
+#include <ArduinoJson.h>             //
+#include <Adafruit_NeoPixel.h>       //
 #include <WS2812FX.h>                //https://github.com/kitesurfer1404/WS2812FX
 
 const byte DNS_PORT = 53;
@@ -23,8 +23,6 @@ ESP8266WebServer HTTPWAN(DDNSPort);
 ESP8266HTTPUpdateServer httpUpdater;
 // Для файловой системы
 File fsUploadFile;
-// Для сервопривода
-//Servo myled;
 // Для тикера
 Ticker tickerSetLow;
 Ticker tickerAlert;
@@ -34,9 +32,9 @@ Ticker tickerBizz;
 #define Tach0 0
 
 // 2811 на ноге в количестве
-#define buzer_pin 3
+#define buzer_pin 5
 #define LED_COUNT 15 //Количество лед огней
-#define LED_PIN 2
+#define LED_PIN 4
 
 #define DEFAULT_COLOR 0xff6600
 #define DEFAULT_BRIGHTNESS 255
@@ -50,7 +48,9 @@ String modes = "";
 WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // Определяем переменные
-String module[] = {"rbg"};
+// Количество модулей в устройстве
+int a = 1;
+String module[]={"rbg"};
 //,"sonoff","jalousie"};
 // Общие настройки модуля
 String _ssid     = "WiFi";      // Для хранения SSID

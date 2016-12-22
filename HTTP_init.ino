@@ -12,10 +12,10 @@ void handle_wifiScan() {
       wifiScan += WiFi.SSID(i);
       wifiScan += "\",";
       wifiScan += "\"dbm\":";
-      wifiScan +=WiFi.RSSI(i);
+      wifiScan += WiFi.RSSI(i);
       wifiScan += ",";
       wifiScan += "\"pass\":\"";
-      wifiScan += (WiFi.encryptionType(i) == ENC_TYPE_NONE)?"":"*";
+      wifiScan += (WiFi.encryptionType(i) == ENC_TYPE_NONE) ? "" : "*";
       //wifiScan += WiFi.encryptionType(i);
       wifiScan += "\"}";
       if (i != n - 2) wifiScan += ",";
@@ -149,6 +149,7 @@ void HTTP_init(void) {
   });
   // Добавляем функцию Update для перезаписи прошивки по WiFi при 1М(256K SPIFFS) и выше
   httpUpdater.setup(&HTTP);
+
   HTTP.on("/webupdatespiffs", webUpdateSpiffs);                // Обнавление FS из интернет
   HTTP.on("/restartWiFi", RestartWiFi);                // Переплдключение WiFi при первом старте
   HTTP.serveStatic("/css/", SPIFFS, "/css/", "max-age=31536000"); // кеширование на 1 год
@@ -172,9 +173,10 @@ void HTTP_init(void) {
   HTTP.on("/lang.json", handle_Leng);               // Установить язык
   HTTP.on("/ddns", handle_ddns);               // Установить DDNS
   HTTP.on("/lang", handle_SetLeng);               // Установить язык
-  // Запускаем HTTP сервер
+  HTTP.on("/mdules", handle_mdules);               // Установить язык
+   // Запускаем HTTP сервер
   // HTTP.sendHeader("Cache-Control","max-age=2592000, must-revalidate");
-  HTTP.on("/devices", inquirySSDP);         // Блок для
+  //HTTP.on("/devices", inquirySSDP);         // Блок для
   // Запускаем HTTP сервер
   HTTP.begin();
   HTTPWAN.begin();
@@ -205,9 +207,6 @@ void handle_Configs() {
   // Имя SSDP
   json += "\",\"SSDP\":\"";
   json += SSDP_Name;
-  // Статус AP
-  json += "\",\"onOffAP\":\"";
-  json += _setAP;
   // Имя сети
   json += "\",\"ssid\":\"";
   json += _ssid;
@@ -248,34 +247,46 @@ void handle_Configs() {
   //RGB
   json += "\",\"color\":\"";
   json += color;
-  // IP устройства
-  json += "\",\"ip\":\"";
-  json += WiFi.localIP().toString();
   json += "\"}";
   HTTP.send(200, "text/json", json);
 }
 
 void handle_Iplocation() {
+  inquirySSDP();
   String json = "";
-  if (Devices!=""){
+  //Serial.println(Devices);
+  if (Devices != "") {
     json = Devices;
-      json += ",";
-    }
-  //int a = module.length-1;
-  int a=1-1;
-  for (int i=0; i <= a; i++){
-  json += "{\"ip\":\"";
-  json += WiFi.localIP().toString();
-  json += "\",\"module\":\"";
-  json += module[i];
-  json += "\"";
-  json += "}";
-  if (i!=a) json += ",";
+    json += ",";
   }
-  HTTP.send(200, "text/json", "["+json+"]");
+  json +=mdules();
+
+  Serial.println(json);
+  HTTP.send(200, "text/json", "[" + json + "]");
+  Devices="";
 }
 
-void handle_Leng(){
+void handle_mdules() {
+  HTTP.send(200, "text/json", mdules());
+}
+
+String mdules() {
+  String json = "";
+  int j = a - 1;
+  for (int i = 0; i <= j; i++) {
+    json += "{\"ip\":\"";
+    json += WiFi.localIP().toString();
+    json += "\",\"module\":\"";
+    json += module[i];
+    Serial.println(module[i]);
+    json += "\"";
+    json += "}";
+    if (i != j) json += ",";
+  }
+  return json;
+}
+
+void handle_Leng() {
   HTTP.send(200, "text/json", Lang);
 }
 
