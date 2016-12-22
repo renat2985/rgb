@@ -42,7 +42,7 @@ void handleUDP() {
     if (input_string.indexOf("Arduino") > 0) {
       IPAddress remoteIp = udp.remoteIP();
       // Хотим узнать какие модули работают на этом устройстве отправляем запрос на найденый IP
-      String urls = "http://" + udp.remoteIP().toString() + "/mdules";
+      String urls = "http://" + udp.remoteIP().toString() + "/modules";
       HTTPClient http;
       http.begin(urls); //HTTP
       int httpCode = http.GET();
