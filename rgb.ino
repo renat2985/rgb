@@ -89,12 +89,11 @@ unsigned int ssdpPort = 1900;
 WiFiUDP udp;
 
 void setup() {
-  Serial.begin(115200);
+  //Serial.begin(115200);
   pinMode(Tach0, INPUT);
   pinMode(LED_PIN, OUTPUT);
   pinMode(buzer_pin, OUTPUT);
   digitalWrite(buzer_pin, 1);
-  // Serial.println("");
   // Включаем работу с файловой системой
   FS_init();
   // Загружаем настройки из файла
@@ -108,14 +107,10 @@ void setup() {
   // Закускаем UDP
   udp.begin(localPort);
   //udp.beginMulticast(WiFi.localIP(), ssdpAdress1, ssdpPort);
-  //Serial.print("Local port: ");
-  //Serial.println(udp.localPort());
   //настраиваем HTTP интерфейс
   HTTP_init();
-  //Serial.println("HTTP Ready!");
   //запускаем SSDP сервис
   SSDP_init();
-  //Serial.println("SSDP Ready!");
   // Включаем время из сети
   Time_init(timezone);
   // Будет выполняться каждую секунду проверяя будильники

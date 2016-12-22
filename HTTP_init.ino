@@ -94,8 +94,8 @@ void handle_ddns() {
   DDNS = HTTP.arg("url");
   DDNSName = HTTP.arg("wanurl");
   DDNSPort = HTTP.arg("wanport").toInt();
-  Serial.println(HTTP.arg("url"));
-  Serial.println(HTTP.arg("wanurl"));
+  //Serial.println(HTTP.arg("url"));
+  //Serial.println(HTTP.arg("wanurl"));
   ip_wan();
   saveConfig();
   HTTP.send(200, "text/plain", "OK");
@@ -261,7 +261,7 @@ void handle_Iplocation() {
   }
   json +=mdules();
 
-  Serial.println(json);
+  //Serial.println(json);
   HTTP.send(200, "text/json", "[" + json + "]");
   Devices="";
 }
@@ -278,7 +278,7 @@ String mdules() {
     json += WiFi.localIP().toString();
     json += "\",\"module\":\"";
     json += module[i];
-    Serial.println(module[i]);
+    //Serial.println(module[i]);
     json += "\"";
     json += "}";
     if (i != j) json += ",";

@@ -43,20 +43,15 @@ void handleUDP() {
       IPAddress remoteIp = udp.remoteIP();
       // Хотим узнать какие модули работают на этом устройстве отправляем запрос на найденый IP
       String urls = "http://" + udp.remoteIP().toString() + "/mdules";
-      Serial.println(urls);
-
-        HTTPClient http;
-        http.begin(urls); //HTTP
-        int httpCode = http.GET();
-        if (httpCode == HTTP_CODE_OK) {
+      HTTPClient http;
+      http.begin(urls); //HTTP
+      int httpCode = http.GET();
+      if (httpCode == HTTP_CODE_OK) {
         Devices += http.getString();
-        // В строке Device теперь есть список устройств
-        Serial.print("Devices: ");
-        Serial.println(Devices);
-        }
-        http.end();
-
+      }
+      http.end();
     }
   }
+  // В строке Device теперь есть список устройств
 }
 
