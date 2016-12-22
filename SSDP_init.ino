@@ -15,11 +15,15 @@ void SSDP_init(void) {
 }
 
 void inquirySSDP() {
+//  Поиск всех устройств в сети по протоколу SSDP
+  // Создаем адрес для широковещательного запроса
   IPAddress ssdpAdress = WiFi.localIP();
   ssdpAdress[3] = 255;
+  // Очишаем переменную со списком устройств и модулей
   Devices = "";
+  // Строка для запроса где на который ответят все устройства с SSDP протоколом
   char  ReplyBuffer[] = "M-SEARCH * HTTP/1.1\r\nHost:239.255.255.250:1900\r\nST:upnp:rootdevice\r\nMan:\"ssdp:discover\"\r\nMX:3\r\n\r\n";
-  // send a reply, to the IP address and port that sent us the packet we received
+  // Отправляем запрос ответ будем ждать в основном цыкле Loop handleUDP
   udp.beginPacket(ssdpAdress, ssdpPort);
   udp.write(ReplyBuffer);
   udp.endPacket();
@@ -29,38 +33,27 @@ void inquirySSDP() {
 void handleUDP() {
   String input_string = "";
   char packetBuffer[255]; //buffer to hold incoming packet
-  // if there's data available, read a packet
   int packetSize = udp.parsePacket();
   if (packetSize) {
     int len = udp.read(packetBuffer, 255);
     if (len > 0) packetBuffer[len] = 0;
     input_string += packetBuffer;
+    // Если в ответе устройства есть слово Arduino получит IP адрес
     if (input_string.indexOf("Arduino") > 0) {
       IPAddress remoteIp = udp.remoteIP();
+      // Хотим узнать какие модули работают на этом устройстве отправляем запрос на найденый IP
+      String urls = "http://" + udp.remoteIP().toString() + "/iplocation.json";
       HTTPClient http;
-      String urls= "http://"+udp.remoteIP().toString()+"/iplocation.json";
-      Serial.println(urls);
-  http.begin(urls); //HTTP
-  int httpCode = http.GET();
-  // httpCode will be negative on error
-  if (httpCode > 0) {
-    // HTTP header has been send and Server response header has been handled
-    Serial.printf("[HTTP] GET... code: %d\n", httpCode);
-    // file found at server
-            if(httpCode == HTTP_CODE_OK) {
-                Devices += http.getString();
-                Serial.println(Devices);
-            }
-    // file found at server
-    if (httpCode == 302) {
-      String payload = http.getString();
-      Serial.println(payload);
-    }
-  } else {
-    Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-  }
-  http.end();
+      http.begin(urls); //HTTP
+      int httpCode = http.GET();
+      if (httpCode == HTTP_CODE_OK) {
+        Devices += http.getString();
+        // В строке Device теперь есть список устройств
+        Serial.println(Devices);
+      }
+      http.end();
       Serial.println(Devices);
     }
   }
 }
+

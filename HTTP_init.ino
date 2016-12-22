@@ -32,6 +32,7 @@ void webUpdateSpiffs() {
   refresh += "\"></head></html>";
   HTTP.send(200, "text/html", refresh);
   t_httpUpdate_return ret = ESPhttpUpdate.updateSpiffs("http://backup.privet.lv/rgb_spiffs_1m_256k.bin");
+  saveConfig();
 }
 
 
@@ -165,7 +166,7 @@ void HTTP_init(void) {
   HTTP.on("/ssid", handle_Set_Ssid);        // Установить имя и пароль роутера
   HTTP.on("/ssidap", handle_Set_Ssidap);    // Установить имя и пароль для точки доступа
   HTTP.on("/Save", handle_saveConfig);      // Сохранить настройки в файл
-  HTTP.on("/configs.json", handle_ConfigXML); // формирование config_xml страницы для передачи данных в web интерфейс
+  HTTP.on("/configs.json", handle_Configs); // формирование config_xml страницы для передачи данных в web интерфейс
   HTTP.on("/iplocation.json", handle_Iplocation);  // формирование iplocation_xml страницы для передачи данных в web интерфейс
   HTTP.on("/restart", handle_Restart);               // Перезагрузка модуля
   HTTP.on("/lang.json", handle_Leng);               // Установить язык
@@ -190,68 +191,68 @@ String XmlTime(void) {
   return Time; // Возврашаем полученное время
 }
 
-void handle_ConfigXML() {
-  XML = "{";
+void handle_Configs() {
+  String json = "{";
   // Имя DDNS
-  XML += "\"DDNS\":\"";
-  XML += DDNS;
+  json += "\"DDNS\":\"";
+  json += DDNS;
   // Имя DDNSName
-  XML += "\",\"DDNSName\":\"";
-  XML += DDNSName;
+  json += "\",\"DDNSName\":\"";
+  json += DDNSName;
   // Имя DDNSPort
-  XML += "\",\"DDNSPort\":\"";
-  XML += DDNSPort;
+  json += "\",\"DDNSPort\":\"";
+  json += DDNSPort;
   // Имя SSDP
-  XML += "\",\"SSDP\":\"";
-  XML += SSDP_Name;
+  json += "\",\"SSDP\":\"";
+  json += SSDP_Name;
   // Статус AP
-  XML += "\",\"onOffAP\":\"";
-  XML += _setAP;
+  json += "\",\"onOffAP\":\"";
+  json += _setAP;
   // Имя сети
-  XML += "\",\"ssid\":\"";
-  XML += _ssid;
+  json += "\",\"ssid\":\"";
+  json += _ssid;
   // Пароль сети
-  XML += "\",\"password\":\"";
-  XML += _password;
+  json += "\",\"password\":\"";
+  json += _password;
   // Имя точки доступа
-  XML += "\",\"ssidAP\":\"";
-  XML += _ssidAP;
+  json += "\",\"ssidAP\":\"";
+  json += _ssidAP;
   // Пароль точки доступа
-  XML += "\",\"passwordAP\":\"";
-  XML += _passwordAP;
+  json += "\",\"passwordAP\":\"";
+  json += _passwordAP;
   // Времянная зона
-  XML += "\",\"timezone\":\"";
-  XML += timezone;
+  json += "\",\"timezone\":\"";
+  json += timezone;
   //  Время работы
-  XML += "\",\"timeled\":\"";
-  XML += TimeLed;
+  json += "\",\"timeled\":\"";
+  json += TimeLed;
   // Время 1
-  XML += "\",\"times1\":\"";
-  XML += times1;
+  json += "\",\"times1\":\"";
+  json += times1;
   // Время 2
-  XML += "\",\"times2\":\"";
-  XML += times2;
+  json += "\",\"times2\":\"";
+  json += times2;
   // Текущее время
-  XML += "\",\"time\":\"";
-  XML += XmlTime();
+  json += "\",\"time\":\"";
+  json += XmlTime();
   // Статус
-  XML += "\",\"state\":\"";
-  XML += state0;
+  json += "\",\"state\":\"";
+  json += state0;
   // Язык
-  XML += "\",\"lang\":\"";
+  json += "\",\"lang\":\"";
   if (Language == NULL) {
-    XML += "ru";
+    json += "ru";
   } else {
-    XML += Language;
+    json += Language;
   }
   //RGB
-  XML += "\",\"color\":\"";
-  XML += color;
+  json += "\",\"color\":\"";
+  json += color;
   // IP устройства
-  XML += "\",\"ip\":\"";
-  XML += WiFi.localIP().toString();
-  XML += "\"}";
-  HTTP.send(200, "text/json", XML);
+  json += "\",\"ip\":\"";
+  json += WiFi.localIP().toString();
+  json += "\"}";
+  HTTP.send(200, "text/json", json);
 }
 
 void handle_Iplocation() {

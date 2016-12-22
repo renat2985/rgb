@@ -52,24 +52,28 @@ WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 // Определяем переменные
 String module[] = {"rbg"};
 //,"sonoff","jalousie"};
+// Общие настройки модуля
 String _ssid     = "WiFi";      // Для хранения SSID
 String _password = "Pass";      // Для хранения пароля сети
 String _ssidAP = "RGB05";       // SSID AP точки доступа
 String _passwordAP = "";        // пароль точки доступа
-String XML;                     // формирование XML
 String _setAP = "1";            // AP включен
 String SSDP_Name = "jalousie";  // SSDP
-String times1 = "";             // Таймер 1
-String times2 = "";             // Таймер 2
-String Devices = "";            // IP адреса устройств в сети
-String DDNS = "";               // url страницы тестирования WanIP
-String DDNSName = "";           // адрес сайта DDNS
 String Language = "ru";         // язык web интерфейса
 String Lang = "";  // файлы языка web интерфейса
 int timezone = 3;               // часовой пояс GTM
-int TimeLed = 60;               // Время работы будильника
 String kolibrTime = "03:00:00"; // Время колибровки часов
 volatile int chaingtime = LOW;
+// Переменные для обнаружения модулей
+ String Devices = "";            // IP адреса устройств в сети
+// Переменные для таймеров
+String times1 = "";             // Таймер 1
+String times2 = "";             // Таймер 2
+int TimeLed = 60;               // Время работы будильника
+// Переменные для DDNS
+String DDNS = "";               // url страницы тестирования WanIP
+String DDNSName = "";           // адрес сайта DDNS
+
 volatile int chaing = LOW;
 volatile int chaing1 = LOW;
 int volume = 512;// max =1023
