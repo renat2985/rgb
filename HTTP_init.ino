@@ -257,7 +257,7 @@ void handle_Iplocation() {
   //Serial.println(Devices);
   if (Devices != "") {
     json = Devices;
-    json += ",";
+    //json += ",";
   }
   json +=mdules();
 

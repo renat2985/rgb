@@ -19,8 +19,15 @@
 
    window.onload = function() {
     iplocation();
-    var dt = new Date();
-    document.getElementById('date').innerHTML = dt.getDate()+' '+["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"][dt.getDay()]+'<small class="show">'+["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"][dt.getMonth()]+' '+dt.getFullYear()+'г.<\/small>';
+
+    var lang = window.navigator.language || navigator.userLanguage;
+    var now_day = {
+     year: new Date().toLocaleString(lang, {year: 'numeric'}),
+     month: new Date().toLocaleString(lang, {month: 'long'}),
+     day: new Date().toLocaleString(lang, {day: 'numeric'}),
+     weekday: new Date().toLocaleString(lang, {weekday: 'long'})
+    };
+    document.getElementById('date').innerHTML = now_day.day+' '+now_day.weekday+'<small class="show">'+now_day.month+' '+now_day.year+'</small>';
    }
 
    function finddevice() {
