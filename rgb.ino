@@ -32,9 +32,9 @@ Ticker tickerBizz;
 #define Tach0 0
 
 // 2811 на ноге в количестве
-#define buzer_pin 5
+#define buzer_pin 3
 #define LED_COUNT 15 //Количество лед огней
-#define LED_PIN 4
+#define LED_PIN 2
 
 #define DEFAULT_COLOR 0xff6600
 #define DEFAULT_BRIGHTNESS 255

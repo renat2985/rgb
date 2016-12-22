@@ -48,6 +48,7 @@ void handleUDP() {
       int httpCode = http.GET();
       if (httpCode == HTTP_CODE_OK) {
         Devices += http.getString();
+        Devices += ",";
       }
       http.end();
     }

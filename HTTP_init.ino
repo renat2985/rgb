@@ -173,7 +173,7 @@ void HTTP_init(void) {
   HTTP.on("/lang.json", handle_Leng);               // Установить язык
   HTTP.on("/ddns", handle_ddns);               // Установить DDNS
   HTTP.on("/lang", handle_SetLeng);               // Установить язык
-  HTTP.on("/mdules", handle_mdules);               // Установить язык
+  HTTP.on("/mdules", handle_mdules);               // Узнать какие модули есть в устройстве
    // Запускаем HTTP сервер
   // HTTP.sendHeader("Cache-Control","max-age=2592000, must-revalidate");
   //HTTP.on("/devices", inquirySSDP);         // Блок для
