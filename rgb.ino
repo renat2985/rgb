@@ -65,7 +65,8 @@ int timezone = 3;               // часовой пояс GTM
 String kolibrTime = "03:00:00"; // Время колибровки часов
 volatile int chaingtime = LOW;
 // Переменные для обнаружения модулей
- String Devices = "";            // IP адреса устройств в сети
+String Devices = "";            // Поиск IP адресов устройств в сети
+String DevicesList = "";            // IP адреса устройств в сети
 // Переменные для таймеров
 String times1 = "";             // Таймер 1
 String times2 = "";             // Таймер 2
