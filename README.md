@@ -2,6 +2,8 @@
 
 ![alt](https://raw.githubusercontent.com/tretyakovsa/jaluzi/master/tutorial/screen.png)
 
+## Components
+
 - IDs 	# 	Component 	Footprint 	Properties
 - U1 	1 	ESP8266 (beta) 	ESP8266
 - R2 	1 	Resistor Resist the flow of electrical energy in a circuit, changing the voltage and current as a result. 	0617/17 	1 kohm
@@ -10,7 +12,6 @@
 - LED1 	1 	WS2811/WS2812/NeoPixel LEDs
 - S1 	1 	Pushbutton Momentary switches that close a circuit when pressed. 	TACTILE-PTH
 - PIEZO1 	1 	Buzzer [Piezo small] This is the Piezo buzzer included in the DFRobot Kit. It is 12mm in diameter. See datasheet for frequency response. 	PIEZO 12mm DIAMETER
-
 
 ##Video youtube
 
@@ -26,12 +27,14 @@
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/LZI4Yu47LZI/0.jpg)](https://www.youtube.com/watch?v=LZI4Yu47LZI&index=3&list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
 
+##Construction
 
-###breadboard
+###Breadboard
 
 ![alt](https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/breadboard.gif)
 
-###schematic
+###Schematic
+
 ![alt](https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/schematic.gif)
 
 ##Othe...
