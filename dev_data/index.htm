@@ -41,7 +41,7 @@
    function iplocation(searc) {
     document.getElementById('content').innerHTML='';
     var xhttp=createXmlHttpObject();
-    xhttp.open("GET", "/iplocation.json?"+Math.floor(Math.random()*10000), true);
+    xhttp.open("GET", "/devices.list.json?"+Math.floor(Math.random()*10000), true);
     xhttp.send(null);
     xhttp.onload = function(e) {
      var ipModule=JSON.parse(xhttp.responseText);
@@ -81,6 +81,11 @@
       xhttp.onload = function(e) {
        var jsonResponse2=JSON.parse(xhttp.responseText);
        var jsonResponse = Object.assign(jsonResponse1, jsonResponse2);
+
+       var theCookies = document.cookie.split(';');
+       for (var i = 1 ; i <= theCookies.length; i++) {
+        jsonResponse[theCookies[i-1].split("=")[0].replace(/^ /,'')] = theCookies[i-1].split("=")[1];
+       }
 
        jsonResponse.ip = ipval;
        if (jsonResponse.state == 0){
@@ -136,9 +141,24 @@
     }
    }
 
-   function val(id){
-    var v = document.getElementById(id).value;
-    return v;
+   function val(id,val){
+    if (val) {
+     document.getElementById(id).value=(val==' '?'':val);
+    } else {
+     var v = document.getElementById(id).value;
+     return v;
+    }
+   }
+
+   function setCookie(name, value, days, submit) {
+    if (days) {
+     var date = new Date();
+     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+     var expires = "; expires=" + date.toGMTString();
+    }
+    else expires = "";
+    document.cookie = name + "=" + value + expires + "; path=/";
+    submit.parentNode.classList.add('hidden');
    }
   </script>
  </head>

@@ -1,6 +1,7 @@
 <div class="block col-md-5">
  <h5 class="alert-info">{{SSDP}}</h5>
- <div class="alert alert-dismissible alert-warning">
+ <div class="alert alert-dismissible alert-warning {{g279149}}">
+  <button class="close" onclick="setCookie('g279149','hidden',365,this);" type="button">×</button>
   {{LangTime4}} 1: <b>{{times1}}</b>
   <br>{{LangTime4}} 2:  <b>{{times2}}</b>
   <br>{{LangTime5}} <b>{{timeled}}</b>{{LangSec}}
@@ -10,18 +11,18 @@
   <h5 class="alert-warning">{{LangTime10}}</h5>
   <h4>{{LangTime8}}</h4>
   <div class="btn-group">
-   <input type="submit" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=60&sound='+val('sound')*10+'&s='+val('speed'),thisId);return false" value="1">
-   <input type="submit" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=300&sound='+val('sound')*10+'&s='+val('speed'),thisId);return false" value="5">
-   <input type="submit" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=600&sound='+val('sound')*10+'&s='+val('speed'),thisId);return false" value="10">
-   <input type="submit" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=1500&sound='+val('sound')*10+'&s='+val('speed'),thisId);return false" value="15">
-   <input type="submit" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=1800&sound='+val('sound')*10+'&s='+val('speed'),thisId);return false" value="30">
+   <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=60&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="1">
+   <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=300&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="5">
+   <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=600&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="10">
+   <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=1500&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="15">
+   <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=1800&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="30">
   </div>
   <br>
   <div class="btn-group">
-   <input type="submit" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=3600&sound='+val('sound')*10+'&s='+val('speed'),thisId);return false" value="60">
-   <input type="submit" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=5400&sound='+val('sound')*10+'&s='+val('speed'),thisId);return false" value="1:30">
-   <input type="submit" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=7200&sound='+val('sound')*10+'&s='+val('speed'),thisId);return false" value="2:00">
-   <input type="submit" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=10800&sound='+val('sound')*10+'&s='+val('speed'),thisId);return false" value="3:00">
+   <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=3600&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="60">
+   <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=5400&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="1:30">
+   <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=7200&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="2:00">
+   <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=10800&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="3:00">
   </div>
   <hr>
   <h4>{{LangTime5}}</h4>
@@ -32,14 +33,16 @@
   <h4>{{LangSpeed}}</h4>
   <input id="speed" class="form-control" type="range" min="0" max="255" step="1" value="100">
   <hr>
-  <a href="#" onclick="toggle('pop-up-{{ip}}');return false" class="btn btn-block btn-default">{{LangCancel}}</a>
+  <a href="#" onclick="toggle('pop-up-{{ip}}');" class="btn btn-block btn-default">{{LangCancel}}</a>
  </div>
- <input type="color" style="height:40px;" id="color-{{ip}}" class="form-control btn-primary" onchange="toggle('pop-up-{{ip}}');colorUrl='set?c='+(this.value).substring(1,7);thisId=this;return false" value="#fdfdfd">
- <input style="width:32%;display:inline-block;margin-top:5px;" class="btn btn-block btn-danger" value="{{LangColor1}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=ff0000';document.getElementById('color-{{ip}}').value='#FF0000';thisId=this;return false" type="submit">
- <input style="width:32%;display:inline-block" class="btn btn-block btn-success" value="{{LangColor2}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=00ff00';document.getElementById('color-{{ip}}').value='#00FF00';thisId=this;return false" type="submit">
- <input style="width:32%;display:inline-block" class="btn btn-block btn-info" value="{{LangColor3}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=0000ff';document.getElementById('color-{{ip}}').value='#0000FF';thisId=this;return false" type="submit">
- <input type="submit" onclick="ajax('{{ip}}','led',this);" value="{{state}}" class="btn btn-block btn-primary">
+ <input type="color" style="height:40px;" id="color-{{ip}}" class="form-control btn-primary" onchange="toggle('pop-up-{{ip}}');colorUrl='set?c='+(this.value).substring(1,7);thisId=this;" value="#fdfdfd">
+ <input style="width:32%;display:inline-block;margin-top:5px;" class="btn btn-block btn-danger" value="{{LangColor1}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=ff0000';val('color-{{ip}}','#FF0000');thisId=this;" type="button">
+ <input style="width:32%;display:inline-block" class="btn btn-block btn-success" value="{{LangColor2}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=00ff00';val('color-{{ip}}',#00FF00');thisId=this;" type="button">
+ <input style="width:32%;display:inline-block" class="btn btn-block btn-info" value="{{LangColor3}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=0000ff';val('color-{{ip}}','#0000FF');thisId=this;" type="button">
+ <input type="button" onclick="ajax('{{ip}}','led',this);" value="{{state}}" class="btn btn-block btn-primary">
  <hr>
- <div class="alert alert-dismissible alert-info">{{LangOptions2}}</div>
+ <div class="alert alert-dismissible alert-info {{g27579}}">
+  <button class="close" onclick="setCookie('g27579','hidden',365,this);" type="button">×</button>{{LangOptions2}}
+ </div>
  <a class="btn btn-block btn-default" href="http://{{ip}}/device.htm">{{LangOptions1}}</a>
 </div>
