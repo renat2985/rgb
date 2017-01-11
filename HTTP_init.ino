@@ -112,11 +112,6 @@ void handle_ssdp() {
 void handle_ssidap() {
   _ssidAP = HTTP.arg("ssidAP");
   _passwordAP = HTTP.arg("passwordAP");
-  if (HTTP.arg("onOffAP") == "true") {
-    _setAP = "1";
-  } else {
-    _setAP = "0";
-  }
   saveConfig();
   HTTP.send(200, "text/plain", "OK");
 }
@@ -253,8 +248,7 @@ void handle_config() {
 }
 
 void handle_ip_list() {
-  String json = "{\"ip\":\""+WiFi.localIP().toString()+"\"}"+Devices;
-  HTTP.send(200, "text/json", "["+json+"]");
+  HTTP.send(200, "text/json", "[{\"ip\":\""+WiFi.localIP().toString()+"\"}"+Devices+"]");
 }
 
 void handle_ip_scan() {

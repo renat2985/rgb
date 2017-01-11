@@ -58,7 +58,6 @@ bool loadConfig() {
 bool saveConfig() {
   StaticJsonBuffer<400> jsonBuffer;
   JsonObject& json = jsonBuffer.createObject();
-  json["onOffAP"] = _setAP;
   json["SSDPName"] = SSDP_Name;
   json["ssidAPName"] = _ssidAP;
   json["ssidAPPassword"] = _passwordAP;

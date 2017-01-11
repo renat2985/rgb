@@ -28,6 +28,7 @@
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/LZI4Yu47LZI/0.jpg)](https://www.youtube.com/watch?v=LZI4Yu47LZI&index=3&list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
 
 ##Construction
+[https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
 
 ###Breadboard
 

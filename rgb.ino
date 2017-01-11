@@ -50,14 +50,14 @@ WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 // Определяем переменные
 // Количество модулей в устройстве
 int a = 1;
-String module[]={"rbg"};
+//char* module[] = {"rgb", "test"}; //Можно еще вот так (https://forum.arduino.cc/index.php?topic=424342.0)
+String module[]={"rbg", "gg"};
 //,"sonoff","jalousie"};
 // Общие настройки модуля
 String _ssid     = "WiFi";      // Для хранения SSID
 String _password = "Pass";      // Для хранения пароля сети
 String _ssidAP = "RGB05";       // SSID AP точки доступа
 String _passwordAP = "";        // пароль точки доступа
-String _setAP = "1";            // AP включен
 String SSDP_Name = "jalousie";  // SSDP
 String Language = "ru";         // язык web интерфейса
 String Lang = "";  // файлы языка web интерфейса
