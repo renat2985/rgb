@@ -27,7 +27,7 @@ function load(first){
      toggle('content');
      loadBlock(jsonResponse);
     } else {
-     handleServerResponse();
+     handleServerResponse(first);
     }
    }
   }
@@ -64,14 +64,14 @@ function send_request(submit,server){
  xmlHttp.onload = function(e) {
   submit.value=old_submit;
   submit_disabled(false);
-  load();
+  load('next');
  }
 }
 
 function submit_disabled(request){
  var inputs = document.getElementsByTagName("input");
  for (var i = 0; i < inputs.length; i++) {
-  if (inputs[i].type === 'submit') {inputs[i].disabled = request;}
+  if (inputs[i].type === 'button') {inputs[i].disabled = request;}
  }
 }
 function toggle(target,status) {
