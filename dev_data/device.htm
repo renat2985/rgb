@@ -3,6 +3,8 @@
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="css/build.css">
+  <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css"> -->
   <script type="text/javascript" src="js/function.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Options page</title>
@@ -54,7 +56,6 @@
     document.body.style.backgroundColor="#"+jsonResponse.color;
     if (jsonResponse.state=='0') {blockval=jsonResponse.LangOn;} else {blockval=jsonResponse.LangOff;}
     val('off-on', blockval);
-    LoadLang(jsonResponse.lang);
    }
    function useCanvas(el,image,callback){
     el.width = image.width;
@@ -92,7 +93,7 @@
     } else {
      server = "/set?m="+mode+"&time="+t+"&sound="+val('sound')*10+"&s="+val('speed');
     }
-    document.getElementById('url1').innerHTML='<a href="http://'+document.domain+server+'" target="_blank">http://'+document.domain+server+'</a>';
+    document.getElementById('url1').innerHTML='<a href="http://'+document.domain+server+'" target="_blank">http://'+document.domain+server+'<\/a>';
     if(navigator.onLine) {
      var xhttp=createXmlHttpObject();
      xhttp.open("GET", "https://api.ipify.org?format=text", true);
@@ -100,7 +101,7 @@
      xhttp.onload = function(e) {
       if (xhttp.readyState === xhttp.DONE) {
        if (xhttp.status === 200) {
-        document.getElementById('url2').innerHTML='<a href="http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhttp.responseText+':'+jsonResponse.DDNSPort+server)+'" target="_blank">http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhttp.responseText+':'+jsonResponse.DDNSPort+server)+'</a>';
+        document.getElementById('url2').innerHTML='<a href="http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhttp.responseText+':'+jsonResponse.DDNSPort+server)+'" target="_blank">http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhttp.responseText+':'+jsonResponse.DDNSPort+server)+'<\/a>';
        }
       }
      }
@@ -130,9 +131,10 @@
     <h1 id="title">{{LangOptions1}}</h1>
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
      <h5 class="alert-info">{{SSDP}}</h5>
-     <select class="btn btn-default" id="language" onchange="language(this);">
-      <option value="en">{{lang}}</option>
-     </select>
+     <div class="btn-group" id="language">
+      <a href="#" class="btn btn-default dropdown-toggle" onclick="toggle('language-set');LoadLang('language-set');return false">{{lang}} <span class="caret"></span></a>
+      <ul class="dropdown-menu hidden" id="language-set"><li><a href="#">{{LangLoading}}</a></li></ul>
+     </div>
      <a class="btn btn-block btn-danger" href="/">{{LangDevices}}</a>
      <a class="btn btn-block btn-default" href="/setup.htm">{{LangSetting3}}</a>
      <hr>
@@ -164,7 +166,7 @@
        <h4>{{LangSpeed}}</h4>
        <input id="speed" class="form-control" type="range" min="0" max="255" step="1" value="100">
        <hr>
-       <a href="#" onclick="toggle('pop-up');return false" class="btn btn-block btn-default">{{LangCancel}}</a>
+       <input class="btn btn-block btn-default" value="{{LangCancel}}" onclick="toggle('pop-up');" type="button">
       </div>
      </div>
      <div class="thumb">

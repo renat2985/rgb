@@ -33,11 +33,11 @@
   <h4>{{LangSpeed}}</h4>
   <input id="speed" class="form-control" type="range" min="0" max="255" step="1" value="100">
   <hr>
-  <a href="#" onclick="toggle('pop-up-{{ip}}');" class="btn btn-block btn-default">{{LangCancel}}</a>
+  <input class="btn btn-block btn-default" value="{{LangCancel}}" onclick="toggle('pop-up-{{ip}}');" type="button">
  </div>
  <input type="color" style="height:40px;" id="color-{{ip}}" class="form-control btn-primary" onchange="toggle('pop-up-{{ip}}');colorUrl='set?c='+(this.value).substring(1,7);thisId=this;" value="#fdfdfd">
  <input style="width:32%;display:inline-block;margin-top:5px;" class="btn btn-block btn-danger" value="{{LangColor1}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=ff0000';val('color-{{ip}}','#FF0000');thisId=this;" type="button">
- <input style="width:32%;display:inline-block" class="btn btn-block btn-success" value="{{LangColor2}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=00ff00';val('color-{{ip}}',#00FF00');thisId=this;" type="button">
+ <input style="width:32%;display:inline-block" class="btn btn-block btn-success" value="{{LangColor2}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=00ff00';val('color-{{ip}}','#00FF00');thisId=this;" type="button">
  <input style="width:32%;display:inline-block" class="btn btn-block btn-info" value="{{LangColor3}}" onclick="toggle('pop-up-{{ip}}');colorUrl='set?c=0000ff';val('color-{{ip}}','#0000FF');thisId=this;" type="button">
  <input type="button" onclick="ajax('{{ip}}','led',this);" value="{{state}}" class="btn btn-block btn-primary">
  <hr>
