@@ -11,7 +11,7 @@
   <script type="text/javascript">
    var mode = 'off';
    var nex_color = 'ff6600';
-   function handleServerResponse(){
+   function handleServerResponse(stage,jsonResponse){
     var img = _('.thumb img'),
         canvas = _('#cs'),
         result = _('.result'),
@@ -217,7 +217,10 @@
       <option value="38">Running Red Blue</option>
       <option value="39">Running Random</option>
       <option value="40">Larson Scanner</option>
-      <option value="41">Fireworks</option>
+      <option value="41">Comet</option>
+      <option value="42">Fireworks</option>
+      <option value="43">Fireworks random</option>
+      <option value="44">Merry Christmas</option>
      </select>
      <input type="button" class="btn btn-block btn-primary" onclick="send_request(this,'/led');" id="off-on" value="{{LangOnOff}}">
      <hr>
