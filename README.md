@@ -13,13 +13,15 @@
 - S1 	1 	Pushbutton Momentary switches that close a circuit when pressed. 	TACTILE-PTH
 - PIEZO1 	1 	Buzzer [Piezo small] This is the Piezo buzzer included in the DFRobot Kit. It is 12mm in diameter. See datasheet for frequency response. 	PIEZO 12mm DIAMETER
 
+###[Upload from NodeMCU Flasher](https://github.com/renat2985/rgb/tree/master/build)
+
 ##Video youtube
 
-###Upload (Windows)
+###Upload (Windows, Arduino)
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/jMK9mySGHio/0.jpg)](https://www.youtube.com/watch?v=jMK9mySGHio)
 
-###Upload, small version (Linux)
+###Upload (Linux, Arduino)
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/1TAHlRqZ46k/0.jpg)](https://www.youtube.com/watch?v=1TAHlRqZ46k)
 
