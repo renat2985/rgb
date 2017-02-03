@@ -1,4 +1,23 @@
 void handle_wifi_scan() {
+ // String root = "{}";  // Формировать строку для отправки в браузер json формат
+ // DynamicJsonBuffer jsonBuffer;
+ // //  вызовите парсер JSON через экземпляр jsonBuffer
+ // JsonObject& json = jsonBuffer.parseObject(root);
+ // // Заполняем поля json
+ // int n = WiFi.scanNetworks();
+ // if (n == 0) {
+ // json["ssid"] = "none";
+ // } else {
+ //   for (int i = 0; i < n - 1; ++i) {
+ //     json["ssid"] = WiFi.SSID(i);
+ //     json["dbm"] = WiFi.RSSI(i);
+ //     json["pass"] = (WiFi.encryptionType(i) == ENC_TYPE_NONE) ? "" : "*";
+ //     delay(10);
+ //   }
+ // root="";
+ // json.printTo(root);
+ // HTTP.send(200, "text/json", root);
+
   int n = WiFi.scanNetworks();
   String wifiScan = "[";
   if (n == 0)
@@ -120,7 +139,7 @@ void handle_ssidap() {
 void handle_time() {
   Time_init(timezone);
   String Time = XmlTime();
-  HTTP.send(200, "text/plain", "Время синхронизовано: " + Time);
+  HTTP.send(200, "text/plain", "OK: " + Time);
 }
 
 //Таймер 1
@@ -170,7 +189,7 @@ void HTTP_init(void) {
   HTTP.on("/ddns", handle_ddns);               // Установить DDNS
   HTTP.on("/lang", handle_leng);               // Установить язык
   HTTP.on("/modules.json", handle_modules);               // Узнать какие модули есть в устройстве
-   // Запускаем HTTP сервер
+  // Запускаем HTTP сервер
   // HTTP.sendHeader("Cache-Control","max-age=2592000, must-revalidate");
   //HTTP.on("/devices", inquirySSDP);         // Блок для
   // Запускаем HTTP сервер
@@ -190,61 +209,34 @@ String XmlTime(void) {
 }
 
 void handle_config() {
-  String json = "{";
-  // Имя DDNS
-  json += "\"DDNS\":\"";
-  json += DDNS;
-  // Имя DDNSName
-  json += "\",\"DDNSName\":\"";
-  json += DDNSName;
-  // Имя DDNSPort
-  json += "\",\"DDNSPort\":\"";
-  json += DDNSPort;
-  // Имя SSDP
-  json += "\",\"SSDP\":\"";
-  json += SSDP_Name;
-  // Имя сети
-  json += "\",\"ssid\":\"";
-  json += _ssid;
-  // Пароль сети
-  json += "\",\"password\":\"";
-  json += _password;
-  // Имя точки доступа
-  json += "\",\"ssidAP\":\"";
-  json += _ssidAP;
-  // Пароль точки доступа
-  json += "\",\"passwordAP\":\"";
-  json += _passwordAP;
-  // Времянная зона
-  json += "\",\"timezone\":\"";
-  json += timezone;
-  //  Время работы
-  json += "\",\"timeled\":\"";
-  json += TimeLed;
-  // Время 1
-  json += "\",\"times1\":\"";
-  json += times1;
-  // Время 2
-  json += "\",\"times2\":\"";
-  json += times2;
-  // Текущее время
-  json += "\",\"time\":\"";
-  json += XmlTime();
-  // Статус
-  json += "\",\"state\":\"";
-  json += state0;
-  // Язык
-  json += "\",\"lang\":\"";
-  if (Language == NULL) {
-    json += "ru";
+  String root = "{}";  // Формировать строку для отправки в браузер json формат
+  DynamicJsonBuffer jsonBuffer;
+  //  вызовите парсер JSON через экземпляр jsonBuffer
+  JsonObject& json = jsonBuffer.parseObject(root);
+  // Заполняем поля json
+  json["DDNS"] = DDNS;  // Имя DDNS
+  json["DDNSName"] = DDNSName;  // Имя DDNSName
+  json["DDNSPort"] = DDNSPort;  // Имя DDNSPort
+  json["SSDP"] = SSDP_Name;  // Имя SSDP
+  json["ssid"] = _ssid;  // Имя сети
+  json["password"] = _password;  // Пароль сети
+  json["ssidAP"] = _ssidAP;  // Имя точки доступа
+  json["passwordAP"] = _passwordAP;  // Пароль точки доступа
+  json["timezone"] = timezone;  // Времянная зона
+  json["timeled"] = TimeLed;  //  Время работы
+  json["times1"] = times1;  // Время 1
+  json["times2"] = times2;  // Время 2
+  json["time"] = XmlTime();  // Текущее время
+  json["state"] = state0;  // Статус
+  if (Language == NULL) {  // Язык
+    json["lang"] = "ru";
   } else {
-    json += Language;
+    json["lang"]= Language;
   }
-  //RGB
-  json += "\",\"color\":\"";
-  json += color;
-  json += "\"}";
-  HTTP.send(200, "text/json", json);
+  json["color"] = color;  //RGB
+  root="";
+  json.printTo(root);
+  HTTP.send(200, "text/json", root);
 }
 
 void handle_ip_list() {
