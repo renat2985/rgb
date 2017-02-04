@@ -141,6 +141,7 @@ void HTTP_init(void) {
   HTTP.serveStatic("/img/", SPIFFS, "/img/", "max-age=31536000"); // кеширование на 1 год
   //HTTP.serveStatic("/lang/", SPIFFS, "/lang/", "max-age=31536000"); // кеширование на 1 год
   HTTP.on("/led", LedActiv);                // задать цвет ленты и включить.
+  HTTPWAN.on("/led", LedActiv);                // задать цвет ленты и включить.
   HTTP.on("/TimeLed", handle_time_led);      // установка времени работы светодиодов
   HTTP.on("/wifi.scan.json", handle_wifi_scan);      // сканирование ssid
   HTTP.on("/TimeZone", handle_time_zone);    // Установка времянной зоны
