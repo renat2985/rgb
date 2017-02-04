@@ -47,12 +47,14 @@ Ticker tickerBizz;
 String modes = "";
 WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
+// Определяем строку для json config
+String jsonConfig = "";
+
 // Определяем переменные
 // Количество модулей в устройстве
-int a = 1;
-//char* module[] = {"rgb", "test"}; //Можно еще вот так (https://forum.arduino.cc/index.php?topic=424342.0)
-String module[]={"rbg", "gg"};
+String module[]={"rgb", "gg"};
 //,"sonoff","jalousie"};
+
 // Общие настройки модуля
 String _ssid     = "WiFi";      // Для хранения SSID
 String _password = "Pass";      // Для хранения пароля сети

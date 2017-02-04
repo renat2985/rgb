@@ -12,6 +12,8 @@ void initRGB() {
 void LedRGB() {
   for (uint8_t i = 0; i < HTTP.args(); i++) {
     if (HTTP.argName(i) == "c") {
+    //String c = HTTP.arg("c");
+    //if (c != '') {
       uint32_t tmp = (uint32_t) strtol(&HTTP.arg(i)[0], NULL, 16);
       if (tmp >= 0x000000 && tmp <= 0xFFFFFF) {
         color = String(tmp, HEX);
@@ -33,7 +35,7 @@ void LedRGB() {
     }
 
     if (HTTP.argName(i) == "s") {
-       ws2812fx.setSpeed(HTTP.arg("s").toInt());
+      ws2812fx.setSpeed(HTTP.arg("s").toInt());
     }
   }
 
@@ -77,7 +79,7 @@ int LedRGBwan() {
     }
 
     if (HTTP.argName(i) == "s") {
-       ws2812fx.setSpeed(HTTP.arg("s").toInt());
+      ws2812fx.setSpeed(HTTP.arg("s").toInt());
     }
   }
 
