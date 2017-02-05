@@ -10,7 +10,7 @@ void Tach_0() {
 }
 
 void alarm_clock() {
-  tickerSetLow.attach(TimeLed, setT1, 0);
+  tickerSetLow.attach(timeLed, setT1, 0);
   //LedON(r, g, b);
   state0 = 0;
   chaing = 1;

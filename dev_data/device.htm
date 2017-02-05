@@ -101,7 +101,7 @@
      xhttp.onload = function(e) {
       if (xhttp.readyState === xhttp.DONE) {
        if (xhttp.status === 200) {
-        document.getElementById('url2').innerHTML='<a href="http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhttp.responseText+':'+jsonResponse.DDNSPort+server)+'" target="_blank">http://'+(jsonResponse.DDNSName?(jsonResponse.DDNSName+':'+jsonResponse.DDNSPort+server):xhttp.responseText+':'+jsonResponse.DDNSPort+server)+'<\/a>';
+        document.getElementById('url2').innerHTML='<a href="http://'+(jsonResponse.ddnsName?(jsonResponse.ddnsName+':'+jsonResponse.ddnsPort+server):xhttp.responseText+':'+jsonResponse.ddnsPort+server)+'" target="_blank">http://'+(jsonResponse.ddnsName?(jsonResponse.ddnsName+':'+jsonResponse.ddnsPort+server):xhttp.responseText+':'+jsonResponse.ddnsPort+server)+'<\/a>';
        }
       }
      }
@@ -237,7 +237,7 @@
        <input id="time2" value="{{times2}}" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control" placeholder="{{LangExample}}: 07:10:30">
        <div class="btn-group" style="width:100%">
         <input class="btn btn-success" style="width:70%" value="{{LangSave}}" onclick="set_time2(this);" type="button">
-        <input class="btn btn-default" style="width:30%" value="{{LangOff.}}" onclick="val('time1',' ');set_time2(this);" type="button">
+        <input class="btn btn-default" style="width:30%" value="{{LangOff.}}" onclick="val('time2',' ');set_time2(this);" type="button">
        </div>
       </div>
       <div class="col-sm-6">
@@ -254,10 +254,10 @@
       </div>
       <div class="col-sm-4">
        <div class="input-group">
-        <input id="led" value="{{timeled}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
+        <input id="led" value="{{timeLed}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
         <span class="input-group-addon">{{LangSec}}</span>
        </div>
-       <input class="btn btn-block btn-success" value="{{LangSave}}" onclick="send_request(this,'/TimeLed?t='+val('led'));" type="button">
+       <input class="btn btn-block btn-success" value="{{LangSave}}" onclick="send_request(this,'/timeLed?t='+val('led'));" type="button">
       </div>
      </div>
      <hr>
