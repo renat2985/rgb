@@ -199,11 +199,7 @@ void handle_config() {
   json["times2"] = times2;  // Время 2
   json["time"] = XmlTime();  // Текущее время
   json["state"] = state0;  // Статус
-  if (Language == NULL) {  // Язык
-    json["lang"] = "ru";
-  } else {
-    json["lang"]= Language;
-  }
+  json["lang"]= Language; // Язык
   json["color"] = color;  //RGB
   root="";
   json.printTo(root);

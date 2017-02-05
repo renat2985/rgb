@@ -24,7 +24,7 @@ bool loadConfig() {
   ssidPass = root["ssidPass"].as<String>();
   times1 = root["times1"].as<String>();
   times2 = root["times2"].as<String>();
-  Language = root["Lang"].as<String>();
+  Language = root["lang"].as<String>();
   ddns = root["ddns"].as<String>();
   ddnsName = root["ddnsName"].as<String>();
   ddnsPort = root["ddnsPort"];
@@ -47,7 +47,7 @@ bool saveConfig() {
   json["ddns"] = ddns;
   json["ddnsName"] = ddnsName;
   json["ddnsPort"] = ddnsPort;
-  json["Lang"] = Language;
+  json["lang"] = Language;
   File configFile = SPIFFS.open("/config.json", "w");
   if (!configFile) {
     //Serial.println("Failed to open config file for writing");
