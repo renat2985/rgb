@@ -52,7 +52,7 @@
     html('ssdp_t',val('ssdp'));
    }
    function ddns(submit){
-    server = "/ddns?url="+encodeURIComponent(val('ddns'))+"&wanurl="+val("ddns-name")+"&wanport="+val("ddns-port");
+    server = "/ddns?ddns="+encodeURIComponent(val('ddns'))+"&ddnsName="+val("ddns-name")+"&ddnsPort="+val("ddns-port");
     send_request(submit,server);
    }
    function first_restart(submit,texts){
@@ -120,7 +120,7 @@
       <ul class="dropdown-menu hidden" id="ssid-select"><li><a href="#">{{LangLoading}}</a></li></ul>
      </div>
      <input id="ssid" value="{{ssid}}" class="form-control hidden" pattern=".{1,15}" placeholder="{{LangWiFi1}}">
-     <input id="ssidPass" value="{{ssidPass}}" pattern=".{8,15}" onfocus="this.type='text'" type="ssidPass" class="form-control" placeholder="{{LangPass}}">
+     <input id="ssidPass" value="{{ssidPass}}" pattern=".{8,15}" onfocus="this.type='text'" type="password" class="form-control" placeholder="{{LangPass}}">
      <input class="btn btn-block btn-success" value="{{LangSave}}" onclick="set_ssid(this);" type="button">
      <hr>
      <div id="dev-othe">
@@ -135,7 +135,7 @@
       <div class="row">
        <div class="col-sm-6">
         <input id="ssidap" value="{{ssidAP}}" class="form-control" pattern=".{1,15}" placeholder="{{LangWiFi1}}">
-        <input id="ssidApPass" value="{{ssidApPass}}" pattern=".{8,15}" onfocus="this.type='text'" type="ssidPass" class="form-control" placeholder="{{LangPass}}">
+        <input id="ssidApPass" value="{{ssidApPass}}" pattern=".{8,15}" onfocus="this.type='text'" type="password" class="form-control" placeholder="{{LangPass}}">
         <input class="btn btn-block btn-success" value="{{LangSave}}" onclick="set_ssid_ap(this);" type="button">
        </div>
        <div class="col-sm-6">
