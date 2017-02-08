@@ -34,6 +34,7 @@ Ticker tickerBizz;
 #define LED_PIN 2     // RGB лента
 #define LED_COUNT 15  // Количество лед огней
 #define PIR_PIN 14    // RIR sensors
+byte pirSensor = 0;    // 0 = PIR off; 1 = PIR on;
 
 #define DEFAULT_COLOR 0xff6600
 #define DEFAULT_BRIGHTNESS 255
@@ -170,7 +171,7 @@ void alert() {
  if (kolibrTime.compareTo(Time) == 0) {
   chaingtime = 1;
  }
- if (state0 == 0 && digitalRead(PIR_PIN)) {
+ if (pirSensor == 1 && state0 == 0 && digitalRead(PIR_PIN)) {
   alarm_pir();
  }
 
