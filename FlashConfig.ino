@@ -28,6 +28,8 @@ bool loadConfig() {
   ddns = root["ddns"].as<String>();
   ddnsName = root["ddnsName"].as<String>();
   ddnsPort = root["ddnsPort"];
+
+  color = root["color"].as<String>();
   return true;
 }
 
@@ -44,10 +46,12 @@ bool saveConfig() {
   json["timeZone"] = timeZone;
   json["times1"] = times1;
   json["times2"] = times2;
+  json["lang"] = Language;
   json["ddns"] = ddns;
   json["ddnsName"] = ddnsName;
   json["ddnsPort"] = ddnsPort;
-  json["lang"] = Language;
+
+  json["color"] = color;
   File configFile = SPIFFS.open("/config.save.json", "w");
   if (!configFile) {
     //Serial.println("Failed to open config file for writing");

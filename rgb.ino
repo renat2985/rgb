@@ -29,10 +29,11 @@ Ticker tickerSetLow;
 Ticker tickerAlert;
 Ticker tickerBizz;
 
-#define Tach0 0       // Кнопка управления
-#define buzer_pin 3   // Пищалка
+#define TACH_PIN 0    // Кнопка управления
+#define BUZER_PIN 3   // Бузер
+#define LED_PIN 2     // RGB лента
 #define LED_COUNT 15  // Количество лед огней
-#define LED_PIN 2     // RGB лампа
+#define PIR_PIN 14    // RIR sensors
 
 #define DEFAULT_COLOR 0xff6600
 #define DEFAULT_BRIGHTNESS 255
@@ -91,10 +92,11 @@ WiFiUDP udp;
 
 void setup() {
  //Serial.begin(115200);
- pinMode(Tach0, INPUT);
+ pinMode(PIR_PIN, INPUT);
+ pinMode(TACH_PIN, INPUT);
  pinMode(LED_PIN, OUTPUT);
- pinMode(buzer_pin, OUTPUT);
- digitalWrite(buzer_pin, 1);
+ pinMode(BUZER_PIN, OUTPUT);
+ digitalWrite(BUZER_PIN, 1);
  // Включаем работу с файловой системой
  FS_init();
  // Загружаем настройки из файла
@@ -103,7 +105,7 @@ void setup() {
  // Подключаем RGB
  initRGB();
  // Кнопка будет работать по прерыванию
- attachInterrupt(Tach0, Tach_0, FALLING);
+ attachInterrupt(TACH_PIN, Tach_0, FALLING);
  //Запускаем WIFI
  WIFIAP_Client();
  // Закускаем UDP
@@ -141,8 +143,8 @@ void loop() {
     ws2812fx.stop();
     break;
    case 3:
-    analogWrite(buzer_pin, 0);
-    digitalWrite(buzer_pin, 1);
+    analogWrite(BUZER_PIN, 0);
+    digitalWrite(BUZER_PIN, 1);
     state0 = 0;
     break;
   }
@@ -168,6 +170,10 @@ void alert() {
  if (kolibrTime.compareTo(Time) == 0) {
   chaingtime = 1;
  }
+ if (digitalRead(PIR_PIN) == HIGH) {
+ // alarm_pir();
+ }
+
  Time = Time.substring(3, 8); // Выделяем из строки минуты секунды
  // В 15, 30, 45 минут каждого часа идет запрос на сервер ddns
  if ((Time == "00:00" || Time == "15:00" || Time == "30:00" || Time == "45:00") && ddns != "") {

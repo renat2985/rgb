@@ -40,7 +40,7 @@ void handle_restart() {
 // Меняет флаг для включения выключения Led
 void LedActiv() {
   chaing = 1;
-  sound(buzer_pin, volume, 1000, 100);
+  sound(BUZER_PIN, volume, 1000, 100);
   HTTP.send(200, "text/plain", "OK");
 }
 
@@ -54,7 +54,7 @@ void handle_save_config() {
 void handle_time_led() {
   timeLed = HTTP.arg("t").toInt();
   saveConfig();
-  //sound(buzer_pin, volume, 1000, 100);
+  //sound(BUZER_PIN, volume, 1000, 100);
   HTTP.send(200, "text/plain", "OK");
 }
 

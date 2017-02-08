@@ -13,23 +13,28 @@
 - S1 	1 	Pushbutton Momentary switches that close a circuit when pressed. 	TACTILE-PTH
 - PIEZO1 	1 	Buzzer [Piezo small] This is the Piezo buzzer included in the DFRobot Kit. It is 12mm in diameter. See datasheet for frequency response. 	PIEZO 12mm DIAMETER
 
-###[Upload from NodeMCU Flasher](https://github.com/renat2985/rgb/tree/master/build)
 
-##Video youtube
 
-###Upload (Windows, Arduino)
+##Upload instruction
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/jMK9mySGHio/0.jpg)](https://www.youtube.com/watch?v=jMK9mySGHio)
+###[NodeMCU Flasher (Easy)](https://github.com/renat2985/rgb/tree/master/build)
 
-###Upload (Linux, Arduino)
+###[Arduino Windows (Video)](https://www.youtube.com/watch?v=jMK9mySGHio)
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/1TAHlRqZ46k/0.jpg)](https://www.youtube.com/watch?v=1TAHlRqZ46k)
+###[Arduino Linux (Video)](https://www.youtube.com/watch?v=1TAHlRqZ46k)
 
-###Example
+
+##Work example (Video)
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/LZI4Yu47LZI/0.jpg)](https://www.youtube.com/watch?v=LZI4Yu47LZI&list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
 
 ##Construction
+```
+#define TACH_PIN 0    // Кнопка управления
+#define BUZER_PIN 3   // Бузер
+#define LED_PIN 2     // RGB лента
+#define LED_COUNT 15  // Количество лед огней
+```
 [https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
 
 ###Breadboard
@@ -42,12 +47,12 @@
 
 ##Othe...
 
-Jalousie: [https://github.com/tretyakovsa/jaluzi](https://github.com/tretyakovsa/jaluzi)
+####Jalousie: [https://github.com/tretyakovsa/jaluzi](https://github.com/tretyakovsa/jaluzi)
 
-Sonoff: [https://github.com/tretyakovsa/Sonoff_WiFi_switch](https://github.com/tretyakovsa/Sonoff_WiFi_switch)
+####Sonoff: [https://github.com/tretyakovsa/Sonoff_WiFi_switch](https://github.com/tretyakovsa/Sonoff_WiFi_switch)
 
 
-###Themes you can download here: [http://bootswatch.com/](http://bootswatch.com/)
+####Themes you can download here: [http://bootswatch.com/](http://bootswatch.com/)
 
 
 ##Donation

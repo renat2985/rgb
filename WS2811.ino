@@ -48,7 +48,7 @@ void LedRGB() {
   t = HTTP.arg("time").toInt();
   s = HTTP.arg("sound").toInt();
   tickerSetLow.attach(t, setT1, 0);
-  sound(buzer_pin, volume, 1000, s * 100);
+  sound(BUZER_PIN, volume, 1000, s * 100);
   state0 = 0;
   chaing = 1;
 
@@ -86,7 +86,7 @@ int LedRGBwan() {
   t = HTTPWAN->arg("time").toInt();
   s = HTTPWAN->arg("sound").toInt();
   tickerSetLow.attach(t, setT1, 0);
-  sound(buzer_pin, volume, 1000, s * 100);
+  sound(BUZER_PIN, volume, 1000, s * 100);
   state0 = 0;
   chaing = 1;
 
@@ -104,6 +104,6 @@ void sound(int pin, int volume, int freq, int time_ms) {
 
 void setPin(int state) {
   tickerBizz.detach();
-  analogWrite(buzer_pin, 0);
-  digitalWrite(buzer_pin, 1);
+  analogWrite(BUZER_PIN, 0);
+  digitalWrite(BUZER_PIN, 1);
 }
