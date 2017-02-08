@@ -170,8 +170,8 @@ void alert() {
  if (kolibrTime.compareTo(Time) == 0) {
   chaingtime = 1;
  }
- if (digitalRead(PIR_PIN) == HIGH) {
- // alarm_pir();
+ if (state0 == 0 && digitalRead(PIR_PIN)) {
+  alarm_pir();
  }
 
  Time = Time.substring(3, 8); // Выделяем из строки минуты секунды

@@ -113,7 +113,7 @@
     }
    }
 
-   function ajax(ipHost, pagename, submit, loadBlock) {
+   function ajax(ipHost, pagename, submit, loadB) {
     var old_submit = submit.value;
     var d = new Date(); // for now
     var datetext = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
@@ -127,7 +127,7 @@
     xhttp.onload = function(e) {
      submit.value=old_submit;
      submit_disabled(false);
-     if (!loadBlock) loadBlock(ipHost,'block-'+ipHost, '');
+     if (!loadB) {loadBlock(ipHost,'block-'+ipHost, '');}
     }
    }
 

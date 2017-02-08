@@ -34,6 +34,7 @@
 #define BUZER_PIN 3   // Бузер
 #define LED_PIN 2     // RGB лента
 #define LED_COUNT 15  // Количество лед огней
+#define PIR_PIN 14    // RIR sensors
 ```
 [https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
 
