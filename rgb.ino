@@ -33,6 +33,7 @@ Ticker tickerBizz;
 #define BUZER_PIN 3   // Бузер
 #define LED_PIN 2     // RGB лента
 #define LED_COUNT 15  // Количество лед огней
+// If you use ESP8266 12 you can add
 #define PIR_PIN 14    // RIR sensors
 byte pirSensor = 0;    // 0 = PIR off; 1 = PIR on;
 

@@ -29,6 +29,7 @@ bool loadConfig() {
   ddnsName = root["ddnsName"].as<String>();
   ddnsPort = root["ddnsPort"];
 
+  timeLed = root["timeLed"];
   color = root["color"].as<String>();
   return true;
 }
@@ -51,6 +52,7 @@ bool saveConfig() {
   json["ddnsName"] = ddnsName;
   json["ddnsPort"] = ddnsPort;
 
+  json["timeLed"] = timeLed;
   json["color"] = color;
   File configFile = SPIFFS.open("/config.save.json", "w");
   if (!configFile) {
