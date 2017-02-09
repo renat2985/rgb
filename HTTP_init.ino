@@ -197,6 +197,7 @@ void handle_config() {
   json["timeLed"] = timeLed;  //  Время работы
   json["times1"] = times1;  // Время 1
   json["times2"] = times2;  // Время 2
+  json["ip"] = WiFi.localIP().toString();
   json["time"] = XmlTime();  // Текущее время
   json["state"] = state0;  // Статус
   json["lang"]= Language; // Язык
