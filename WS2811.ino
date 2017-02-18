@@ -9,6 +9,19 @@ void initRGB() {
   // ws2812fx.start();
 }
 
+// Led count
+void handle_ledCount() {
+  ledCount = HTTP.arg("num").toInt();
+
+  Adafruit_NeoPixel ws2812fx = Adafruit_NeoPixel();
+  ws2812fx.updateLength(ledCount);
+  ws2812fx.updateType(NEO_GRB + NEO_KHZ800);
+  ws2812fx.setPin(PIR_PIN);
+
+  saveConfig();
+  HTTP.send(200, "text/plain", "OK");
+}
+
 void LedRGB() {
   for (uint8_t i = 0; i < HTTP.args(); i++) {
     if (HTTP.argName(i) == "c") {

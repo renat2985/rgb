@@ -4,7 +4,7 @@
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="css/build.css">
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+<link rel="stylesheet" type="text/css" href="css/style.css"> -->
   <script type="text/javascript" src="js/function.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Options page</title>
@@ -113,16 +113,6 @@
     toggle('pop-up');
     set_rgb(submit,t,'off');
    }
-   function set_time1(submit){
-    send_request(submit,'/times1?time1='+val('time1'));
-   }
-   function set_time2(submit){
-    send_request(submit,'/times2?time2='+val('time2'));
-   }
-   function set_mode(submit){
-    toggle('pop-up');
-    mode = submit.value;
-   }
   </script>
  </head>
  <body onload="load('first');">
@@ -138,7 +128,7 @@
      <a class="btn btn-block btn-danger" id="btn-devices" href="/">{{LangDevices}}</a>
      <a class="btn btn-block btn-default" href="/setup.htm">{{LangSetting3}}</a>
      <hr>
-     <div class="alert alert-dismissible alert-info {{g2342}}"><button class="close" onclick="setCookie('g2342','hidden',365,this);" type="button">×</button>{{LangIfttt1}}<span id="hide" class="hidden">{{LangIfttt2}}</span></div>
+     <div class="alert alert-dismissible alert-info {{g2342}}"><button class="close" onclick="hide('g2342',this);" type="button">×</button>{{LangIfttt1}}<span id="hide" class="hidden">{{LangIfttt2}}</span></div>
      <div class="row hidden" id="pop-up">
       <div class="col-sm-offset-3 col-sm-6 pop-up">
        <h5 class="alert-warning">{{LangTime10}}</h5>
@@ -174,7 +164,7 @@
       <img alt="" style="cursor:pointer;width:100%" src="/img/swatches.png" />
      </div>
      <canvas id="cs" style="display:none"></canvas>
-     <select class="btn btn-block btn-default" onchange="set_mode(this);">
+     <select class="btn btn-block btn-default" onchange="toggle('pop-up');mode=this.value;">
       <option value="0">Select Mode</option>
       <option value="0">Static</option>
       <option value="1">Blink</option>
@@ -230,25 +220,25 @@
        <h4>{{LangTime4}} 1:</h4>
        <input id="time1" value="{{times1}}" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control" placeholder="{{LangExample}}: 07:10:30">
        <div class="btn-group" style="width:100%">
-        <input class="btn btn-success" style="width:70%" value="{{LangSave}}" onclick="set_time1(this);" type="button">
-        <input class="btn btn-default" style="width:30%" value="{{LangOff.}}" onclick="val('time1',' ');set_time1(this);" type="button">
+        <input class="btn btn-success" style="width:70%" value="{{LangSave}}" onclick="send_request(this,'/times1?t='+val('time1'));" type="button">
+        <input class="btn btn-default" style="width:30%" value="{{LangOff.}}" onclick="val('time1',' ');send_request(this,'/times1?t=');" type="button">
        </div>
        <h4>{{LangTime4}} 2:</h4>
        <input id="time2" value="{{times2}}" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control" placeholder="{{LangExample}}: 07:10:30">
        <div class="btn-group" style="width:100%">
-        <input class="btn btn-success" style="width:70%" value="{{LangSave}}" onclick="set_time2(this);" type="button">
-        <input class="btn btn-default" style="width:30%" value="{{LangOff.}}" onclick="val('time2',' ');set_time2(this);" type="button">
+        <input class="btn btn-success" style="width:70%" value="{{LangSave}}" onclick="send_request(this,'/times2?t='+val('time2'));" type="button">
+        <input class="btn btn-default" style="width:30%" value="{{LangOff.}}" onclick="val('time2',' ');send_request(this,'/timtes2?t=');" type="button">
        </div>
       </div>
       <div class="col-sm-6">
        <div class="alert alert-dismissible alert-warning">{{LangTime6}}</div>
-       <div class="alert alert-dismissible alert-info {{g2532}}"><button class="close" onclick="setCookie('g2532','hidden',365,this);" type="button">×</button>
+       <div class="alert alert-dismissible alert-info {{g2532}}"><button class="close" onclick="hide('g2532',this);" type="button">×</button>
         {{LangIfttt3}}
        </div>
       </div>
      </div>
+     <h2>{{LangTime5}}</h2>
      <div class="row">
-      <h2>{{LangTime5}}</h2>
       <div class="col-sm-8">
        <div class="alert alert-dismissible alert-info">{{LangTime7}}</div>
       </div>
@@ -261,6 +251,40 @@
       </div>
      </div>
      <hr>
+<!--       <div class="{{g74392}}">
+      <button class="close" onclick="hide('g74392',this);" type="button">×</button>
+      <h2>Led Count</h2>
+      <div class="row">
+       <div class="col-sm-4">
+         <input id="led-count" value="{{ledCount}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
+         <input class="btn btn-block btn-success" value="{{LangSave}}" onclick="send_request(this,'/ledCount?num='+val('led-count'));alert('{{LangReset2}}');" type="button">
+       </div>
+       <div class="col-sm-8">
+        <div class="alert alert-dismissible alert-info">Количество led огней.</div>
+       </div>
+      </div>
+      <hr>
+           </div> -->
+     <div class="{{g8359}}">
+      <button class="close" onclick="hide('g8359',this);" type="button">×</button>
+      <h2>PIR Sensor</h2>
+      <div class="row">
+       <div class="col-sm-8">
+        <div class="alert alert-dismissible alert-info">Время в секундах как долго будет гореть LED от сенсора на движения. Если PIR сенсор не покдючен, значение должно быть 0.</div>
+       </div>
+       <div class="col-sm-4">
+        <div class="input-group">
+         <input id="pir-time" value="{{pirTime}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
+         <span class="input-group-addon">{{LangSec}}</span>
+        </div>
+        <div class="btn-group" style="width:100%">
+         <input class="btn btn-success" style="width:60%" value="{{LangSave}}" onclick="send_request(this,'/pir?t='+val('pir-time'));" type="button">
+         <input class="btn btn-default" style="width:40%" value="{{LangOff.}}" onclick="val('pir-time','0');send_request(this,'/pir?t=0');" type="button">
+        </div>
+       </div>
+      </div>
+      <hr>
+     </div>
      <a class="btn btn-block btn-default" href="/setup.htm">{{LangSetting3}}</a>
     </div>
    </div>

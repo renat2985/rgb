@@ -31,6 +31,8 @@ bool loadConfig() {
 
   timeLed = root["timeLed"];
   color = root["color"].as<String>();
+  pirTime = root["pirTime"];
+  ledCount = root["ledCount"];
   return true;
 }
 
@@ -54,6 +56,8 @@ bool saveConfig() {
 
   json["timeLed"] = timeLed;
   json["color"] = color;
+  json["pirTime"] = pirTime;
+  json["ledCount"] = ledCount;
   File configFile = SPIFFS.open("/config.save.json", "w");
   if (!configFile) {
     //Serial.println("Failed to open config file for writing");

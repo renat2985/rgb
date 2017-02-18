@@ -23,6 +23,12 @@
 
 ###[Arduino Linux (Video)](https://www.youtube.com/watch?v=1TAHlRqZ46k)
 
+####Used Libraries
+- Arduino core for ESP8266 WiFi chip https://github.com/esp8266/Arduino
+- Arduino ESP8266 filesystem uploader https://github.com/esp8266/arduino-esp8266fs-plugin
+- C++ JSON library for IoT. Simple and efficient. https://github.com/bblanchon/ArduinoJson
+- Neo Pixels!  https://github.com/adafruit/Adafruit_NeoPixel
+- WS2812 FX Library for Arduino and ESP8266  https://github.com/kitesurfer1404/WS2812FX
 
 ##Work example (Video)
 
@@ -33,10 +39,9 @@
 #define TACH_PIN 0    // Кнопка управления
 #define BUZER_PIN 3   // Бузер
 #define LED_PIN 2     // RGB лента
-#define LED_COUNT 15  // Количество лед огней
+int ledCount = 15;    // Количество лед огней
 // If you use ESP8266 12 you can add
 #define PIR_PIN 14    // RIR sensors
-byte pirSensor = 0;    // 0 = PIR off; 1 = PIR on;
 ```
 [https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
 

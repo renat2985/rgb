@@ -18,7 +18,7 @@ void alarm_clock() {
 }
 
 void alarm_pir() {
-  tickerSetLow.attach(timeLed, setT1, 0);
+  tickerSetLow.attach(pirTime, setT1, 0);
   state0 = 0;
   chaing = 1;
 }

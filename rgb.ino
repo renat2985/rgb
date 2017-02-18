@@ -1,3 +1,8 @@
+/*
+ * esp8266 and WS2811/WS2812/NeoPixel LEDs (Arduino) https://github.com/renat2985/rgb
+ * Arduino core for ESP8266 WiFi chip https://github.com/esp8266/Arduino
+ * Arduino ESP8266 filesystem uploader https://github.com/esp8266/arduino-esp8266fs-plugin
+ */
 #include <ESP8266WiFi.h>             //Содержится в пакете
 #include <ESP8266WebServer.h>        //Содержится в пакете
 #include <ESP8266SSDP.h>             //Содержится в пакете
@@ -9,8 +14,9 @@
 #include <ESP8266httpUpdate.h>       //Содержится в пакете
 #include <ESP8266HTTPClient.h>       //Содержится в пакете
 #include <DNSServer.h>               //Содержится в пакете
-#include <ArduinoJson.h>             //
-#include <Adafruit_NeoPixel.h>       //
+
+#include <ArduinoJson.h>             //https://github.com/bblanchon/ArduinoJson
+#include <Adafruit_NeoPixel.h>       //https://github.com/adafruit/Adafruit_NeoPixel
 #include <WS2812FX.h>                //https://github.com/kitesurfer1404/WS2812FX
 
 // Настройки DNS сервера и адреса точки в режиме AP
@@ -32,21 +38,20 @@ Ticker tickerBizz;
 #define TACH_PIN 0    // Кнопка управления
 #define BUZER_PIN 3   // Бузер
 #define LED_PIN 2     // RGB лента
-#define LED_COUNT 15  // Количество лед огней
 // If you use ESP8266 12 you can add
 #define PIR_PIN 14    // RIR sensors
-byte pirSensor = 0;    // 0 = PIR off; 1 = PIR on;
 
 #define DEFAULT_COLOR 0xff6600
 #define DEFAULT_BRIGHTNESS 255
 #define DEFAULT_SPEED 100
 #define DEFAULT_MODE FX_MODE_STATIC
 
-#define BRIGHTNESS_STEP 15              // in/decrease brightness by this amount per click
-#define SPEED_STEP 10                   // in/decrease brightness by this amount per click
+#define BRIGHTNESS_STEP 15      // in/decrease brightness by this amount per click
+#define SPEED_STEP 10           // in/decrease brightness by this amount per click
+int ledCount = 15;              // Количество лед огней
+WS2812FX ws2812fx = WS2812FX(ledCount, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 String modes = "";
-WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // Определяем строку для json config
 String jsonConfig = "";
@@ -76,7 +81,8 @@ int timeLed = 60;               // Время работы будильника
 // Переменные для ddns
 String ddns = "";               // url страницы тестирования WanIP
 String ddnsName = "";           // адрес сайта ddns
-int ddnsPort = 8080; // порт для обращение к устройству с wan
+int ddnsPort = 8080;            // порт для обращение к устройству с wan
+int pirTime = 0;                // 0 = PIR off; >1 = PIR on;
 
 volatile int chaing = LOW;
 volatile int chaing1 = LOW;
@@ -103,6 +109,13 @@ void setup() {
  FS_init();
  // Загружаем настройки из файла
  loadConfig();
+ //Обновляем количество LED
+
+ //Adafruit_NeoPixel ws2812fx = Adafruit_NeoPixel();
+ //ws2812fx.updateLength(ledCount);
+ //ws2812fx.updateType(NEO_GRB + NEO_KHZ800);
+ //ws2812fx.setPin(PIR_PIN);
+
  HTTPWAN = new ESP8266WebServer(ddnsPort);
  // Подключаем RGB
  initRGB();
@@ -172,7 +185,7 @@ void alert() {
  if (kolibrTime.compareTo(Time) == 0) {
   chaingtime = 1;
  }
- if (pirSensor == 1 && state0 == 0 && digitalRead(PIR_PIN)) {
+ if (pirTime > 0 && state0 == 0 && digitalRead(PIR_PIN)) {
   alarm_pir();
  }
 
