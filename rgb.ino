@@ -57,7 +57,7 @@ String modes = "";
 String jsonConfig = "";
 
 // Определяем переменные
-String module[]={"rgb", "gg"};
+String module[]={"rgb", "pir"};
 //,"sonoff","jalousie"};
 
 // Общие настройки модуля
