@@ -26,7 +26,7 @@ DNSServer dnsServer;
 // Web интерфейс для устройства
 ESP8266WebServer HTTP(80);
 //ESP8266WebServer HTTPWAN(ddnsPort);
-ESP8266WebServer *HTTPWAN;
+ESP8266WebServer HTTPWAN;
 ESP8266HTTPUpdateServer httpUpdater;
 // Для файловой системы
 File fsUploadFile;
@@ -116,7 +116,6 @@ void setup() {
  //ws2812fx.updateType(NEO_GRB + NEO_KHZ800);
  //ws2812fx.setPin(PIR_PIN);
 
- HTTPWAN = new ESP8266WebServer(ddnsPort);
  // Подключаем RGB
  initRGB();
  // Кнопка будет работать по прерыванию
@@ -141,7 +140,7 @@ void loop() {
  dnsServer.processNextRequest();
  HTTP.handleClient();
  delay(1);
- HTTPWAN->handleClient();
+ HTTPWAN.handleClient();
  delay(1);
  handleUDP();
  if (chaing && !chaing1) {

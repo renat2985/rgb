@@ -44,6 +44,11 @@ void LedActiv() {
   HTTP.send(200, "text/plain", "OK");
 }
 
+void LedActivWan() {
+  chaing = 1;
+  sound(BUZER_PIN, volume, 1000, 100);
+  HTTPWAN.send(200, "text/plain", "OK");
+}
 // Сохраняет все настройки в файле
 void handle_save_config() {
   saveConfig();
@@ -134,6 +139,7 @@ void handle_pir() {
 }
 
 void HTTP_init(void) {
+  HTTPWAN = ESP8266WebServer (ddnsPort);
   // SSDP дескриптор
   HTTP.on("/description.xml", HTTP_GET, []() {
     SSDP.schema(HTTP.client());
@@ -148,7 +154,7 @@ void HTTP_init(void) {
   HTTP.serveStatic("/img/", SPIFFS, "/img/", "max-age=31536000"); // кеширование на 1 год
   //HTTP.serveStatic("/lang/", SPIFFS, "/lang/", "max-age=31536000"); // кеширование на 1 год
   HTTP.on("/led", LedActiv);                // задать цвет ленты и включить.
-  HTTPWAN->on("/led", LedActiv);                // задать цвет ленты и включить.
+  HTTPWAN.on("/led", LedActivWan);                // задать цвет ленты и включить.
   HTTP.on("/timeLed", handle_time_led);      // установка времени работы светодиодов
   HTTP.on("/wifi.scan.json", handle_wifi_scan);      // сканирование ssid
   HTTP.on("/timeZone", handle_time_zone);    // Установка времянной зоны
@@ -174,7 +180,7 @@ void HTTP_init(void) {
   //HTTP.on("/devices", inquirySSDP);         // Блок для
   // Запускаем HTTP сервер
   HTTP.begin();
-  HTTPWAN->begin();
+  HTTPWAN.begin();
 }
 
 // Получение текущего времени

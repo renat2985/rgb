@@ -70,21 +70,21 @@ void LedRGB() {
 
 
 int LedRGBwan() {
-  for (uint8_t i = 0; i < HTTPWAN->args(); i++) {
-    if (HTTPWAN->argName(i) == "c") {
-      uint32_t tmp = (uint32_t) strtol(&HTTPWAN->arg(i)[0], NULL, 16);
+  for (uint8_t i = 0; i < HTTPWAN.args(); i++) {
+    if (HTTPWAN.argName(i) == "c") {
+      uint32_t tmp = (uint32_t) strtol(&HTTPWAN.arg(i)[0], NULL, 16);
       if (tmp >= 0x000000 && tmp <= 0xFFFFFF) {
         ws2812fx.setColor(tmp);
       }
     }
 
-    if (HTTPWAN->argName(i) == "m") {
-      uint8_t tmp = (uint8_t) strtol(&HTTPWAN->arg(i)[0], NULL, 10);
+    if (HTTPWAN.argName(i) == "m") {
+      uint8_t tmp = (uint8_t) strtol(&HTTPWAN.arg(i)[0], NULL, 10);
       ws2812fx.setMode(tmp % ws2812fx.getModeCount());
     }
 
-    if (HTTPWAN->argName(i) == "b") {
-      if (HTTPWAN->arg(i)[0] == '-') {
+    if (HTTPWAN.argName(i) == "b") {
+      if (HTTPWAN.arg(i)[0] == '-') {
         ws2812fx.decreaseBrightness(BRIGHTNESS_STEP);
       } else {
         ws2812fx.increaseBrightness(BRIGHTNESS_STEP);
@@ -96,14 +96,14 @@ int LedRGBwan() {
     }
   }
 
-  t = HTTPWAN->arg("time").toInt();
-  s = HTTPWAN->arg("sound").toInt();
+  t = HTTPWAN.arg("time").toInt();
+  s = HTTPWAN.arg("sound").toInt();
   tickerSetLow.attach(t, setT1, 0);
   sound(BUZER_PIN, volume, 1000, s * 100);
   state0 = 0;
   chaing = 1;
 
-  HTTPWAN->send(200, "text/plain", "OK");
+  HTTPWAN.send(200, "text/plain", "OK");
 }
 
 
