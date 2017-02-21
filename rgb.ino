@@ -69,8 +69,7 @@ String ssdpName = "jalousie";  // SSDP
 String Language = "ru";         // язык web интерфейса
 String Lang = "";               // файлы языка web интерфейса
 int timeZone = 3;               // часовой пояс GTM
-String kolibrTime = "03:00:00"; // Время колибровки часов
-volatile int chaingtime = LOW;
+String calibrationTime = "03:00:00"; // Время колибровки часов
 // Переменные для обнаружения модулей
 String Devices = "";            // Поиск IP адресов устройств в сети
 String DevicesList = "";            // IP адреса устройств в сети
@@ -83,11 +82,12 @@ String ddns = "";               // url страницы тестирования
 String ddnsName = "";           // адрес сайта ddns
 int ddnsPort = 8080;            // порт для обращение к устройству с wan
 int pirTime = 0;                // 0 = PIR off; >1 = PIR on;
+int state0 = 0;
+int task = 0;
 
 volatile int chaing = LOW;
 volatile int chaing1 = LOW;
 int volume = 512;// max =1023
-int state0 = 0;
 int t = 300;
 int s = 5;
 String color = "ff6600";
@@ -165,9 +165,16 @@ void loop() {
   }
   interrupts();
  }
- if (chaingtime) {
-  Time_init(timeZone);
-  chaingtime = 0;
+
+ switch (task) {
+  case 1:
+   Time_init(timeZone);
+   task = 0;
+   break;
+  case 2:
+   ip_wan();
+   task = 0;
+   break;
  }
 
  ws2812fx.service();
@@ -182,8 +189,8 @@ void alert() {
  if (times2.compareTo(Time) == 0) {
   alarm_clock();
  }
- if (kolibrTime.compareTo(Time) == 0) {
-  chaingtime = 1;
+ if (calibrationTime.compareTo(Time) == 0) {
+  task = 1;
  }
  if (pirTime > 0 && state0 == 0 && digitalRead(PIR_PIN)) {
   alarm_pir();
@@ -192,7 +199,7 @@ void alert() {
  Time = Time.substring(3, 8); // Выделяем из строки минуты секунды
  // В 15, 30, 45 минут каждого часа идет запрос на сервер ddns
  if ((Time == "00:00" || Time == "15:00" || Time == "30:00" || Time == "45:00") && ddns != "") {
-  ip_wan();
+  task=2;
  }
 }
 
