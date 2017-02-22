@@ -5,11 +5,11 @@ void SSDP_init(void) {
   SSDP.setHTTPPort(80);
   SSDP.setName(ssdpName);
   SSDP.setSerialNumber("001788102201");
-  SSDP.setURL("/");
+  SSDP.setURL("/device.htm");
   SSDP.setModelName("jalousie");
   SSDP.setModelNumber("000000000001");
   SSDP.setModelURL("https://github.com/tretyakovsa/jaluzi");
-  SSDP.setManufacturer("Tretyakov Sergey");
+  SSDP.setManufacturer("Tretyakov Sergey, Kevrels Renats");
   SSDP.setManufacturerURL("http://www.esp8266-arduinoide.ru");
   SSDP.begin();
 }
