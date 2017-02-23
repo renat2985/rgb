@@ -100,6 +100,7 @@ WiFiUDP udp;
 
 void setup() {
  //Serial.begin(115200);
+ sensor_init();
  pinMode(PIR_PIN, INPUT);
  pinMode(TACH_PIN, INPUT);
  pinMode(LED_PIN, OUTPUT);
