@@ -42,7 +42,7 @@
 int ledCount = 15;    // Количество лед огней
 // If you use ESP8266 12 you can add
 #define PIR_PIN 14    // RIR sensors
-#define A0            // /analog.json or /chart.htm#analog
+// PIN ADC (A0)       // URL: /analog.json or /chart.htm#analog
 ```
 [https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
 
