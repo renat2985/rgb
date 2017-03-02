@@ -63,13 +63,6 @@ void handle_time_led() {
   HTTP.send(200, "text/plain", "OK");
 }
 
-// Установка времянной зоны
-void handle_time_zone() {
-  timeZone = HTTP.arg("timeZone").toInt();
-  Time_init(timeZone);
-  saveConfig();
-  HTTP.send(200, "text/plain", "OK");
-}
 // Установка языка
 void handle_leng() {
   Language = HTTP.arg("set");
@@ -108,13 +101,6 @@ void handle_ssidap() {
   ssidApPass = HTTP.arg("ssidApPass");
   saveConfig();
   HTTP.send(200, "text/plain", "OK");
-}
-
-//Время из сети
-void handle_time() {
-  Time_init(timeZone);
-  String Time = XmlTime();
-  HTTP.send(200, "text/plain", "OK: " + Time);
 }
 
 //Таймер 1
@@ -157,8 +143,6 @@ void HTTP_init(void) {
   HTTPWAN.on("/led", LedActivWan);                // задать цвет ленты и включить.
   HTTP.on("/timeLed", handle_time_led);      // установка времени работы светодиодов
   HTTP.on("/wifi.scan.json", handle_wifi_scan);      // сканирование ssid
-  HTTP.on("/timeZone", handle_time_zone);    // Установка времянной зоны
-  HTTP.on("/Time", handle_time);            // Синхронизировать время из сети
   HTTP.on("/times1", handle_time_1);        // Установить время 1
   HTTP.on("/times2", handle_time_2);        // Установить время 2
   HTTP.on("/pir", handle_pir);        // Устанавливаем время работы pir сенсра

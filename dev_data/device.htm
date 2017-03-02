@@ -2,6 +2,10 @@
 <html>
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <script src="js/build.chart.js" charset="utf-8"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="css/chartist.min.css">
+<script src="js/chartist.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/chart.js"></script> -->
   <link rel="stylesheet" type="text/css" href="css/build.css">
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css"> -->
@@ -19,15 +23,9 @@
     // click function
     img.addEventListener('click', function(e){
      // chrome
-     if(e.offsetX) {
-      x = e.offsetX;
-      y = e.offsetY;
-     }
+     if(e.offsetX) {x=e.offsetX;y=e.offsetY;}
      // firefox
-     else if(e.layerX) {
-      x = e.layerX;
-      y = e.layerY;
-     }
+     else if(e.layerX) {x=e.layerX;y=e.layerY;}
      useCanvas(canvas,img,function(){
       // get image data
       var p = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
@@ -39,23 +37,21 @@
     // preview function mousemove
     img.addEventListener('mousemove', function(e){
      // chrome
-     if(e.offsetX) {
-      x = e.offsetX;
-      y = e.offsetY;
-     }
+     if(e.offsetX) {x=e.offsetX;y=e.offsetY;}
      // firefox
-     else if(e.layerX) {
-      x = e.layerX;
-      y = e.layerY;
-     }
+     else if(e.layerX) {x=e.layerX;y=e.layerY;}
      useCanvas(canvas,img,function(){
       var p = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
       preview.style.background = "#"+rgbToHex(p[0],p[1],p[2]);
      });
     },false);
     document.body.style.backgroundColor="#"+jsonResponse.color;
-    if (jsonResponse.state=='0') {blockval=jsonResponse.LangOn;} else {blockval=jsonResponse.LangOff;}
-    val('off-on', blockval);
+    val('off-on',(jsonResponse.state=='0'?jsonResponse.LangOn:jsonResponse.LangOff));
+    if (stage != 'next') {
+     //if (!jsonResponse.g72895) LoadChart('ct-chart','sensor');
+     if (!jsonResponse.g85723) LoadChart('ct-analog','analog');
+    }
+    if (!jsonResponse.g42843) LoadTimer("timer-list");
    }
    function useCanvas(el,image,callback){
     el.width = image.width;
@@ -116,7 +112,7 @@
   </script>
  </head>
  <body onload="load('first');">
-  <div class="container">
+  <div class="container loader-bg">
    <div class="row hidden" id="content">
     <h1 id="title">{{LangOptions1}}</h1>
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
@@ -131,7 +127,7 @@
      <div class="alert alert-dismissible alert-info {{g2342}}"><button class="close" onclick="hide('g2342',this);" type="button">×</button>{{LangIfttt1}}<span id="hide" class="hidden">{{LangIfttt2}}</span></div>
      <div class="row hidden" id="pop-up">
       <div class="col-sm-offset-3 col-sm-6 pop-up">
-       <h5 class="alert-warning">{{LangTime10}}</h5>
+       <h5 class="alert-warning">{{LangTime4}}</h5>
        <h4>{{LangTime8}}</h4>
        <div class="btn-group">
         <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,60)" value="1">
@@ -212,59 +208,34 @@
       <option value="43">Fireworks random</option>
       <option value="44">Merry Christmas</option>
      </select>
-     <input type="button" class="btn btn-block btn-primary" onclick="send_request(this,'/led');" id="off-on" value="{{LangOnOff}}">
+     <input type="button" class="btn btn-block btn-lg btn-primary" onclick="send_request(this,'/led');" id="off-on" value="{{LangOnOff}}">
      <hr>
-     <h2>{{LangTime3}}</h2>
-     <div class="row">
-      <div class="col-sm-6">
-       <h4>{{LangTime4}} 1:</h4>
-       <input id="time1" value="{{times1}}" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control" placeholder="{{LangExample}}: 07:10:30">
-       <div class="btn-group" style="width:100%">
-        <input class="btn btn-success" style="width:70%" value="{{LangSave}}" onclick="send_request(this,'/times1?t='+val('time1'));" type="button">
-        <input class="btn btn-default" style="width:30%" value="{{LangOff.}}" onclick="val('time1',' ');send_request(this,'/times1?t=');" type="button">
-       </div>
-       <h4>{{LangTime4}} 2:</h4>
-       <input id="time2" value="{{times2}}" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="form-control" placeholder="{{LangExample}}: 07:10:30">
-       <div class="btn-group" style="width:100%">
-        <input class="btn btn-success" style="width:70%" value="{{LangSave}}" onclick="send_request(this,'/times2?t='+val('time2'));" type="button">
-        <input class="btn btn-default" style="width:30%" value="{{LangOff.}}" onclick="val('time2',' ');send_request(this,'/timtes2?t=');" type="button">
-       </div>
-      </div>
-      <div class="col-sm-6">
-       <div class="alert alert-dismissible alert-warning">{{LangTime6}}</div>
-       <div class="alert alert-dismissible alert-info {{g2532}}"><button class="close" onclick="hide('g2532',this);" type="button">×</button>
-        {{LangIfttt3}}
-       </div>
-      </div>
+     <h2>{{LangTimer}}</h2>
+     <div class="alert alert-dismissible alert-warning {{g42843}}"><button class="close" onclick="hide('g42843',this);" type="button">×</button>
+      <ul id="timer-list"><li>{{LangLoading}}</li></ul>
      </div>
-     <h2>{{LangTime5}}</h2>
-     <div class="row">
-      <div class="col-sm-8">
-       <div class="alert alert-dismissible alert-info">{{LangTime7}}</div>
-      </div>
-      <div class="col-sm-4">
-       <div class="input-group">
-        <input id="led" value="{{timeLed}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
-        <span class="input-group-addon">{{LangSec}}</span>
-       </div>
-       <input class="btn btn-block btn-success" value="{{LangSave}}" onclick="send_request(this,'/timeLed?t='+val('led'));" type="button">
-      </div>
-     </div>
+     <a class="btn btn-block btn-default" href="/timer.htm">{{LangTime3}}</a>
      <hr>
-<!--       <div class="{{g74392}}">
-      <button class="close" onclick="hide('g74392',this);" type="button">×</button>
-      <h2>Led Count</h2>
-      <div class="row">
-       <div class="col-sm-4">
-         <input id="led-count" value="{{ledCount}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
-         <input class="btn btn-block btn-success" value="{{LangSave}}" onclick="send_request(this,'/ledCount?num='+val('led-count'));alert('{{LangReset2}}');" type="button">
-       </div>
-       <div class="col-sm-8">
-        <div class="alert alert-dismissible alert-info">Количество led огней.</div>
-       </div>
-      </div>
+     <!--       <div class="{{g74392}}">
+<button class="close" onclick="hide('g74392',this);" type="button">×</button>
+<h2>Led Count</h2>
+<div class="row">
+<div class="col-sm-4">
+<input id="led-count" value="{{ledCount}}" class="form-control" pattern="[0-9]*[.,]?[0-9]+">
+<input class="btn btn-block btn-success" value="{{LangSave}}" onclick="send_request(this,'/ledCount?num='+val('led-count'));alert('{{LangReset2}}');" type="button">
+</div>
+<div class="col-sm-8">
+<div class="alert alert-dismissible alert-info">Количество led огней.</div>
+</div>
+</div>
+<hr>
+</div> -->
+     <div class="{{g85723}}">
+      <button class="close" onclick="hide('g85723',this);" type="button">×</button>
+      <a href="/chart.htm#analog" target="_blank" class="close"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAM0lEQVQ4jWNgQAN+fgH/ScHo+oeiAUSbjMOi4WQAhsSAG0ByNFLNAIJOJlqCVAMGLPMAAM5NI5iNV9vsAAAAAElFTkSuQmCC" alt=""></a>
+      <div id="ct-analog" style="height:200px;margin-left:-20px"></div>
       <hr>
-           </div> -->
+     </div>
      <div class="{{g8359}}">
       <button class="close" onclick="hide('g8359',this);" type="button">×</button>
       <h2>{{LangPir1}}</h2>

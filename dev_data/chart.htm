@@ -2,9 +2,9 @@
 <html>
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="css/chartist.min.css">
   <script src="js/build.chart.js" charset="utf-8"></script>
-  <!-- <script src="js/chartist.min.js" charset="utf-8"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="css/chartist.min.css">
+<script src="js/chartist.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/chart.js"></script> -->
   <link rel="stylesheet" type="text/css" href="css/build.css">
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -16,12 +16,12 @@
 json file test.json: {"title":"Temp","refresh":2000, "points":10, "data":[21,55], "data2":[21,55], "data3":[21,55], "label":[3,5]} -->
   <script type="text/javascript">
    function handleServerResponse(){
-    chartStart('ct-chart',window.location.hash.substring(1));
+    LoadChart('ct-chart',window.location.hash.substring(1));
    }
   </script>
  </head>
  <body onload="load('first');">
-  <div class="container">
+  <div class="container loader-bg">
    <div class="row hidden" id="content">
     <h1 id="title">{{LangChart}}</h1>
     <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">

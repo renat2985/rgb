@@ -80,6 +80,9 @@ h5 {
 #content {
  text-align:center;
 }
+#content ul li {
+ text-align:left;
+}
 #title {
  margin:50px;
 }
@@ -89,7 +92,7 @@ h5 {
 }
 
 /* loader */
-.loader {
+.loader, .loader-bg:after {
  border:15px solid #fff;
  border-top:15px solid #FF851B;
  border-radius:50%;
@@ -99,10 +102,18 @@ h5 {
  display:block;
  margin:0 auto;
 }
+.loader-bg:after {
+ content: '';
+ position:fixed;
+ left:49%;
+ top:150px;
+ z-index:-999;
+}
 @keyframes spin {
  0% { transform:rotate(0deg); }
  100% { transform:rotate(360deg); }
 }
+
 ul#history {
  text-indent: .5em;
  border-left: .25em solid #c0c7ca;
@@ -120,4 +131,9 @@ ul#history {
 }
 .ct-label{
  font-size:10px;
+}
+#timer-list,.timer-list  {
+ -webkit-columns:2;
+ -moz-columns:2;
+ columns:2;
 }

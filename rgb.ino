@@ -81,6 +81,7 @@ int timeLed = 60;               // Время работы будильника
 String ddns = "";               // url страницы тестирования WanIP
 String ddnsName = "";           // адрес сайта ddns
 int ddnsPort = 8080;            // порт для обращение к устройству с wan
+String jsonTimer ="{}";
 int pirTime = 0;                // 0 = PIR off; >1 = PIR on;
 int state0 = 0;
 int task = 0;
@@ -131,7 +132,7 @@ void setup() {
  //запускаем SSDP сервис
  SSDP_init();
  // Включаем время из сети
- Time_init(timeZone);
+ Time_init();
  // Будет выполняться каждую секунду проверяя будильники
  tickerAlert.attach(1, alert);
  ip_wan();
@@ -168,7 +169,7 @@ void loop() {
 
  switch (task) {
   case 1:
-   Time_init(timeZone);
+   Time_init();
    task = 0;
    break;
   case 2:
