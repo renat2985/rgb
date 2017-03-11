@@ -86,6 +86,7 @@
  "LangColor2":"Зеленый",
  "LangColor3":"Синий",
  "LangSpeed":"Скорость",
+ "LengBrightness":"Яркость",
  "LangPir1":"Датчик движения",
  "LangPir2":"Время в секундах как долго будет гореть LED от сенсора на движения. Если PIR сенсор не подключен, значение должно быть 0.",
  "LangIfttt3":"Больше настроек вы можете получить на <a target=\"_blank\" href=\"https://ifttt.com/create/if-date_and_time?sid=1\">ifttt.com</a>."

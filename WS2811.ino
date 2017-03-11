@@ -39,13 +39,21 @@ void LedRGB() {
       ws2812fx.setMode(tmp % ws2812fx.getModeCount());
     }
 
+
+
+   // if (HTTP.argName(i) == "b") {
+   //   if (HTTP.arg(i)[0] == '-') {
+   //     ws2812fx.decreaseBrightness(BRIGHTNESS_STEP);
+   //   }
+   //  if (HTTP.arg(i)[0] == '+') {
+   //     ws2812fx.increaseBrightness(BRIGHTNESS_STEP);
+   //   }
+   // }
+
     if (HTTP.argName(i) == "b") {
-      if (HTTP.arg(i)[0] == '-') {
-        ws2812fx.decreaseBrightness(BRIGHTNESS_STEP);
-      } else {
-        ws2812fx.increaseBrightness(BRIGHTNESS_STEP);
-      }
+      ws2812fx.setBrightness(HTTP.arg("b").toInt());
     }
+
 
     if (HTTP.argName(i) == "s") {
       ws2812fx.setSpeed(HTTP.arg("s").toInt());

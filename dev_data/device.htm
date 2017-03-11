@@ -85,9 +85,9 @@
     document.body.style.background="#"+nex_color;
     //server = "/rgb?r="+r+"&g="+g+"&b="+b+"&t="+t+"&s="+val('sound')*10;
     if (mode == 'off') {
-     server = "/set?c="+nex_color+"&time="+t+"&sound="+val('sound')*10+"&s="+val('speed');
+     server = "/set?c="+nex_color+"&time="+t+"&sound="+val('sound')*10+"&s="+val('speed')+"&b="+val('brightness');
     } else {
-     server = "/set?m="+mode+"&time="+t+"&sound="+val('sound')*10+"&s="+val('speed');
+     server = "/set?m="+mode+"&time="+t+"&sound="+val('sound')*10+"&s="+val('speed')+"&b="+val('brightness');
     }
     document.getElementById('url1').innerHTML='<a href="http://'+document.domain+server+'" target="_blank">http://'+document.domain+server+'<\/a>';
     if(navigator.onLine) {
@@ -151,6 +151,8 @@
        </div>
        <h4>{{LangSpeed}}</h4>
        <input id="speed" class="form-control" type="range" min="0" max="255" step="1" value="100">
+       <h4>{{LengBrightness}}</h4>
+       <input id="brightness" class="form-control" type="range" min="0" max="255" step="1" value="255">
        <hr>
        <input class="btn btn-block btn-default" value="{{LangCancel}}" onclick="toggle('pop-up');" type="button">
       </div>

@@ -11,18 +11,18 @@
    <h5 class="alert-warning">{{LangTime4}}</h5>
    <h4>{{LangTime8}}</h4>
    <div class="btn-group">
-    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=60&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="1">
-    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=300&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="5">
-    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=600&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="10">
-    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=1500&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="15">
-    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=1800&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="30">
+    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=60&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'),thisId);" value="1">
+    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=300&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'),thisId);" value="5">
+    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=600&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'),thisId);" value="10">
+    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=1500&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'),thisId);" value="15">
+    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=1800&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'),thisId);" value="30">
    </div>
    <br>
    <div class="btn-group">
-    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=3600&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="60">
-    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=5400&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="1:30">
-    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=7200&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="2:00">
-    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=10800&sound='+val('sound')*10+'&s='+val('speed'),thisId);" value="3:00">
+    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=3600&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'),thisId);" value="60">
+    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=5400&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'),thisId);" value="1:30">
+    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=7200&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'),thisId);" value="2:00">
+    <input type="button" class="btn btn-primary btn-sm" onclick="toggle('pop-up-{{ip}}');ajax('{{ip}}',colorUrl+'&time=10800&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'),thisId);" value="3:00">
    </div>
    <hr>
    <h4>{{LangTime5}}</h4>
@@ -32,6 +32,8 @@
    </div>
    <h4>{{LangSpeed}}</h4>
    <input id="speed" class="form-control" type="range" min="0" max="255" step="1" value="100">
+   <h4>{{LengBrightness}}</h4>
+   <input id="brightness" class="form-control" type="range" min="0" max="255" step="1" value="255">
    <hr>
    <input class="btn btn-block btn-default" value="{{LangCancel}}" onclick="toggle('pop-up-{{ip}}');" type="button">
   </div>
