@@ -18,17 +18,23 @@ function load(stage){
    xmlHttp.send(null);
    xmlHttp.onload = function(e) {
     var jsonResponse2=JSON.parse(xmlHttp.responseText);
-    jsonResponse = Object.assign(jsonResponse1, jsonResponse2);
-    var theCookies = document.cookie.split(';');
-    for (var i = 1 ; i <= theCookies.length; i++) {
-     jsonResponse[theCookies[i-1].split("=")[0].replace(/^ /,'')] = theCookies[i-1].split("=")[1];
-    }
-    if (stage == 'first') {
-     if (jsonResponse.ip=='0.0.0.0') { toggle('btn-devices'); }
-     toggle('content');
-     loadBlock(jsonResponse);
-    } else {
-     handleServerResponse(stage,jsonResponse);
+    xmlHttp.open('GET','/modules.json',true);
+    xmlHttp.send(null);
+    xmlHttp.onload = function(e) {
+     var modules=JSON.parse(xmlHttp.responseText);
+     jsonResponse = Object.assign(jsonResponse1, jsonResponse2);
+     jsonResponse.module = modules.module;
+     var theCookies = document.cookie.split(';');
+     for (var i = 1 ; i <= theCookies.length; i++) {
+      jsonResponse[theCookies[i-1].split("=")[0].replace(/^ /,'')] = theCookies[i-1].split("=")[1];
+     }
+     if (stage == 'first') {
+      if (jsonResponse.ip=='0.0.0.0') { toggle('btn-devices'); }
+      toggle('content');
+      loadBlock(jsonResponse);
+     } else {
+      handleServerResponse(stage,jsonResponse);
+     }
     }
    }
   }
@@ -39,11 +45,21 @@ function loadBlock(jsonResponse) {
  var data = document.getElementsByTagName('body')[0].innerHTML;
  var new_string;
  for (var key in jsonResponse) {
-  new_string = data.replace(new RegExp('{{'+key+'}}', 'g'), jsonResponse[key]);
-  data = new_string;
+  data = data.replace(new RegExp('{{'+key+'}}', 'g'), jsonResponse[key]);
  }
- document.getElementsByTagName('body')[0].innerHTML = new_string;
+ for (var key in jsonResponse.module) {
+  data = data.replace(new RegExp('module-'+jsonResponse.module[key]+' hidden', 'g'), 'show');
+ }
+ document.getElementsByTagName('body')[0].innerHTML = data;
  handleServerResponse('',jsonResponse);
+}
+
+function searchModule(modules,find) {
+ for(var key in modules) {
+  if (modules[key] == find) {
+   return "yes";
+  }
+ }
 }
 
 function val(id,val){
@@ -108,7 +124,7 @@ function setLang(submit){
  }
 }
 
-function LoadWifi(ssids){
+function loadWifi(ssids){
  var xmlHttp=createXmlHttpObject();
  xmlHttp.open('GET','/wifi.scan.json',true);
  xmlHttp.send(null);
@@ -129,7 +145,7 @@ function LoadWifi(ssids){
  }
 }
 
-function LoadLang(langids){
+function loadLang(langids){
  var xmlHttp=createXmlHttpObject();
  xmlHttp.open('GET','/lang.list.json',true);
  xmlHttp.send(null);
@@ -144,7 +160,7 @@ function LoadLang(langids){
  }
 }
 
-function LoadTimer(timerids){
+function loadTimer(timerids){
  var xhttp=createXmlHttpObject();
  xhttp.open("GET", "/timer.save.json", true);
  xhttp.send(null);
@@ -159,6 +175,20 @@ function LoadTimer(timerids){
    html += '<li>'+timers.timer[i].trigger+' <b>'+timers.timer[i].day+'<\/b> '+timers.timer[i].time+'<\/li>';
   }
   document.getElementById(timerids).innerHTML = (html?html:'<li>No timers</li>');
+ }
+}
+
+function loadSpace(spaceids){
+ var xmlHttp=createXmlHttpObject();
+ xmlHttp.open('GET','/devices.list.json',true);
+ xmlHttp.send(null);
+ xmlHttp.onload = function(e) {
+  var jsonSpace=JSON.parse(xmlHttp.responseText);
+  var html = '';
+  for(var key in jsonSpace) {
+   html += '<option value="'+jsonSpace[key].space+'">';
+  }
+  document.getElementById(spaceids).innerHTML = html;
  }
 }
 

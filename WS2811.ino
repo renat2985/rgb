@@ -25,8 +25,8 @@ void handle_ledCount() {
 void LedRGB() {
   for (uint8_t i = 0; i < HTTP.args(); i++) {
     if (HTTP.argName(i) == "c") {
-    //String c = HTTP.arg("c");
-    //if (c != '') {
+      //String c = HTTP.arg("c");
+      //if (c != '') {
       uint32_t tmp = (uint32_t) strtol(&HTTP.arg(i)[0], NULL, 16);
       if (tmp >= 0x000000 && tmp <= 0xFFFFFF) {
         color = String(tmp, HEX);
@@ -41,14 +41,14 @@ void LedRGB() {
 
 
 
-   // if (HTTP.argName(i) == "b") {
-   //   if (HTTP.arg(i)[0] == '-') {
-   //     ws2812fx.decreaseBrightness(BRIGHTNESS_STEP);
-   //   }
-   //  if (HTTP.arg(i)[0] == '+') {
-   //     ws2812fx.increaseBrightness(BRIGHTNESS_STEP);
-   //   }
-   // }
+    // if (HTTP.argName(i) == "b") {
+    //   if (HTTP.arg(i)[0] == '-') {
+    //     ws2812fx.decreaseBrightness(BRIGHTNESS_STEP);
+    //   }
+    //  if (HTTP.arg(i)[0] == '+') {
+    //     ws2812fx.increaseBrightness(BRIGHTNESS_STEP);
+    //   }
+    // }
 
     if (HTTP.argName(i) == "b") {
       ws2812fx.setBrightness(HTTP.arg("b").toInt());
@@ -68,7 +68,9 @@ void LedRGB() {
   //}
   t = HTTP.arg("time").toInt();
   s = HTTP.arg("sound").toInt();
-  tickerSetLow.attach(t, setT1, 0);
+  if (t != 0) {
+    tickerSetLow.attach(t, setT1, 0);
+  }
   sound(BUZER_PIN, volume, 1000, s * 100);
   state0 = 0;
   chaing = 1;
@@ -106,7 +108,10 @@ int LedRGBwan() {
 
   t = HTTPWAN.arg("time").toInt();
   s = HTTPWAN.arg("sound").toInt();
-  tickerSetLow.attach(t, setT1, 0);
+  if (t != 0) {
+    tickerSetLow.attach(t, setT1, 0);
+  }
+
   sound(BUZER_PIN, volume, 1000, s * 100);
   state0 = 0;
   chaing = 1;

@@ -48,10 +48,10 @@
     document.body.style.backgroundColor="#"+jsonResponse.color;
     val('off-on',(jsonResponse.state=='0'?jsonResponse.LangOn:jsonResponse.LangOff));
     if (stage != 'next') {
-     //if (!jsonResponse.g72895) LoadChart('ct-chart','sensor');
-     if (!jsonResponse.g85723) LoadChart('ct-analog','analog');
+     //if (!jsonResponse.g72895) loadChart('ct-chart','sensor');
+     if (!jsonResponse.g85723) loadChart('ct-analog','analog');
     }
-    if (!jsonResponse.g42843) LoadTimer("timer-list");
+    if (!jsonResponse.g42843) loadTimer("timer-list");
    }
    function useCanvas(el,image,callback){
     el.width = image.width;
@@ -118,7 +118,7 @@
     <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
      <h5 class="alert-info">{{SSDP}}</h5>
      <div class="btn-group" id="language">
-      <a href="#" class="btn btn-default dropdown-toggle" onclick="toggle('language-set');LoadLang('language-set');return false">{{lang}} <span class="caret"></span></a>
+      <a href="#" class="btn btn-default dropdown-toggle" onclick="toggle('language-set');loadLang('language-set');return false">{{lang}} <span class="caret"></span></a>
       <ul class="dropdown-menu hidden" id="language-set"><li><a href="#">{{LangLoading}}</a></li></ul>
      </div>
      <a class="btn btn-block btn-danger" id="btn-devices" href="/">{{LangDevices}}</a>
@@ -135,13 +135,14 @@
         <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,600)" value="10">
         <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,1500)" value="15">
         <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,1800)" value="30">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,3600)" value="60">
        </div>
        <br>
        <div class="btn-group">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,3600)" value="60">
         <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,5400)" value="1:30">
         <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,7200)" value="2:00">
         <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,10800)" value="3:00">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,0)" value="&#8734;">
        </div>
        <hr>
        <h4>{{LangTime5}}</h4>
@@ -210,7 +211,7 @@
       <option value="43">Fireworks random</option>
       <option value="44">Merry Christmas</option>
      </select>
-     <input type="button" class="btn btn-block btn-lg btn-primary" onclick="send_request(this,'/led');" id="off-on" value="{{LangOnOff}}">
+     <input type="button" class="btn btn-block btn-lg btn-primary" onclick="send_request(this,'/rgb');" id="off-on" value="{{LangOnOff}}">
      <hr>
      <h2>{{LangTimer}}</h2>
      <div class="alert alert-dismissible alert-warning {{g42843}}"><button class="close" onclick="hide('g42843',this);" type="button">×</button>
