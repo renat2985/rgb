@@ -15,7 +15,9 @@
   <script type="text/javascript">
    var mode = 'off';
    var nex_color = 'ff6600';
+
    function handleServerResponse(stage,jsonResponse){
+             if (stage != 'next') {
     var img = _('.thumb img'),
         canvas = _('#cs'),
         result = _('.result'),
@@ -30,6 +32,7 @@
       // get image data
       var p = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
       nex_color = rgbToHex(p[0],p[1],p[2]);
+      on_rgb(this,0);
       toggle('pop-up','hidden');
       //on_rgb(this,p[0],p[1],p[2]);
      });
@@ -53,6 +56,7 @@
     }
     if (!jsonResponse.g42843) loadTimer("timer-list");
    }
+    }
    function useCanvas(el,image,callback){
     el.width = image.width;
     el.height = image.height;
@@ -106,7 +110,6 @@
     mode = 'off';
    }
    function on_rgb(submit,t){
-    toggle('pop-up');
     set_rgb(submit,t,'off');
    }
   </script>
@@ -127,22 +130,22 @@
      <div class="alert alert-dismissible alert-info {{g2342}}"><button class="close" onclick="hide('g2342',this);" type="button">×</button>{{LangIfttt1}}<span id="hide" class="hidden">{{LangIfttt2}}</span></div>
      <div class="row hidden" id="pop-up">
       <div class="col-sm-offset-3 col-sm-6 pop-up">
-       <h5 class="alert-warning">{{LangTime4}}</h5>
+       <h5 class="alert-warning">{{LangScenery1}}</h5>
        <h4>{{LangTime8}}</h4>
        <div class="btn-group">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,60)" value="1">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,300)" value="5">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,600)" value="10">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,1500)" value="15">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,1800)" value="30">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,3600)" value="60">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,60);toggle('pop-up')" value="1">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,300);toggle('pop-up')" value="5">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,600);toggle('pop-up')" value="10">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,1500);toggle('pop-up')" value="15">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,1800);toggle('pop-up')" value="30">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,3600);toggle('pop-up')" value="60">
        </div>
        <br>
        <div class="btn-group">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,5400)" value="1:30">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,7200)" value="2:00">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,10800)" value="3:00">
-        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,0)" value="&#8734;">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,5400);toggle('pop-up')" value="1:30">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,7200);toggle('pop-up')" value="2:00">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,10800);toggle('pop-up')" value="3:00">
+        <input type="button" class="btn btn-primary btn-sm" onclick="on_rgb(this,0);toggle('pop-up')" value="&#8734;">
        </div>
        <hr>
        <h4>{{LangTime5}}</h4>
@@ -151,11 +154,11 @@
         <span class="input-group-addon">{{LangSec}}</span>
        </div>
        <h4>{{LangSpeed}}</h4>
-       <input id="speed" class="form-control" type="range" min="0" max="255" step="1" value="100">
+       <input id="speed" class="form-control" onchange="on_rgb(this,0);" type="range" min="0" max="255" step="1" value="100">
        <h4>{{LengBrightness}}</h4>
-       <input id="brightness" class="form-control" type="range" min="0" max="255" step="1" value="255">
+       <input id="brightness" class="form-control" onchange="on_rgb(this,0);" type="range" min="0" max="255" step="1" value="255">
        <hr>
-       <input class="btn btn-block btn-default" value="{{LangCancel}}" onclick="toggle('pop-up');" type="button">
+       <input class="btn btn-block btn-default" value="{{LangClose}}" onclick="toggle('pop-up');" type="button">
       </div>
      </div>
      <div class="thumb">
@@ -163,7 +166,7 @@
       <img alt="" style="cursor:pointer;width:100%" src="/img/swatches.png" />
      </div>
      <canvas id="cs" style="display:none"></canvas>
-     <select class="btn btn-block btn-default" onchange="toggle('pop-up');mode=this.value;">
+     <select class="btn btn-block btn-default" onchange="toggle('pop-up');mode=this.value;on_rgb(this,0);">
       <option value="0">Select Mode</option>
       <option value="0">Static</option>
       <option value="1">Blink</option>
