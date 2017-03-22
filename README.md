@@ -15,26 +15,26 @@
 
 
 
-##Upload instruction
+## Upload instruction
 
-###[NodeMCU Flasher (Easy)](https://github.com/renat2985/rgb/tree/master/build)
+### [NodeMCU Flasher (Easy)](https://github.com/renat2985/rgb/tree/master/build)
 
-###[Arduino Windows (Video)](https://www.youtube.com/watch?v=jMK9mySGHio)
+### [Arduino Windows (Video)](https://www.youtube.com/watch?v=jMK9mySGHio)
 
-###[Arduino Linux (Video)](https://www.youtube.com/watch?v=1TAHlRqZ46k)
+### [Arduino Linux (Video)](https://www.youtube.com/watch?v=1TAHlRqZ46k)
 
-####Used Libraries
+#### Used Libraries
 - Arduino core for ESP8266 WiFi chip https://github.com/esp8266/Arduino
 - Arduino ESP8266 filesystem uploader https://github.com/esp8266/arduino-esp8266fs-plugin
 - C++ JSON library for IoT. Simple and efficient. https://github.com/bblanchon/ArduinoJson
 - Neo Pixels!  https://github.com/adafruit/Adafruit_NeoPixel
 - WS2812 FX Library for Arduino and ESP8266  https://github.com/kitesurfer1404/WS2812FX
 
-##Work example (Video)
+## Work example (Video)
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/NrIrLw1rOdk/0.jpg)](https://www.youtube.com/watch?v=NrIrLw1rOdk&list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
 
-##Construction
+## Construction
 ```
 #define TACH_PIN 0    // Кнопка управления
 #define BUZER_PIN 3   // Бузер
@@ -46,25 +46,25 @@ int ledCount = 15;    // Количество лед огней
 ```
 [https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
 
-###Breadboard
+### Breadboard
 
 ![alt](https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/breadboard.gif)
 
-###Schematic
+### Schematic
 
 ![alt](https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/schematic.gif)
 
-##Othe...
+## Othe...
 
-####Jalousie: [https://github.com/tretyakovsa/jaluzi](https://github.com/tretyakovsa/jaluzi)
+#### Jalousie: [https://github.com/tretyakovsa/jaluzi](https://github.com/tretyakovsa/jaluzi)
 
-####Sonoff: [https://github.com/tretyakovsa/Sonoff_WiFi_switch](https://github.com/tretyakovsa/Sonoff_WiFi_switch)
-
-
-####Themes you can download here: [http://bootswatch.com/](http://bootswatch.com/)
+#### Sonoff: [https://github.com/tretyakovsa/Sonoff_WiFi_switch](https://github.com/tretyakovsa/Sonoff_WiFi_switch)
 
 
-##Donation
+#### Themes you can download here: [http://bootswatch.com/](http://bootswatch.com/)
+
+
+## Donation
 
 If you like this project, you can give me a cup of coffee :)
 
