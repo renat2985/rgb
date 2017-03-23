@@ -48,10 +48,10 @@
     document.body.style.backgroundColor="#"+jsonResponse.color;
     val('off-on',(jsonResponse.state=='0'?jsonResponse.LangOn:jsonResponse.LangOff));
     if (stage != 'next') {
-     //if (!jsonResponse.g72895) LoadChart('ct-chart','sensor');
-     if (!jsonResponse.g85723) LoadChart('ct-analog','analog');
+     //if (!jsonResponse.g72895) loadChart('ct-chart','sensor');
+     if (!jsonResponse.g85723) loadChart('ct-analog','analog');
     }
-    if (!jsonResponse.g42843) LoadTimer("timer-list");
+    if (!jsonResponse.g42843) loadTimer("timer-list");
    }
    function useCanvas(el,image,callback){
     el.width = image.width;
