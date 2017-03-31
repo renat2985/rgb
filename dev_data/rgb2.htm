@@ -62,7 +62,7 @@
      <input id="brightness" class="form-control" onchange="sends(this,'/set?b='+this.value);" type="range" min="0" max="255" step="1" value="255">
 
      <input type="button" class="btn btn-primary" onclick="sends(this,'/rgb');" value="Выключить\Выключить">
-     <input type="button" class="btn btn-primary" onclick="sends(this,'/set?m=2&time='+val('time')+'&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'));" value="Отправить все настройки сразу">
+     <input type="button" class="btn btn-primary" onclick="sends(this,'/set?m=9&time='+val('time')+'&sound='+val('sound')*10+'&s='+val('speed')+'&b='+val('brightness'));" value="Отправить все настройки сразу">
 
      <hr>
      <a class="btn btn-block btn-default" href="/device.htm">{{LangOptions1}}</a>
