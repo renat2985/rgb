@@ -278,13 +278,13 @@
 
    function loadBuild(spiffs, LangUpgrade){
     var xmlHttp=createXmlHttpObject();
-    xmlHttp.open('GET','https://api.github.com/repos/tretyakovsa/Sonoff_WiFi_switch/contents/build',true);
+    xmlHttp.open('GET','https://api.github.com/repos/renat2985/rgb/contents/build',true);
     xmlHttp.send(null);
     xmlHttp.onload = function(e) {
      var jsonBuild=JSON.parse(xmlHttp.responseText);
      jsonBuild.sort(function(a,b){return (a.name< b.name) ? 1 : ((b.name < a.name) ? -1 : 0);});
      if (jsonBuild[0].name != spiffs) {
-      document.getElementById('update').innerHTML = '<a href="/upgrade?spiffs=http://backup.privet.lv/esp/sonoff/'+jsonBuild[0].name+'&build=http://backup.privet.lv/esp/sonoff/build.0x00000'+jsonBuild[0].name.substring(14)+'" onclick="return confirm(\''+LangUpgrade+'\')"><i class="warning-img"><\/i><\/a>';
+      document.getElementById('update').innerHTML = '<a href="/upgrade?spiffs=http://backup.privet.lv/esp/rgb/'+jsonBuild[0].name+'&build=http://backup.privet.lv/esp/rgb/build.0x00000'+jsonBuild[0].name.substring(14)+'" onclick="return confirm(\''+LangUpgrade+'\')"><i class="warning-img"><\/i><\/a>';
      }
     }
    }
