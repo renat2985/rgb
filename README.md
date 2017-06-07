@@ -24,11 +24,25 @@
 ### [Arduino Linux (Video)](https://www.youtube.com/watch?v=1TAHlRqZ46k)
 
 #### Used Libraries
-- Arduino core for ESP8266 WiFi chip https://github.com/esp8266/Arduino
-- Arduino ESP8266 filesystem uploader https://github.com/esp8266/arduino-esp8266fs-plugin
-- C++ JSON library for IoT. Simple and efficient. https://github.com/bblanchon/ArduinoJson
-- Neo Pixels!  https://github.com/adafruit/Adafruit_NeoPixel
-- WS2812 FX Library for Arduino and ESP8266  https://github.com/kitesurfer1404/WS2812FX
+ - ESP8266WiFi.h
+ - ESP8266WebServer.h
+ - ESP8266SSDP.h
+ - FS.h
+ - time.h
+ - Ticker.h
+ - WiFiUdp.h
+ - ESP8266HTTPUpdateServer.h
+ - ESP8266httpUpdate.h
+ - ESP8266HTTPClient.h
+ - DNSServer.h
+ - StringCommand.h           https://github.com/tretyakovsa/ESP8266-StringCommand
+ - ArduinoJson.h             Ставим через менеджер библиотек
+ - DHT.h                     https://github.com/markruys/arduino-DHT
+ - OneWire.h                 Ставим через менеджер библиотек
+ - DallasTemperature.h       Ставим через менеджер библиотек
+ - PubSubClient.h            https://github.com/Imroy/pubsubclient
+ - Adafruit_NeoPixel.h       https://github.com/adafruit/Adafruit_NeoPixel
+ - WS2812FX.h                https://github.com/kitesurfer1404/WS2812FX
 
 ## Work example (Video)
 
@@ -36,13 +50,13 @@
 
 ## Construction
 ```
-#define TACH_PIN 0    // Кнопка управления
-#define BUZER_PIN 3   // Бузер
-#define LED_PIN 2     // RGB лента
-int ledCount = 15;    // Количество лед огней
-// If you use ESP8266 12 you can add
-#define PIR_PIN 14    // RIR sensors
-// PIN ADC (A0)       // URL: /analog.json or /chart.htm#analog
+  #define TACH_PIN 0    // Кнопка управления
+  #define PIR_PIN 16     // RIR sensors
+  #define RELE1_PIN 12  // Реле
+  #define LED_PIN 13    // Светодиод
+  #define DHTPIN 14     // DHT сенсор.
+  #define RGB_PIN 2     // WS2811/WS2812/NeoPixel LEDs
+  #define impuls_PIN 3  //электросчетчик
 ```
 [https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
 
