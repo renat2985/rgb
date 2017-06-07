@@ -2,21 +2,21 @@
 <html>
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <script src="js/build.chart.js" charset="utf-8"></script>
+  <script src="js/build.chart.js?v06.06.2017" charset="utf-8"></script>
   <!-- <link rel="stylesheet" type="text/css" href="css/chartist.min.css">
 <script src="js/chartist.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/chart.js"></script> -->
-  <link rel="stylesheet" type="text/css" href="css/build.css">
+  <link rel="stylesheet" type="text/css" href="css/build.css?v06.06.2017">
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css"> -->
-  <script type="text/javascript" src="js/function.js"></script>
+  <script type="text/javascript" src="js/function.js?v06.06.2017"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chart</title>
-  <!-- url /chart.htm#test
+  <!-- url /page.htm?chart&test
 json file test.json: {"title":"Temp","refresh":2000, "points":10, "data":[21,55], "data2":[21,55], "data3":[21,55], "label":[3,5]} -->
   <script type="text/javascript">
    function handleServerResponse(){
-    loadChart('ct-chart',window.location.hash.substring(1));
+    loadChart('ct-chart',window.location.hash.substring(1)+'.json');
    }
   </script>
  </head>
@@ -31,11 +31,11 @@ json file test.json: {"title":"Temp","refresh":2000, "points":10, "data":[21,55]
       <ul class="dropdown-menu hidden" id="language-set"><li><a href="#">{{LangLoading}}</a></li></ul>
      </div>
      <a class="btn btn-block btn-danger" id="btn-devices" href="/">{{LangDevices}}</a>
-     <a class="btn btn-block btn-default" href="/device.htm">{{LangOptions1}}</a>
+     <a class="btn btn-block btn-default" href="/page.htm?setup"><i class="opt-img"></i> {{LangSetting3}}</a>
      <hr>
      <div id="ct-chart" style="height:350px;margin-left:-20px"></div>
      <hr>
-     <a class="btn btn-block btn-default" href="/device.htm">{{LangOptions1}}</a>
+     <a class="btn btn-block btn-default" href="/page.htm?setup"><i class="opt-img"></i> {{LangSetting3}}</a>
     </div>
    </div>
   </div>

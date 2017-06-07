@@ -2,10 +2,10 @@
 <html>
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="css/build.css">
+  <link rel="stylesheet" type="text/css" href="css/build.css?v06.06.2017">
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css"> -->
-  <script type="text/javascript" src="js/function.js"></script>
+  <script type="text/javascript" src="js/function.js?v06.06.2017"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings page</title>
   <script type="text/javascript">
@@ -21,27 +21,17 @@
      toggle('wifi-connect1','hidden');
      toggle('first-restart', 'hidden');
     }
+    if (window.location.hash == '#dev-update') {
+     toggle('dev-update');
+     toggle('dev-othe');
+    }
     document.body.style.backgroundColor="#"+jsonResponse.color;
     if (stage != 'next') {
-     if (jsonResponse.checkboxIP == '1'){
-      toggle('static-ip');
-      document.getElementById('checkboxIP').checked=true;
-     }
+
     }
    }
-   function real_time(hours,min,sec) {
-    sec=Number(sec)+1;
-    if (sec>=60){min=Number(min)+1;sec=0;}
-    if (min>=60){hours=Number(hours)+1;min=0;}
-    if (hours>=24){hours=0};
-    html('time',hours+":"+min+":"+sec);
-    set_real_time = setTimeout("real_time("+hours+","+min+","+sec+");", 1000);
-   }
-   function set_time_zone(submit){
-    var gmtHours = new Date().getTimezoneOffset()/60*-1;
-    val('timeZone', gmtHours);
-    send_request(submit,'/timeZone?timeZone='+gmtHours);
-   }
+
+
    function first_restart(submit,texts){
     var LangConnect2 = jsonResponse.LangConnect2;
     var LangRedirect = '<small class="pull-right">'+jsonResponse.LangRedirect+' 15 '+jsonResponse.LangSec+'<\/small>';
@@ -59,6 +49,25 @@
      }
     }
    }
+
+
+
+
+   //function loadNews(news, repos){
+   // htmls = '';
+   // var xmlHttp=createXmlHttpObject();
+   // xmlHttp.open('GET','https://api.github.com/repos/tretyakovsa/Sonoff_WiFi_switch/commits',true);
+   // xmlHttp.send(null);
+   // xmlHttp.onload = function(e) {
+   //  var jsonBuild=JSON.parse(xmlHttp.responseText);
+   //  var html = '';
+   //  for(i = 0;i<10;i++) {
+   //    html += '<li><a href="'+jsonBuild[i].html_url+'" target="_blank">'+jsonBuild[i].commit.message+'<\/a><\/li>';
+   //  }
+   //  document.getElementById(news).innerHTML = (html?html:'<li>No commitr<\/li>');
+   // }
+   //}
+
   </script>
   <style type="text/css">
    .wifi-0-60 {background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAn0lEQVQ4jc3QTQpBYRgF4McUmxBhLEtQlJ0YGCkptiMpc2ITyhoY+Rka3Bujr9CNe5k49Q6f09vh31LHGGvscUWEAzaYoJYEm1jhlvKWaATcR5wBh4vRgyouXxScUA5fdDN+EaP9usM4Q8EwacgcFinwLAmHFLF7g7fIvyuACs4J+IjSJxzS8TxqhFZaHDJ6KBhkxSFzTL/FUJBitJ9yB0PAZo1JMnGDAAAAAElFTkSuQmCC)}
@@ -85,19 +94,47 @@
      <!-- DEVELOPER OPTIONS Module - START -->
      <div id="dev-opt">
       <a class="btn btn-block btn-danger" id="btn-devices" href="/">{{LangDevices}}</a>
-      <a class="btn btn-block btn-default" href="/device.htm">{{LangOptions1}}</a>
+      <!--       <a class="btn btn-block btn-default" href="#" onclick="loadNews('news')">ss</a>
+<ul id="news"></ul> -->
       <hr id="hide-hr1">
       <div class="alert alert-dismissible alert-info {{g784673}}"><button class="close" onclick="hide('g784673',this);" type="button">×</button>
-       <a href="/help.htm" target="_blank" class="close">?</a>
+       <a href="/help.htm" target="_blank" class="close"><i class="help-img"></i></a>
        {{LangSetting4}}
-       <span id="hide" class="hidden">
-        <b>{{LangSetting5}} <a href="https://github.com/renat2985/rgb/tree/master/build" target="_blank">RGB</a>, <a href="https://github.com/tretyakovsa/Sonoff_WiFi_switch/tree/master/build" target="_blank">Sonoff</a>, <a href="https://github.com/tretyakovsa/jaluzi/tree/master/build" target="_blank">Jalousie</a></b>
-        <form method="POST" action="/update" enctype="multipart/form-data">
-         <div class="btn-group">
-          <input type="file" class="btn btn-primary btn-xs" name="update" style="height:33px" accept=".bin">
-          <input type="submit" class="btn btn-default btn-sm" value="Download" onclick="this.value='{{LangLoading}}';" style="height:33px">
-         </div>
-        </form>
+       <span id="dev-update" class="hidden">
+        <b>{{LangSetting5}}</b>
+        <div class="btn-group">
+         <a href="#" class="btn btn-default dropdown-toggle" onclick="toggle('repos-build');return false">Build <span class="caret"></span></a>
+         <ul class="dropdown-menu hidden" id="repos-build">
+          <li><a href="#" onclick="toggle('sonoff-build');loadBuild('sonoff','build');return false"><b>Sonoff</b> (Relay) <span class="caret"></span></a>
+           <ul class="hidden" id="sonoff-build" style="margin-right:20px"><li><a href="#">{{LangLoading}}</a></li></ul>
+          </li>
+          <li><a href="#" onclick="toggle('rgb-build');return false"><b>RGB</b> (WS2811/WS2812/NeoPixel LEDs) <span class="caret"></span></a>
+           <ul class="hidden" id="rgb-build" style="margin-right:20px"><li><a href="#">Soon...</a></li></ul>
+          </li>
+         </ul>
+        </div>
+        <div class="btn-group">
+         <a href="#" class="btn btn-default dropdown-toggle" onclick="toggle('repos-spiffs');return false">Spiffs <span class="caret"></span></a>
+         <ul class="dropdown-menu hidden" id="repos-spiffs">
+          <li><a href="#" onclick="toggle('sonoff-spiffs');loadBuild('sonoff','spiffs');return false"><b>Sonoff</b> (Relay) <span class="caret"></span></a>
+           <ul class="hidden" id="sonoff-spiffs" style="margin-right:20px"><li><a href="#">{{LangLoading}}</a></li></ul>
+          </li>
+          <li><a href="#" onclick="toggle('rgb-spiffs');return false"><b>RGB</b> (WS2811/WS2812/NeoPixel LEDs) <span class="caret"></span></a>
+           <ul class="hidden" id="rgb-spiffs" style="margin-right:20px"><li><a href="#">Soon...</a></li></ul>
+          </li>
+         </ul>
+        </div>
+        <br>
+        <b><a href="#" onclick="toggle('repos-bin');return false">{{LangSetting6}}</a></b>
+        <span id="repos-bin" class="hidden">
+         <b>GitHub: <a href="https://github.com/renat2985/rgb/tree/master/build" target="_blank">RGB</a>, <a href="https://github.com/tretyakovsa/Sonoff_WiFi_switch/tree/master/build" target="_blank">Sonoff</a>, <a href="https://github.com/tretyakovsa/jaluzi/tree/master/build" target="_blank">Jalousie</a></b>
+         <form method="POST" action="/update" enctype="multipart/form-data">
+          <div class="btn-group">
+           <input type="file" class="btn btn-primary btn-xs" name="update" style="height:33px" accept=".bin">
+           <input type="submit" class="btn btn-default btn-sm" value="Download" onclick="this.value='{{LangLoading}}';" style="height:33px">
+          </div>
+         </form>
+        </span>
        </span>
       </div>
      </div>
@@ -127,12 +164,12 @@
      <div class="alert alert-dismissible alert-danger hidden" id="wifi-connect1">{{LangWiFi3}}</div>
      <h2>{{LangWiFi2}}</h2>
      <div class="btn-group btn-block" id="ssid-group">
-      <a href="#" class="btn btn-default btn-block dropdown-toggle" onclick="toggle('ssid-select');loadWifi('ssid-select');return false"><span id="ssid-name">{{ssid}}</span> <span class="caret"></span></a>
+      <a href="#" class="btn btn-default btn-block dropdown-toggle" onclick="toggle('ssid-select');loadWifi('ssid-select','ssid');return false"><span id="ssid-name">{{ssid}}</span> <span class="caret"></span></a>
       <ul class="dropdown-menu hidden" id="ssid-select"><li><a href="#">{{LangLoading}}</a></li></ul>
      </div>
      <input id="ssid" value="{{ssid}}" class="form-control hidden" pattern=".{1,20}" placeholder="{{LangWiFi1}}">
      <input id="ssidPass" value="{{ssidPass}}" pattern=".{8,20}" onfocus="this.type='text'" type="password" class="form-control" placeholder="{{LangPass}}">
-     <label><input type="checkbox" id="checkboxIP" value="1" onchange="val('checkboxIP',(this.checked?'1':'0'));toggle('static-ip');"> Задать статический IP</label>
+     <label><input type="checkbox" id="checkboxIP" value="{{checkboxIP}}" onchange="val('checkboxIP',(this.checked?'1':'0'));toggle('static-ip');"> Задать статический IP</label>
      <div class="row hidden" id="static-ip">
       <div class="col-sm-6">
        <input id="ip" value="{{ip}}" class="form-control" pattern="[0-9.]{1,15}" placeholder="IP Adress">
@@ -140,7 +177,7 @@
       </div>
       <div class="col-sm-6">
        <input id="getway" value="{{getway}}" class="form-control" pattern="[0-9.]{1,15}" placeholder="Default Getway">
-       <input id="dns" value="{{dns}}" class="form-control" pattern="[0-9.]{1,15}" placeholder="DNS Server">
+       <input id="dns" value="{{dns}}" class="form-control" pattern="[0-9.]{1,15}" placeholder="DNS Server (Optional)">
       </div>
      </div>
      <input class="btn btn-block btn-success" value="{{LangSave}}" onclick="send_request(this,'/ssid?ssid='+val('ssid')+'&ssidPass='+encodeURIComponent(val('ssidPass'))+'&subnet='+val('subnet')+'&getway='+val('getway')+'&dns='+val('dns')+'&ip='+val('ip')+'&checkboxIP='+val('checkboxIP'));alert('{{LangReset2}}');" type="button">
@@ -212,7 +249,6 @@
      </div>
 
      <input class="btn btn-block btn-warning hidden" id="first-restart" value="{{LangReset1}}" onclick="first_restart(this,'{{LangReset3}}');" type="button">
-     <a class="btn btn-block btn-default" href="/device.htm">{{LangOptions1}}</a>
 
     </div>
    </div>

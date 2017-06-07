@@ -7,6 +7,9 @@ function createXmlHttpObject(){
  }
  return xmlHttp;
 }
+
+var set_real_time;
+
 function load(stage){
  var xmlHttp=createXmlHttpObject();
  if(xmlHttp.readyState==0 || xmlHttp.readyState==4){
@@ -80,7 +83,39 @@ function html(id,val){
  }
 }
 
-function send_request(submit,server){
+function send_request_edit(submit,server,filename){
+ xmlHttp = new XMLHttpRequest();
+ var formData = new FormData();
+ formData.append("data", new Blob([server], { type: 'text/html' }), filename);
+ xmlHttp.open("POST", "/edit");
+ xmlHttp.send(formData);
+}
+
+
+
+function send_request_post(submit,server,state){
+ var xmlHttp=createXmlHttpObject();
+ xmlHttp.open("POST", server, true);
+ xmlHttp.send(null);
+ xmlHttp.onload = function(e) {
+  if (state != null && state!='undefined'){
+   var response=JSON.parse(xmlHttp.responseText);
+   var block = document.getElementById(state.slice(2,-2));
+   if (response.class && response.class!='undefined') {block.className = response.class;}
+   if (response.style && response.style!='undefined') {block.style = response.style;}
+   if (response.title && response.title!='undefined') {
+    if (block.tagName == 'INPUT') {block.value = renameBlock(jsonResponse, response.title);}
+    if (block.tagName == 'DIV' ||block.tagName == 'A' || block.tagName == 'H1' || block.tagName == 'H2' || block.tagName == 'H3' || block.tagName == 'H4' || block.tagName == 'H5' || block.tagName == 'H6') {block.innerHTML = renameBlock(jsonResponse, response.title);}
+   }
+   if (typeof(element) != 'undefined' && element != null){
+    element.innerHTML += '<li class="alert alert-info" style="margin:5px 0px;">'+xmlHttp.responseText.replace(/</g,'&lt;')+'</li>';
+   }
+  }
+ }
+}
+
+
+function send_request(submit,server,state){
  var old_submit = submit.value;
  submit.value = jsonResponse.LangLoading;
  submit_disabled(true);
@@ -88,9 +123,31 @@ function send_request(submit,server){
  xmlHttp.open("GET", server, true);
  xmlHttp.send(null);
  xmlHttp.onload = function(e) {
+
   submit.value=old_submit;
   submit_disabled(false);
-  load('next');
+
+  var element =  document.getElementById('url-content');
+  if (typeof(element) != 'undefined' && element != null){
+   element.innerHTML += '<li><span class="label label-warning">GET</span> <a href="'+server+'" class="btn btn-link" style="text-transform:none;text-align:left;white-space:normal;display:inline">'+server+'</a> <span class="label label-'+(xmlHttp.status==200?'default':'danger')+'">'+xmlHttp.status+' '+xmlHttp.statusText+'</span></li>';
+  }
+
+  if (state != null && state!='undefined'){
+   var response=JSON.parse(xmlHttp.responseText);
+   var block = document.getElementById(state.slice(2,-2));
+   if (response.class && response.class!='undefined') {block.className = response.class;}
+   if (response.style && response.style!='undefined') {block.style = response.style;}
+   if (response.title && response.title!='undefined') {
+    if (block.tagName == 'INPUT') {block.value = renameBlock(jsonResponse, response.title);}
+    if (block.tagName == 'DIV' ||block.tagName == 'A' || block.tagName == 'H1' || block.tagName == 'H2' || block.tagName == 'H3' || block.tagName == 'H4' || block.tagName == 'H5' || block.tagName == 'H6') {block.innerHTML = renameBlock(jsonResponse, response.title);}
+   }
+   if (typeof(element) != 'undefined' && element != null){
+    element.innerHTML += '<li class="alert alert-info" style="margin:5px 0px;">'+xmlHttp.responseText.replace(/</g,'&lt;')+'</li>';
+   }
+  }
+
+
+  // load('next');
  }
 }
 
@@ -124,7 +181,7 @@ function setLang(submit){
  }
 }
 
-function loadWifi(ssids){
+function loadWifi(ssids,hiddenIds){
  var xmlHttp=createXmlHttpObject();
  xmlHttp.open('GET','/wifi.scan.json',true);
  xmlHttp.send(null);
@@ -139,10 +196,34 @@ function loadWifi(ssids){
    if (jsonWifi.networks[i].dbm <= -70) { wifiSignal = '<i class="wifi wifi-70-80"></i>';}
    if (jsonWifi.networks[i].dbm <= -80) { wifiSignal = '<i class="wifi wifi-80-90"></i>';}
    if (jsonWifi.networks[i].dbm <= -90) { wifiSignal = '<i class="wifi wifi-90-100"></i>';}
-   html += '<li><a href="#" onclick="val(\'ssid\',\''+jsonWifi.networks[i].ssid+'\');toggle(\'ssid-select\');document.getElementById(\'ssid-name\').innerHTML=\''+jsonWifi.networks[i].ssid+'\';return false"><div style="float:right">'+(jsonWifi.networks[i].pass?'<i class="wifi wifi-key"></i>':'')+' '+wifiSignal+' <span class="label label-default">'+jsonWifi.networks[i].dbm+' dBm</span></div><b>'+jsonWifi.networks[i].ssid+'</b></a></li>';
+   html += '<li><a href="#" onclick="val(\''+hiddenIds+'\',\''+jsonWifi.networks[i].ssid+'\');toggle(\'ssid-select\');html(\'ssid-name\',\''+jsonWifi.networks[i].ssid+'\');return false"><div style="float:right">'+(jsonWifi.networks[i].pass?'<i class="wifi wifi-key"></i>':'')+' '+wifiSignal+' <span class="label label-default">'+jsonWifi.networks[i].dbm+' dBm</span></div><b>'+jsonWifi.networks[i].ssid+'</b></a></li>';
   }
   document.getElementById(ssids).innerHTML = (html?html:'<li>No WiFi</li>')+'<li><a href="#" onclick="toggle(\'ssid-group\');toggle(\'ssid\');return false"><b>'+jsonResponse.LangHiddenWifi+'</b></a></li>';
  }
+}
+
+function loadBuild(buildids,typeFile){
+ htmls = '';
+ var xmlHttp=createXmlHttpObject();
+ xmlHttp.open('GET','http://backup.privet.lv/esp/build/'+buildids,true);
+ xmlHttp.send(null);
+ xmlHttp.onload = function(e) {
+  var jsonBuild=JSON.parse(xmlHttp.responseText);
+  jsonBuild.sort(function(a,b){return (a.name< b.name) ? 1 : ((b.name < a.name) ? -1 : 0);});
+  var html = '';
+  for(i = 0;i<jsonBuild.length;i++) {
+   if (jsonBuild[i].name.substring(0,5) == typeFile.substring(0,5)) {
+    html += '<li><a href="/upgrade?'+typeFile+'=http://backup.privet.lv/esp/'+buildids+'/'+jsonBuild[i].name+'" '+(jsonResponse[typeFile+"Data"]==jsonBuild[i].name?'style="font-weight:bold;"':'')+' onclick="return confirm(\''+jsonResponse.LangRefresh+' '+typeFile+' ('+jsonBuild[i].name+')?\')">'+jsonBuild[i].name+'<\/a><\/li>';
+   }
+  }
+  document.getElementById(buildids+'-'+typeFile).innerHTML = (html?html:'<li><a href="#">No build in folder<\/a><\/li>');
+ }
+}
+
+function set_time_zone(submit){
+ var gmtHours = new Date().getTimezoneOffset()/60*-1;
+ val('timeZone', gmtHours);
+ send_request(submit,'/timeZone?timeZone='+gmtHours);
 }
 
 function loadLang(langids){
@@ -160,21 +241,24 @@ function loadLang(langids){
  }
 }
 
-function loadTimer(timerids){
+function loadTimer(timerids,module){
  var xhttp=createXmlHttpObject();
  xhttp.open("GET", "/timer.save.json", true);
  xhttp.send(null);
  xhttp.onload = function(e) {
   var timers=JSON.parse(xhttp.responseText);
+  timers.timer.sort(function(a,b){return (a.time > b.time) ? 1 : ((b.time > a.time) ? -1 : 0);});
   var html = '';
   for (var i = 0; i < timers.timer.length; i++) {
-   if (timers.timer[i].trigger == "on") {timers.timer[i].trigger = '<span class="label label-success">'+jsonResponse["LangOn."]+'</span>';}
-   if (timers.timer[i].trigger == "off") {timers.timer[i].trigger = '<span class="label label-danger">'+jsonResponse["LangOff."]+'</span>';}
-   if (timers.timer[i].trigger == "not") {timers.timer[i].trigger = '<span class="label label-info">'+jsonResponse["LangSwitch."]+'<\/span>';}
-   timers.timer[i].day = jsonResponse["Lang"+timers.timer[i].day];
-   html += '<li>'+timers.timer[i].trigger+' <b>'+timers.timer[i].day+'<\/b> '+timers.timer[i].time+'<\/li>';
+   if(timers.timer[i].module == module) {
+    if (timers.timer[i].trigger == "on") {timers.timer[i].trigger = '<span class="label label-success">'+jsonResponse["LangOn."]+'</span>';}
+    if (timers.timer[i].trigger == "off") {timers.timer[i].trigger = '<span class="label label-danger">'+jsonResponse["LangOff."]+'</span>';}
+    if (timers.timer[i].trigger == "not") {timers.timer[i].trigger = '<span class="label label-info">'+jsonResponse["LangSwitch."]+'<\/span>';}
+    timers.timer[i].day = jsonResponse["Lang"+timers.timer[i].day];
+    html += '<li>'+timers.timer[i].trigger+' <b>'+timers.timer[i].day+'<\/b> '+timers.timer[i].time+'<\/li>';
+   }
   }
-  document.getElementById(timerids).innerHTML = (html?html:'<li>No timers</li>');
+  document.getElementById(timerids).innerHTML = (html?html:'<li>'+jsonResponse.LangNoTimers+'</li>');
  }
 }
 
@@ -190,6 +274,15 @@ function loadSpace(spaceids){
   }
   document.getElementById(spaceids).innerHTML = html;
  }
+}
+
+function real_time(hours,min,sec) {
+ sec=Number(sec)+1;
+ if (sec>=60){min=Number(min)+1;sec=0;}
+ if (min>=60){hours=Number(hours)+1;min=0;}
+ if (hours>=24){hours=0};
+ html('time',hours+":"+min+":"+sec);
+ set_real_time = setTimeout("real_time("+hours+","+min+","+sec+");", 1000);
 }
 
 function setCookie(name, value, days, submit) {
