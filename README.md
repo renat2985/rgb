@@ -1,9 +1,9 @@
 # esp8266 and WS2811/WS2812/NeoPixel LEDs (Arduino)
 
-<a href="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/screen1.png"><img src="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/screen1.png" align="left" height="220" width="400" ></a>
-<a href="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/screen2.png"><img src="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/screen2.png" align="left" height="220" width="400" ></a>
-<a href="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/screen3.png"><img src="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/screen3.png" align="left" height="220" width="400" ></a>
-<a href="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/screen4.png"><img src="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/screen4.png" align="left" height="220" width="400" ></a>
+<a href="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen1.png"><img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen1.png" align="left" height="220" width="400" ></a>
+<a href="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen2.png"><img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen2.png" align="left" height="220" width="400" ></a>
+<a href="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen3.png"><img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen3.png" align="left" height="220" width="400" ></a>
+<a href="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen4.png"><img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen4.png" align="left" height="220" width="400" ></a>
 
 ## Components
 
