@@ -2,13 +2,13 @@
 <html>
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="css/build.css?v12.06.2017">
+  <link rel="stylesheet" type="text/css" href="css/build.css?v15.07.2017">
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css"> -->
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-json.min.js"></script>
-  <script type="text/javascript" src="js/function.js?v12.06.2017"></script>
+  <script type="text/javascript" src="js/function.js?v15.07.2017"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Помощь</title>
  </head>
@@ -25,7 +25,7 @@
     <h3>GET <a href="/config.save.json">/config.save.json</a></h3>
     <p>Здесь хранятся основные настройки устройсва (Эти настройки восстанавливаются посте рестарта)</p>
     <pre><code class="language-json" id="configs-save-json">Loading...</code></pre>
-    <h3>GET <a href="/devices.list.json">/devices.list.json</a></h3>
+    <h3>GET <a href="/devices.list.json">/ip.list.json</a></h3>
     <p>Количество устройст найденых в локальной сети, обновляются через GET /devices.scan.json</p>
     <pre><code class="language-json" id="devices-list-json">Loading...</code></pre>
     <h3>GET <a href="/modules.json">/modules.json</a></h3>
@@ -33,12 +33,6 @@
     <h3>GET <a href="/timer.save.json">/timer.save.json</a></h3>
     <p>Таймеры включения\выключения устройсва</p>
     <pre><code class="language-json" id="timer-save-json">Loading...</code></pre>
-    <h3>GET <a href="/lang.list.json">/lang.list.json</a></h3>
-    <p>Список языковых файлов в папке lang</p>
-    <pre><code class="language-json" id="lang-list-json">Loading...</code></pre>
-    <h3>GET <a href="/wifi.scan.json">/wifi.scan.json</a></h3>
-    <p>Список доступных WiFi сетей</p>
-    <pre><code class="language-json" id="wifi-scan-json">Loading...</code></pre>
     <h3>GET <a href="/lang/lang.ru.json">/lang/lang.ru.json</a></h3>
     <p>Изменить язык можно GET запросом /lang?set=en </p>
     <pre><code class="language-json" id="lang-json">Loading...</code></pre>
@@ -60,12 +54,10 @@
   }
   setTimeout(function(){load_request('configs-live-json','/config.live.json');},1000);
   setTimeout(function(){load_request('configs-save-json','/config.save.json');},2000);
-  setTimeout(function(){load_request('lang-list-json','/lang.list.json');},3000);
   setTimeout(function(){load_request('lang-json','/lang/lang.ru.json');},4000);
-  setTimeout(function(){load_request('devices-list-json','/devices.list.json');},5000);
+  setTimeout(function(){load_request('devices-list-json','/ip.list.json');},5000);
   setTimeout(function(){load_request('modules-json','/modules.json');},6000);
   setTimeout(function(){load_request('timer-save-json','/timer.save.json');},7000);
-  setTimeout(function(){load_request('wifi-scan-json','/wifi.scan.json');},8000);
 
   function listCookies() {
    var theCookies = document.cookie.split(';');

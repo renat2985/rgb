@@ -1,6 +1,6 @@
 {
  "_comment": "---INDEX.HTM---",
- "LangDevices":"Страница устройств",
+ "LangDevices":"Главная",
  "LangOptions1":"Страница управления",
  "LangSetting3":"Конфигурация",
  "LangExample":"Пример",
@@ -39,8 +39,7 @@
  "LangDevice":"Имя устройства",
  "LangSpace":"Пространство",
  "LangSetting4":"<b><a onclick=\"toggle('dev-update');return false\" href=\"#\">Открыть настройки разработчика</a></b><br>Осторожно, непродуманные действия могут повредить устройство.",
- "LangSetting5":"Нажав <a target=\"_blank\" href=\"/edit\">сюда</a> вы сможете изменить html, css, js файлы проекта.<br>Также ниже вы можете установить новую прошивку и файловую систему:",
- "LangSetting6":"Или скачать и обновить самостоятельно",
+ "LangSetting6":"Другие настройки",
  "LangPass":"Пароль",
  "LangWiFi1":"Имя Wi-Fi сети",
  "LangWiFi2":"Подключение к Wi-Fi роутеру",
@@ -111,5 +110,5 @@
  "LangTemperature":"Температура",
  "LangHumidity":"Влажность",
  "LangChart":"График",
- "LangAnalog":"Analog (ADC/A0)"
+ "LangAnalog":"Освещенность"
 }

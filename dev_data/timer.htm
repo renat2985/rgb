@@ -2,10 +2,10 @@
 <html>
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="css/build.css?v12.06.2017">
+  <link rel="stylesheet" type="text/css" href="css/build.css?v15.07.2017">
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css"> -->
-  <script type="text/javascript" src="js/function.js?v12.06.2017"></script>
+  <script type="text/javascript" src="js/function.js?v15.07.2017"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Timers</title>
   <script type="text/javascript">
@@ -32,31 +32,49 @@
    function loadDevice(content){
     html("timer-list", ' ');
     var xhttp=createXmlHttpObject();
-    xhttp.open("GET", "/devices.list.json?"+Math.floor(Math.random()*10000), true);
+    xhttp.open("GET", "/ip.list.json?"+Math.floor(Math.random()*10000), true);
     xhttp.send(null);
     xhttp.onload = function(e) {
-     var ipModule=JSON.parse(xhttp.responseText);
-     for(var key in ipModule) {
-      if (ipModule[key].module[0] != 'jalousie') {
-       if (content) {
-
-        if (searchModule(ipModule[key].module,"relay") == 'yes'){
-         document.getElementById("device").innerHTML += '<option value="'+ipModule[key].ip+'/timerSave?module=relay">'+ipModule[key].SSDP+' / relay<\/option>';
-        }
-        if (searchModule(ipModule[key].module,"rgb") == 'yes'){
-         document.getElementById("device").innerHTML += '<option value="'+ipModule[key].ip+'/timerSave?module=rgb">'+ipModule[key].SSDP+' / rgb<\/option>';
-        }
-        if (searchModule(ipModule[key].module,"jalousie") == 'yes'){
-         document.getElementById("device").innerHTML += '<option value="'+ipModule[key].ip+'/timerSave?module=jalousie">'+ipModule[key].SSDP+' / jalousie<\/option>';
-        }
-
-       } else {
-        loadTimers(ipModule[key].ip,ipModule[key].SSDP,ipModule[key].space);
-       }
-      }
+     var ipDevice=JSON.parse(xhttp.responseText);
+     for(i = 0;i<ipDevice.ssdpList.length;i++) {
+      loadModule(ipDevice.ssdpList[i].ip);
      }
     }
    }
+
+
+   function loadModule(ipval) {
+    var xhttp=createXmlHttpObject();
+    xhttp.open("GET", "http://"+ipval+"/modules.json", true)
+    xhttp.send(null);
+    xhttp.onload = function(e) {
+     var ipModule=JSON.parse(xhttp.responseText);
+    // for(var key in ipModule) {
+      if (ipModule.module[0] != 'jalousie') {
+       if (content) {
+
+        if (searchModule(ipModule.module,"relay") == 'yes'){
+         document.getElementById("device").innerHTML += '<option value="'+ipval+'/timerSave?module=relay">'+ipModule.space+' - '+ipModule.SSDP+' / relay<\/option>';
+        }
+        if (searchModule(ipModule.module,"rgb") == 'yes'){
+         document.getElementById("device").innerHTML += '<option value="'+ipval+'/timerSave?module=rgb">'+ipModule.space+' - '+ipModule.SSDP+' / rgb<\/option>';
+        }
+        if (searchModule(ipModule.module,"jalousie") == 'yes'){
+         document.getElementById("device").innerHTML += '<option value="'+ipval+'/timerSave?module=jalousie">'+ipModule.space+' - '+ipModule.SSDP+' / jalousie<\/option>';
+        }
+
+       } else {
+        loadTimers(ipval,ipModule.SSDP,ipModule.space);
+       }
+      }
+  //   }
+    }
+   }
+
+
+
+
+
 
    function loadTimers(ip,ssdp,space){
     var xmlHttp=createXmlHttpObject();

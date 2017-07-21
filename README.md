@@ -51,16 +51,11 @@
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/NrIrLw1rOdk/0.jpg)](https://www.youtube.com/watch?v=NrIrLw1rOdk&list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
 
-## Construction
+You can change here
 ```
-  #define TACH_PIN 0    // Кнопка управления
-  #define PIR_PIN 16     // RIR sensors
-  #define RELE1_PIN 12  // Реле
-  #define LED_PIN 13    // Светодиод
-  #define DHTPIN 14     // DHT сенсор.
-  #define RGB_PIN 2     // WS2811/WS2812/NeoPixel LEDs
-  #define impuls_PIN 3  //электросчетчик
+/data/config.modules.json
 ```
+
 [https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
 
 ### Breadboard
@@ -85,9 +80,33 @@
 
 If you like this project, you can give me a cup of coffee :)
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=W4PURUNKWMRJW&lc=AU&item_name=esp8266&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted)
 
-### WebMoney
-- USD Z242847016348
-- RUS R466173026928
-- EUR E555861976545
+### Web Developer
+#### AdvCash
+
+    U 0586 7862 1354
+    E 8788 6352 1126
+    R 7705 0208 6566
+
+#### PayPal
+
+    wul@inbox.lv
+
+#### WebMoney
+
+- Z242847016348
+- R466173026928
+- E555861976545
+
+### Arduino Developer
+
+#### YandexMoney
+
+- 410011740665305
+
+#### WebMoney
+
+- Z343206590467
+- R124424038680
+- U883416626152
+- E211342115147

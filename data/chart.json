@@ -1,6 +1,9 @@
 {
- "config": "config.live.json",
- "lang": "/lang/lang.{{lang}}.json",
+ "configs": [
+  "/config.live.json",
+  "/lang/lang.{{lang}}.json",
+  "/modules.json"
+ ],
  "title": "{{LangChart}}",
  "class":"col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6",
  "content": [
@@ -25,6 +28,20 @@
    "title": "{{LangDevices}}",
    "action": "/",
    "class": "btn btn-block btn-danger"
+  },
+  {
+   "type": "link",
+   "title": "<i class=\"set-img\"></i>{{LangOptions1}} RGB",
+   "module": "rgb",
+   "action": "/page.htm?rgb",
+   "class": "btn btn-block btn-default"
+  },
+  {
+   "type": "link",
+   "title": "<i class=\"set-img\"></i>{{LangOptions1}} Relay",
+   "module": "relay",
+   "action": "/page.htm?relay",
+   "class": "btn btn-block btn-default"
   },
   {
    "type": "link",

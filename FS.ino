@@ -7,6 +7,7 @@ void FS_init(void) {
       String fileName = dir.fileName();
       size_t fileSize = dir.fileSize();
     }
+    // Создаем список файлов каталога /lang
     Lang = FileList("/lang");
   }
   //HTTP страницы для работы с FFS
@@ -31,6 +32,12 @@ void FS_init(void) {
     if (!handleFileRead(HTTP.uri()))
       HTTP.send(404, "text/plain", "FileNotFound");
   });
+  HTTP.on("/skins", HTTP_GET, []() {
+    configJson = jsonWrite(configJson, "setIndex", HTTP.arg("set"));
+    writeFile("config.save.json", configJson );
+    HTTP.send(307, "Temporary Redirect\r\nLocation: /\r\nConnection: Close\r\n", "");
+  });
+
 }
 
 // Здесь функции для работы с файловой системой
@@ -53,7 +60,9 @@ String getContentType(String filename) {
 }
 
 bool handleFileRead(String path) {
-  if (path.endsWith("/")) path += "index.htm";
+  String setIndex =  jsonRead(configJson, "setIndex");
+  if (setIndex == "") setIndex = "index.htm";
+  if (path.endsWith("/")) path += setIndex;
   String contentType = getContentType(path);
   String pathWithGz = path + ".gz";
   if (SPIFFS.exists(pathWithGz) || SPIFFS.exists(path)) {
@@ -124,6 +133,7 @@ void handleFileList() {
   HTTP.send(200, "text/json", FileList(path));
 }
 
+// Создаем список файлов каталога
 String FileList(String path) {
   Dir dir = SPIFFS.openDir(path);
   path = String();

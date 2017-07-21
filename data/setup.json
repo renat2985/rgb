@@ -1,6 +1,9 @@
 {
- "config": "config.live.json",
- "lang": "/lang/lang.{{lang}}.json",
+ "configs": [
+  "/config.live.json",
+  "/lang/lang.{{lang}}.json",
+  "/modules.json"
+ ],
  "title": "{{LangSetting3}}",
  "class":"col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6",
  "content": [
@@ -26,19 +29,36 @@
    "action": "/",
    "class": "btn btn-block btn-danger"
   },
+  {
+   "type": "link",
+   "title": "<i class=\"set-img\"></i>{{LangOptions1}} RGB",
+   "module": "rgb",
+   "action": "/page.htm?rgb",
+   "class": "btn btn-block btn-default"
+  },
+  {
+   "type": "link",
+   "title": "<i class=\"set-img\"></i>{{LangOptions1}} Relay",
+   "module": "relay",
+   "action": "/page.htm?relay",
+   "class": "btn btn-block btn-default"
+  },
 
 
   {
    "type": "hr"
   },
 
+  {
+   "type": "h2",
+   "title": "{{configs}}"
+  },
 
   {
    "type": "dev",
    "title": "{{LangSetting4}}",
    "class": "alert alert-dismissible alert-info"
   },
-
 
   {
    "type": "h2",
@@ -182,12 +202,14 @@
   {
    "type": "time",
    "module":"ntp",
+   "name":"times1",
    "title": "{{LangTime1}}",
    "state":"{{time}}"
   },
   {
    "type": "button",
    "module":"",
+   "response":"[[times1]]",
    "title": "{{LangTime2}}",
    "class": "btn btn-block btn-primary",
    "action": "Time"

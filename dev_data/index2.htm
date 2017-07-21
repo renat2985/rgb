@@ -2,13 +2,14 @@
 <html>
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="css/build.css?v12.06.2017">
+  <link rel="stylesheet" type="text/css" href="css/build.css?v15.07.2017">
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Device Page</title>
   <script type="text/javascript">
    var xhttp=createXmlHttpObject();
+   var jsonResponse;
    function createXmlHttpObject(){
     if(window.XMLHttpRequest){
      xhttp=new XMLHttpRequest();
@@ -26,11 +27,6 @@
     }
    }
 
-   function findDevice(submit) {
-    document.getElementById('content').innerHTML='<div class="alert alert-dismissible alert-info"><div class="loader"><\/div><strong><center>Пожалуйста подождите, идет сканирование сети.<\/center><\/strong><\/div>';
-    ajax(window.location.hostname,'devices.scan.json',submit, '1');
-    deviceList('search');
-   }
 
    function deviceList(stage,sorting) {
     document.getElementById('content').innerHTML='';
@@ -40,28 +36,45 @@
     document.getElementById("content").innerHTML += '<div class="col-md-6"><div class="block"><h5 class="alert-warning">{{LangTimer}}<\/h5><table id="table-timers" class="table table-striped table-hover" style="width:100%;text-align:left;"><\/table><\/div><\/div>';
 
     var xhttp=createXmlHttpObject();
-    xhttp.open("GET", "/devices.list.json?"+Math.floor(Math.random()*10000), true);
+    xhttp.open("GET", "/ip.list.json?"+Math.floor(Math.random()*10000), true);
     xhttp.send(null);
     xhttp.onload = function(e) {
+     var ipDevice=JSON.parse(xhttp.responseText);
+     for(i = 0;i<ipDevice.ssdpList.length;i++) {
+      loadModule(ipDevice.ssdpList[i].ip,stage,sorting);
+     }
+     if (ipDevice.ssdpList.length == 0) {
+      location.href = "/page.htm?first-connect";
+     }
+    }
+   }
+
+
+
+   function loadModule(ipval,stage,sorting) {
+
+    var xhttp=createXmlHttpObject();
+    xhttp.open("GET", "http://"+ipval+"/modules.json", true)
+    xhttp.send(null);
+    xhttp.onload = function(e) {
+
      var ipModule=JSON.parse(xhttp.responseText);
      var allModules = [];
      var allSpace = [];
-     for(var key in ipModule) {
-      var ipval = ipModule[key].ip;
-      if (ipval == '0.0.0.0') {location.href = "/page.htm?first-connect";}
-      if (stage == 'search') {
-       loadBlock(ipval,'content','first',ipModule[key].module);
-      }
-      // Сортировка
-      if (stage == 'first' && sorting == null || searchModule(ipModule[key].module,sorting) == 'yes' || ipModule[key].space == sorting) {
-       loadBlock(ipval,'content','first',ipModule[key].module);
-      }
-      for (var s in ipModule[key].module) {
-       // if (ipModule[key].module[s] != 'ntp' && ipModule[key].module[s] != 'ddns' && ipModule[key].module[s] != 'timers' && ipModule[key].module[s] != 'mqtt')
-       allModules.push(ipModule[key].module[s]);
-      }
-      allSpace.push(ipModule[key].space);
+     //  for(var key in ipModule) {
+     if (stage == 'search') {
+      loadBlock(ipval,'content','first',ipModule.module);
      }
+     // Сортировка
+     if (stage == 'first' && sorting == null || searchModule(ipModule.module,sorting) == 'yes' || ipModule.space == sorting) {
+      loadBlock(ipval,'content','first',ipModule.module);
+     }
+     for (var s in ipModule.module) {
+      // if (ipModule.module[s] != 'ntp' && ipModule.module[s] != 'ddns' && ipModule.module[s] != 'timers' && ipModule.module[s] != 'mqtt')
+      allModules.push(ipModule.module[s]);
+     }
+     allSpace.push(ipModule.space);
+     // }
      if (stage == 'first' || stage == 'search') {
       var spaceArray = [];
       var space_lookup  = {};
@@ -82,6 +95,7 @@
        if (moduleArray[key]) document.getElementById("sorting-module").innerHTML += '<a href="#'+moduleArray[key]+'" class="btn btn-sm btn-default" onclick="deviceList(\'first\',\''+moduleArray[key]+'\')">'+moduleArray[key]+'<\/a>';
       }
      }
+
     }
    }
 
@@ -111,7 +125,7 @@
       xhttp.send(null);
       xhttp.onload = function(e) {
        var jsonResponse2=JSON.parse(xhttp.responseText);
-       var jsonResponse = Object.assign(jsonResponse1, jsonResponse2);
+       jsonResponse = Object.assign(jsonResponse1, jsonResponse2);
        var theCookies = document.cookie.split(';');
        for (var i = 1 ; i <= theCookies.length; i++) {
         jsonResponse[theCookies[i-1].split("=")[0].replace(/^ /,'')] = theCookies[i-1].split("=")[1];
@@ -131,7 +145,13 @@
 
        if (searchModule(modules,"relay") == 'yes'){
         if (stage == 'first'){document.getElementById('table-content').innerHTML+='<tr id="block-'+ipval+'-relay"><\/tr>';}
-        document.getElementById("block-"+ipval+"-relay").innerHTML='<td>'+(jsonResponse.space?'<a href="#'+jsonResponse.space+'" onclick="deviceList(\'first\',\''+jsonResponse.space+'\');" class="label label-default">'+jsonResponse.space+'<\/a>':'')+' <a href="#relay" onclick="deviceList(\'first\',\'relay\');" class="label label-danger">relay<\/a> <b><a href="http://'+jsonResponse.ip+'">'+jsonResponse.SSDP+'<\/a><\/b><\/td><td><input onclick="ajax(\''+jsonResponse.ip+'\',\'relay\',this);" value="'+(jsonResponse.state=='0'?jsonResponse.LangOn:jsonResponse.LangOff)+'" class="btn btn-'+(jsonResponse.state=='0'?'primary':'info')+'" type="button"><\/td><td><div class="btn-group pull-right"><a href="http://'+jsonResponse.ip+'/page.htm?relay" class="btn btn-default"><i class="set-img"><\/i><span class="hidden-xs">'+jsonResponse.LangOptions1+'<\/span><\/a><a href="http://'+jsonResponse.ip+'/page.htm?setup" title="'+jsonResponse.LangSetting3+'" class="btn btn-default"><i class="opt-img"><\/i><\/a><\/div><\/td>';
+        var relayNumber = '<input onclick="ajax(\''+jsonResponse.ip+'\',\'relay\',this);" value="'+(jsonResponse.state=='0'?jsonResponse.LangOn:jsonResponse.LangOff)+'" class="btn btn-'+(jsonResponse.state=='0'?'primary':'info')+'" type="button">';
+        for (var i = 1; i < 5; i++) {
+         if (searchModule(modules,"relay"+i) == 'yes'){
+          relayNumber += '<input onclick="ajax(\''+jsonResponse.ip+'\',\'relay'+i+'\',this);" value="'+(jsonResponse.state=='0'?jsonResponse.LangOn:jsonResponse.LangOff)+'" class="btn btn-'+(jsonResponse.state=='0'?'primary':'info')+'" type="button">';
+         }
+        }
+        document.getElementById("block-"+ipval+"-relay").innerHTML='<td>'+(jsonResponse.space?'<a href="#'+jsonResponse.space+'" onclick="deviceList(\'first\',\''+jsonResponse.space+'\');" class="label label-default">'+jsonResponse.space+'<\/a>':'')+' <a href="#relay" onclick="deviceList(\'first\',\'relay\');" class="label label-danger">relay<\/a> <b><a href="http://'+jsonResponse.ip+'">'+jsonResponse.SSDP+'<\/a><\/b><\/td><td>'+relayNumber+'<\/td><td><div class="btn-group pull-right"><a href="http://'+jsonResponse.ip+'/page.htm?relay" class="btn btn-default"><i class="set-img"><\/i><span class="hidden-xs">'+jsonResponse.LangOptions1+'<\/span><\/a><a href="http://'+jsonResponse.ip+'/page.htm?setup" title="'+jsonResponse.LangSetting3+'" class="btn btn-default"><i class="opt-img"><\/i><\/a><\/div><\/td>';
        }
        if (searchModule(modules,"rgb") == 'yes'){
         if (stage == 'first'){document.getElementById('table-content').innerHTML+='<tr id="block-'+ipval+'-rgb"><\/tr>';}
@@ -142,7 +162,7 @@
         document.getElementById("block-"+ipval+"-jalousie").innerHTML='<td>'+(jsonResponse.space?'<a href="#'+jsonResponse.space+'" onclick="deviceList(\'first\',\''+jsonResponse.space+'\');" class="label label-default">'+jsonResponse.space+'<\/a>':'')+' <a href="#jalousie" onclick="deviceList(\'first\',\'jalousie\');" class="label label-success">jalousie<\/a> <b><a href="http://'+jsonResponse.ip+'">'+jsonResponse.SSDP+'<\/a><\/b><\/td><td><input onclick="ajax(\''+jsonResponse.ip+'\',\'jalousie\',this);" value="'+(jsonResponse.state=='0'?jsonResponse.LangOn:jsonResponse.LangOff)+'" class="btn btn-'+(jsonResponse.state=='0'?'primary':'info')+'" type="button"><\/td><td><div class="btn-group pull-right"><a href="http://'+jsonResponse.ip+'/jalousie.htm" class="btn btn-default"><i class="set-img"><\/i><span class="hidden-xs">'+jsonResponse.LangOptions1+'<\/span><\/a><a href="http://'+jsonResponse.ip+'/page.htm?setup" title="'+jsonResponse.LangSetting3+'" class="btn btn-default"><i class="opt-img"><\/i><\/a><\/div><\/td>';
        }
 
-       if (window.location.hostname == ipval) {
+       if (window.location.hostname == ipval && stage == 'first') {
         var new_string2;
         var bodyData = document.getElementsByTagName('body')[0].innerHTML;
         for (var key in jsonResponse) {
@@ -150,7 +170,11 @@
          bodyData = new_string2;
         }
         document.getElementsByTagName('body')[0].innerHTML = new_string2;
-        loadBuild(jsonResponse.spiffsData, jsonResponse.LangUpgrade);
+
+        if (searchModule(modules,"upgrade") == 'yes'){
+         loadBuild(jsonResponse.spiffsData, jsonResponse.LangUpgrade);
+        }
+
        }
 
       }
@@ -226,7 +250,13 @@
     xhttp.onload = function(e) {
      submit.value=old_submit;
      submit_disabled(false);
-     if (!loadB) {loadBlock(ipHost,'block-'+ipHost, '');}
+     // if (!loadB) {loadBlock(ipHost,'block-'+ipHost, '');}
+     var response=JSON.parse(xhttp.responseText);
+     if (response.class && response.class!='undefined') {submit.className = response.class.replace(/btn-block btn-lg/,'');}
+     if (response.style && response.style!='undefined') {submit.style = response.style;}
+     if (response.title && response.title!='undefined') {
+      if (submit.tagName == 'INPUT') {submit.value = jsonResponse[response.title.slice(2, -2)];}
+     }
     }
    }
 
@@ -281,19 +311,20 @@
 
    function loadBuild(spiffs, LangUpgrade){
     var xmlHttp=createXmlHttpObject();
-    xmlHttp.open('GET','https://api.github.com/repos/renat2985/rgb/contents/build',true);
+    xmlHttp.open('GET','https://api.github.com/repos/tretyakovsa/Sonoff_WiFi_switch/contents/build',true);
     xmlHttp.send(null);
     xmlHttp.onload = function(e) {
      var jsonBuild=JSON.parse(xmlHttp.responseText);
      jsonBuild.sort(function(a,b){return (a.name< b.name) ? 1 : ((b.name < a.name) ? -1 : 0);});
      if (jsonBuild[0].name != spiffs) {
-      document.getElementById('update').innerHTML = '<a href="/upgrade?spiffs=http://backup.privet.lv/esp/rgb/'+jsonBuild[0].name+'&build=http://backup.privet.lv/esp/rgb/build.0x00000'+jsonBuild[0].name.substring(14)+'" onclick="return confirm(\''+LangUpgrade+'\')"><i class="warning-img"><\/i><\/a>';
+      document.getElementById('update').innerHTML = '<a href="/upgrade?spiffs=http://backup.privet.lv/esp/sonoff/'+jsonBuild[0].name+'&build=http://backup.privet.lv/esp/sonoff/build.0x00000'+jsonBuild[0].name.substring(14)+'" onclick="return confirm(\''+LangUpgrade+'\')"><i class="warning-img"><\/i><\/a>';
      }
     }
    }
   </script>
  </head>
  <body>
+  <div id="news"></div>
   <div class="container device index2">
    <div class="header">
     <div class="btn-group pull-right" style="margin-top:35px;">
@@ -304,7 +335,7 @@
     <div class="pull-right" style="margin-top:35px;margin-right:5px">
      <div class="btn-group">
       <a href="#" class="btn btn-warning dropdown-toggle" onclick="toggle('skins');">{{LangDesign}} <span class="caret"></span></a>
-      <ul class="dropdown-menu hidden" id="skins"><li><a href="/index.htm"><b>Default</b></a></li><li><a href="/index2.htm"><b>Inline</b></a></li><li><a href="/index3.htm"><b>Block</b></a></li></ul>
+      <ul class="dropdown-menu hidden" id="skins"><li><a href="/skins?set=index.htm"><b>Default</b></a></li><li><a href="/skins?set=index2.htm"><b>Inline</b></a></li><li><a href="/skins?set=index3.htm"><b>Block</b></a></li><li><a href="/skins?set=index4.htm"><b>Life</b></a></li></ul>
      </div>
     </div>
     <h1>{{space}}<br><small class="show">{{SSDP}}<sup id="update"></sup></small></h1>
@@ -315,15 +346,6 @@
     <hr>
     <div class="block" id="sorting-space"></div>
     <div class="block" id="sorting-module"></div>
-    <div class="col-xs-6 col-sm-12">
-     <div class="block">
-      <h5 class="alert-danger">{{LangSearch1}}</h5>
-      <div class="alert alert-dismissible alert-info {{g73683}}"><button class="close" onclick="hide('g73683',this);" type="button">×</button>{{LangSearch2}}</div>
-      <span>
-       <input type="button" class="btn btn-block btn-default" value="{{LangSearch3}}" onclick="findDevice(this);window.scrollTo(0,0);">
-      </span>
-     </div>
-    </div>
     <div class="col-xs-6 col-md-12">
      <div class="block">
       <h5 class="alert-warning">{{LangScenery1}}</h5>
