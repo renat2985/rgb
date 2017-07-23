@@ -51,6 +51,9 @@
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/NrIrLw1rOdk/0.jpg)](https://www.youtube.com/watch?v=NrIrLw1rOdk&list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
 
+## [Construction PIN and Modules](https://github.com/renat2985/rgb/blob/master/data/config.modules.json)
+
+
 You can change here
 ```
 /data/config.modules.json
