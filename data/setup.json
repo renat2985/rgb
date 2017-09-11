@@ -10,7 +10,7 @@
   {
    "type": "h5",
    "title": "{{SSDP}}",
-   "class":"alert-danger"
+   "class":"alert-warning"
   },
   {
    "type": "select",
@@ -43,6 +43,13 @@
    "action": "/page.htm?relay",
    "class": "btn btn-block btn-default"
   },
+  {
+   "type": "link",
+   "title": "<i class=\"set-img\"></i>{{LangOptions1}} Jalousie",
+   "module": "jalousie",
+   "action": "/page.htm?jalousie",
+   "class": "btn btn-block btn-default"
+  },
 
 
   {
@@ -51,7 +58,7 @@
 
   {
    "type": "h2",
-   "title": "{{configs}}"
+   "title": "{{LangType}} {{configs}}"
   },
 
   {
@@ -112,12 +119,18 @@
    "pattern": ".{8,20}"
   },
 
+
   {
    "type": "checkbox",
    "title": "Задать статический IP",
    "name":"checkboxIP",
    "state": "{{checkboxIP}}",
    "style": "display:block"
+  },
+  {
+   "type": "text",
+   "title": "Если вы хотите задать статический IP, вам необходимо заполнить поля Default Getway и Subnet Mask.",
+   "class": "alert alert-warning"
   },
   {
    "type": "input",

@@ -52,7 +52,7 @@
 
   {
    "type": "button",
-   "title": "{{LangOnOff}}",
+   "title": "({{stateRGB}}==0?'{{LangOn}}':'{{LangOff}}')",
    "name":"relay0",
    "response":"[[relay0]]",
    "action": "relay",
@@ -61,7 +61,7 @@
 
   {
    "type": "button",
-   "title": "{{LangOnOff}}",
+   "title": "({{stateRGB}}==0?'{{LangOn}}':'{{LangOff}}')",
    "name":"relay1",
    "module":"relay1",
    "response":"[[relay1]]",
@@ -71,7 +71,7 @@
 
   {
    "type": "button",
-   "title": "{{LangOnOff}}",
+   "title": "({{stateRGB}}==0?'{{LangOn}}':'{{LangOff}}')",
    "name":"relay2",
    "module":"relay2",
    "response":"[[relay2]]",
@@ -81,7 +81,7 @@
 
   {
    "type": "button",
-   "title": "{{LangOnOff}}",
+   "title": "({{stateRGB}}==0?'{{LangOn}}':'{{LangOff}}')",
    "name":"relay3",
    "module":"relay3",
    "response":"[[relay3]]",
@@ -108,9 +108,10 @@
    "state": "timer.save.json",
    "title": {
     "module":"",
-    "trigger":"On/Off",
+    "trigger":"{{LangOn.}}/{{LangOff.}}",
     "day":"{{LangDay}}",
-    "time":"{{LangTime4}}"
+    "time":"{{LangTime4}}",
+    "work":"{{LangWorkTime}}"
    },
    "class": "table alert alert-dismissible alert-warning",
    "style": "width:100%;"
@@ -119,7 +120,7 @@
    "type": "link",
    "module":"timers",
    "title": "{{LangTimer}}",
-   "action": "timer.htm",
+   "action": "page.htm?timer",
    "class": "btn btn-block btn-default"
   },
 
@@ -137,7 +138,22 @@
    "action": "/page.htm?chart&analog",
    "style": "height:200px;margin-left:-20px"
   },
-
+  {
+   "type": "chart",
+   "title":"{{LangTemperature}}",
+   "state": "temperature.json",
+   "module":"temperature",
+   "action": "/page.htm?chart&analog",
+   "style": "height:200px;margin-left:-20px"
+  },
+  {
+   "type": "chart",
+   "title":"{{LangHumidity}}",
+   "state": "humidity.json",
+   "module":"humidity",
+   "action": "/page.htm?chart&analog",
+   "style": "height:200px;margin-left:-20px"
+  },
 
 
   {
@@ -148,7 +164,7 @@
   {
    "type": "text",
    "module": "movement",
-   "title": "{{LangPir2}}",
+   "title": "{{LangPir2}} {{LangSoon}}",
    "class": "alert alert-info",
    "style": "width:60%;float:left;"
   },

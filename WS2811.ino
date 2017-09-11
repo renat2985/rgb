@@ -1,12 +1,9 @@
 /*
    Модуль использует библиотеки
    #include <Adafruit_NeoPixel.h>       //https://github.com/adafruit/Adafruit_NeoPixel
-   #include <WS2812FX.h>                //https://github.com/kitesurfer1404/WS2812FX
-   Глобальные переменные
-  int ledCount = 15;              // Количество лед огней
-   Переменная статуса stateRGB
+   #include <WS2812FX.h>                //https://github.com/MTJoker/WS2812FX
    Объект должен быть определен в начале скетча
-   WS2812FX ws2812fx = WS2812FX(ledCount, RGB_PIN, NEO_GRB + NEO_KHZ800);
+   WS2812FX ws2812fx = WS2812FX();
      В Loop обработчик
      ws2812fx.service();
 */
@@ -14,14 +11,17 @@
 void initRGB() {
   configJson = jsonWrite(configJson, "colorRGB", "ff6600");
   configJson = jsonWrite(configJson, "speedRGB", 100);
-  configJson = jsonWrite(configJson, "BrightnessRGB", 255);
-  configJson = jsonWrite(configJson, "ModeRGB", 0);
+  configJson = jsonWrite(configJson, "brightnessRGB", 255);
+  configJson = jsonWrite(configJson, "modeRGB", 0);
   configJson = jsonWrite(configJson, "timeRGB", 0);
   configJson = jsonWrite(configJson, "timeBUZ", 0);
   //Serial.end();
   // Настраивается по запросу /set?
   HTTP.on("/set", handle_RGB);
   HTTP.on("/rgb", LedRGB);
+  HTTPWAN.on("/set", handle_RGB);
+  HTTPWAN.on("/rgb", LedRGB);
+
   // Реагирует на комманду rgbnot
   sCmd.addCommand("rgbnot",    rgbNot);
   sCmd.addCommand("rgbon",    rgbOn);
@@ -30,14 +30,14 @@ void initRGB() {
   ws2812fx.setPin(readArgsInt());
   ws2812fx.updateLength(readArgsInt());
   ws2812fx.init();
-  ws2812fx.setMode(jsonReadtoInt(configJson, "ModeRGB")); // Режим
+  ws2812fx.setMode(jsonReadtoInt(configJson, "modeRGB")); // Режим
   // Начальный цвет
   uint32_t  tmp = strtol(("0x" + jsonRead(configJson, "colorRGB")).c_str(), NULL, 0);
   if (tmp >= 0x000000 && tmp <= 0xFFFFFF) {
     ws2812fx.setColor(tmp);
   }
   ws2812fx.setSpeed(jsonReadtoInt(configJson, "speedRGB")); // Скорость
-  ws2812fx.setBrightness(jsonReadtoInt(configJson, "BrightnessRGB")); //Яркость
+  ws2812fx.setBrightness(jsonReadtoInt(configJson, "brightnessRGB")); //Яркость
   //регистрируем модуль
   modulesReg("rgb");
 }
@@ -62,20 +62,20 @@ void handle_RGB() {
     ws2812fx.setSpeed(speedRGB.toInt());
   }
   //Получаем яркость
-  String BrightnessRGB = HTTP.arg("b");
-  if (BrightnessRGB != "") {
-    configJson = jsonWrite(configJson, "BrightnessRGB", BrightnessRGB);
-    ws2812fx.setBrightness(BrightnessRGB.toInt());
+  String brightnessRGB = HTTP.arg("b");
+  if (brightnessRGB != "") {
+    configJson = jsonWrite(configJson, "brightnessRGB", brightnessRGB);
+    ws2812fx.setBrightness(brightnessRGB.toInt());
 
   }
   //Получаем режим
-  String ModeRGB = HTTP.arg("m");
-  if (ModeRGB != "") {
-    configJson = jsonWrite(configJson, "ModeRGB", ModeRGB);
-    ws2812fx.setMode(ModeRGB.toInt() % ws2812fx.getModeCount());
+  String modeRGB = HTTP.arg("m");
+  if (modeRGB != "") {
+    configJson = jsonWrite(configJson, "modeRGB", modeRGB);
+    ws2812fx.setMode(modeRGB.toInt() % ws2812fx.getModeCount());
   }
   //Получаем время таймера
-  String  timeRGB = HTTP.arg("time");
+  String timeRGB = HTTP.arg("time");
   if (timeRGB != "") {
     configJson = jsonWrite(configJson, "timeRGB", timeRGB);
   }

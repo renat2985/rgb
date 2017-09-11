@@ -1,7 +1,7 @@
 void initTimers() {
   HTTP.on("/timerSave", handle_timer_Save);
   HTTP.on("/timersDel", handle_timer_Del);
-// задача проверять таймеры каждую секунду.
+  // задача проверять таймеры каждую секунду.
   ts.add(0, 1000, [&](void*) {
     runTimers();
   }, nullptr, true);
@@ -14,19 +14,32 @@ void handle_timer_Save() {
   JsonObject& Timers = jsonBuffer.parseObject(jsonTimer);
   JsonArray& arrays = Timers["timer"].asArray();
   JsonObject& record = arrays.createNestedObject();
-  record["id"]  = HTTP.arg("id").toInt();
+  record["id"]  = HTTP.arg("id");
   record["trigger"]  = HTTP.arg("trigger");
   record["module"]  = HTTP.arg("module");
   record["day"]  = HTTP.arg("day");
   record["time"]  = HTTP.arg("time");
-  record["work"]  = HTTP.arg("work").toInt();
+  record["work"]  = HTTP.arg("work");
   jsonTimer = "";
   Timers.printTo(jsonTimer);
   writeFile("timer.save.json", jsonTimer );
 
   loadTimer();
-  HTTP.send(200, "text/plain", "OK");
+  HTTP.send(200, "text/plain", responsTimer());
 }
+
+String responsTimer(){
+  String responsA="{\"state\": \"timer.save.json\",\"title\":";
+  String responsB ="{}";
+  responsB= jsonWrite(responsB, "module", "");
+  responsB= jsonWrite(responsB, "trigger", "{{LangOn.}}/{{LangOff.}}");
+  responsB= jsonWrite(responsB, "day", "{{LangDay}}");
+  responsB= jsonWrite(responsB, "time", "{{LangTime4}}");
+  responsB= jsonWrite(responsB, "work", "{{LangWorkTime}}");
+  responsB= jsonWrite(responsB, "id", "{{LangDel}}");
+  return responsA +=responsB +="}";
+}
+
 
 void handle_timer_Del() {
   DynamicJsonBuffer jsonBuffer;
@@ -43,13 +56,15 @@ void handle_timer_Del() {
   Timers.printTo(jsonTimer);
   writeFile("timer.save.json", jsonTimer );
   loadTimer();
-  HTTP.send(200, "text/plain", "OK");
+  HTTP.send(200, "text/plain", responsTimer());
 }
+
 
 bool loadTimer() {
   Timerset = "";
   jsonTimer = readFile("timer.save.json", 4096);
   String Weekday = GetWeekday();
+  configJson = jsonWrite(configJson, "Weekday", Weekday);
   DynamicJsonBuffer jsonBuffer;
   JsonObject& Timers = jsonBuffer.parseObject(jsonTimer);
   JsonArray& nestedArray = Timers["timer"].asArray();
@@ -57,10 +72,12 @@ bool loadTimer() {
   if (j != 0) {
     for (int i = 0; i <= j - 1; i++) {
       if ((Weekday == Timers["timer"][i]["day"].as<String>()) || (Timers["timer"][i]["day"].as<String>() == "All")) {
+
         Timerset += Timers["timer"][i]["time"].as<String>() + ",";
         Timerset += Timers["timer"][i]["module"].as<String>() + ",";
+        Timerset += Timers["timer"][i]["trigger"].as<String>() + ",";
         Timerset += Timers["timer"][i]["work"].as<String>() + ",";
-        Timerset += Timers["timer"][i]["trigger"].as<String>();
+        Timerset += Timers["timer"][i]["id"].as<String>();
         Timerset += "\r\n";
       }
     }
@@ -69,11 +86,15 @@ bool loadTimer() {
   //runTimers();
   return true;
 }
-
 void runTimers() {
   // Список текущих таймеров во временную переменную
   String timers = Timerset;
   String now = GetTime();
+  String Weekday = GetWeekday();
+  if (jsonRead(configJson, "Weekday")!=Weekday){
+  configJson = jsonWrite(configJson, "Weekday", Weekday);
+  loadTimer();
+  }
   configJson = jsonWrite(configJson, "time", now);
   int i;
   // Будем повторять проверку для каждого установленного таймера
@@ -83,23 +104,27 @@ void runTimers() {
     if (i != -1) {
       // получаем строку текщего таймера
       String timer = timers.substring(0, i);
-      // Если время совпадает с текущим
-      //Serial.println(GetTime());
       if (timer.substring(0, 8) == now) {
-        // Отрезаем время из строки 12:44:15,relay,0,not
-        timer = timer.substring(9);
-        int b = timer.indexOf(",");
-        String temp = timer.substring(0, b);
-        Serial.println(temp);
-        int e = timer.lastIndexOf(",");
-        // Загружаем время работы реле
-        int interval = timer.substring(b, e).toInt();
+        // Отрезаем время из строки 12:44:15,relay,not,work,id
+        timer = deleteBeforeDelimiter(timer, ",");
+        // Выделяем модуль
+        String module = selectToMarker (timer, ",");
+        // отрезаем модуль
+        timer = deleteBeforeDelimiter(timer, ",");
+        // Выделяем команду
+        String com = selectToMarker (timer, ",");
+        // отрезаем команду
+        timer = deleteBeforeDelimiter(timer, ",");
+        // Выделяем интервал таймера
+        String interval = selectToMarker (timer, ",");
+        // отрезаем интервал
+        timer = deleteBeforeDelimiter(timer, ",");
+        // выделяем id таймера
+        String id = selectToMarker (timer, "\r\n");
         // выполняем необходимое действие
-        temp += timer.substring(e + 1);
-        Serial.println(temp);
-        if (temp != "") {
-          command = temp;
-        }
+
+        command = module + com + " " + interval + " " + id;
+        Serial.println(command);
 
       }
       timers = timers.substring(timers.indexOf("\r\n") + 2);

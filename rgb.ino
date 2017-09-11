@@ -3,7 +3,7 @@
 #include <ESP8266SSDP.h>             //Содержится в пакете
 #include <FS.h>                      //Содержится в пакете
 #include <time.h>                    //Содержится в пакете
-#include <Ticker.h>                  //Содержится в пакете
+//#include <Ticker.h>                  //Содержится в пакете
 #include <WiFiUdp.h>                 //Содержится в пакете
 #include <ESP8266HTTPUpdateServer.h> //Содержится в пакете
 #include <ESP8266httpUpdate.h>       //Содержится в пакете
@@ -22,6 +22,7 @@
 #include <Adafruit_NeoPixel.h>       //https://github.com/adafruit/Adafruit_NeoPixel
 #include <WS2812FX.h>                //https://github.com/MTJoker/WS2812FX
 #include <RCSwitch.h>                //Ставим через менеджер библиотек
+
 
 #define d18b20PIN 14
 DHT dht;
@@ -78,26 +79,45 @@ String prefix   = "/IoTmanager";
 void setup() {
 
   //Serial.println (ESP.getResetReason());
-
+  Serial.begin(115200);
+  delay(100);
   TickerScheduler(1);
+  Serial.println ("");
   Serial.println ("Load");
   initCMD();
   chipID = String( ESP.getChipId() ) + "-" + String( ESP.getFlashChipId() );
   FS_init();         // Включаем работу с файловой системой
   configJson = readFile("config.save.json", 1024);
-  String init = readFile("config.modules.json", 4096);
   String configs = jsonRead(configJson, "configs");
+  configs.toLowerCase();
 
-  if (configs == "") {
-    sCmd.readStr("Serial 115200");
-    sCmd.readStr("wifi 12");
-    sCmd.readStr("Upgrade");
-    sCmd.readStr("HTTP");
-    //configs = "Basic";
-  }
-  Serial.println (configs);
-  Serial.println(modulesInit(init, configs));
+  String test = readFile("configs/"+configs+".txt", 4096);
+  //Serial.print(test);
+  test.replace("\r\n", "\n");
+   test +="\n";
+  //Serial.print(test);
+   sCmd.readStr("wifi 12");
+   sCmd.readStr("Upgrade");
+   sCmd.readStr("SSDP");
+   sCmd.readStr("HTTP");
+
+  Serial.println(goCommands(test));
+  //Serial.println(modules);
+  //Serial.println(modules.lastIndexOf("[]"));
+  /*
+  if(modules.lastIndexOf("[]")!=-1){
+    String rn = "\n";
+    //test ="Serial 115200"+rn;
+    test ="wifi 12"+rn;
+    test +="Upgrade"+rn;
+    test +="SSDP"+rn;
+    test +="HTTP"+rn;
+    Serial.println(goCommands(test));
+    }
+   */
+  Serial.println (configLive);
   Serial.println ("Start");
+  configJson = jsonWrite(configJson, "mac", WiFi.macAddress().c_str());
 }
 
 void loop() {
@@ -105,6 +125,8 @@ void loop() {
   sCmd.readStr(command);     // We don't do much, just process serial commands
   command = "";
   dnsServer.processNextRequest();
+  HTTPWAN.handleClient();
+  delay(1);
   HTTP.handleClient();
   delay(1);
   handleUDP();

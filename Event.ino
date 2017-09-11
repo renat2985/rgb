@@ -1,7 +1,7 @@
 // -----------------  Аналоговый вход A0
 void initA0() {
   HTTP.on("/analog.json", HTTP_GET, []() {
-    HTTP.send(200, "text/json", graf(analogRead(A0), 10, 3000));
+    HTTP.send(200, "text/json", graf(analogRead(A0), 10, 3000, "low:0"));
   });
   modulesReg("analog");
 }
@@ -16,7 +16,7 @@ void initTach() {
 void Tach_0() {
   static unsigned long millis_prev;
   // Устроняем дребезг контакта
-  if (millis() - 100 > millis_prev) {
+  if (millis() - 500 > millis_prev) {
     command = jsonRead(configJson, "TachCommand");
   }
   millis_prev = millis();
@@ -34,12 +34,12 @@ void initMotion() {
 
 void motionOn() {
   motion.attach(120, motionOff);
-  command = jsonRead(configJson, "Command")+"on";
+  command = jsonRead(configJson, "Command") + "on";
 
 }
 void motionOff() {
   motion.detach();
-  command = jsonRead(configJson, "Command")+"off";
+  command = jsonRead(configJson, "Command") + "off";
 
 }
 
@@ -53,14 +53,22 @@ void initDHT() {
   temp += dht.getTemperature();
   if (temp != "nan") {
     //Serial.println("ok");
-    HTTP.on("/sensor.json", HTTP_GET, []() {
+    HTTP.on("/temperature.json", HTTP_GET, []() {
       float temp = dht.getTemperature();
       if (temp == 'NaN') {
         temp = 0;
       }
-      HTTP.send(200, "text/json", graf(temp, 10, 3000));
+      HTTP.send(200, "text/json", graf(temp, 10, 3000, "low:0"));
     });
     modulesReg("temperature");
+    HTTP.on("/humidity.json", HTTP_GET, []() {
+      float temp = dht.getHumidity();;
+      if (temp == 'NaN') {
+        temp = 0;
+      }
+      HTTP.send(200, "text/json", graf(temp, 10, 3000, "low:0"));
+    });
+    modulesReg("humidity");
   }
 }
 
@@ -70,9 +78,10 @@ void initD18B20() {
   d18b20.begin();
   d18b20.requestTemperatures();
   float ok = d18b20.getTempCByIndex(0);
+  d18b20.setResolution(12);
   //Serial.println(ok);
   if (ok != -127) {
-    HTTP.on("/sensor.json", HTTP_GET, []() {
+    HTTP.on("/temperature.json", HTTP_GET, []() {
       d18b20.requestTemperatures();
       float temp = d18b20.getTempCByIndex(0);
       if (temp == -127) {
@@ -93,6 +102,10 @@ void initRCSwitch() {
   ts.add(3, 100, [&](void*) {
     RCRCreceiv();
   }, nullptr, true);
+
+  HTTP.on("rcreceivi.json", HTTP_GET, []() {
+    HTTP.send(200, "text/json", jsonWrite("{}", "Received", jsonRead(configJson, "Received")));
+  });
   modulesReg("RCreceivi");
 }
 

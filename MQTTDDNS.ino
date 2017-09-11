@@ -52,7 +52,7 @@ void MQTT_Pablush() {
           client.set_callback(callback);
           client.subscribe(prefix);  // Для приема получения HELLOW и подтверждения связи
           client.subscribe(prefix + "/+/+/control"); // Подписываемся на топики control
-          client.subscribe("/" + chipID + "/RELE_1"); // подписываемся по топик с данными для светодиода
+          //client.subscribe("/" + chipID + "/RELE_1"); // подписываемся по топик с данными для светодиода
           loadnWidgets();
         } else {
           //Serial.println("Could not connect to MQTT server");
@@ -64,6 +64,10 @@ void MQTT_Pablush() {
 
 void  handleMQTT() {
   if (client.connected()) client.loop();
+  else {
+    MQTT_Pablush();
+    //Serial.println("MQTT");
+    }
 }
 
 //Установка параметров  http://192.168.0.101/mqtt?server=m13.cloudmqtt.com&port=15535&user=cxluynva&pass=4cje5WEkzqvR

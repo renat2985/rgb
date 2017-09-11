@@ -116,6 +116,8 @@ boolean startSTA(String configWiFi) {
   Serial.println(WiFi.SSID());
   WiFi.begin();
   //WiFi.begin(jsonRead(configJson, "ssid").c_str(),jsonRead(configJson, "ssidPass").c_str());
+  Serial.println(jsonRead(configJson, "ssid").c_str());
+  Serial.println(jsonRead(configJson, "ssidPass").c_str());
   if ( wifiConnect(jsonReadtoInt(configLive, "attempt"), jsonReadtoInt(configLive, "led"))) {
     WiFi.setAutoConnect(true);
     WiFi.setAutoReconnect(true);

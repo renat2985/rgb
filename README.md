@@ -20,7 +20,7 @@
 
 ## Upload instruction
 
-### [NodeMCU Flasher (Easy)](https://github.com/renat2985/rgb/tree/master/build)
+### [NodeMCU Flasher (Quick start / Easy)](https://github.com/renat2985/rgb/tree/master/build)
 
 ### [Arduino Windows (Video)](https://www.youtube.com/watch?v=jMK9mySGHio)
 
@@ -56,7 +56,7 @@
 
 You can change here
 ```
-/data/config.modules.json
+/data/configs/*.txt
 ```
 
 [https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
@@ -87,13 +87,13 @@ If you like this project, you can give me a cup of coffee :)
 ### Web Developer
 #### AdvCash
 
-    U 0586 7862 1354
-    E 8788 6352 1126
-    R 7705 0208 6566
+- U 0586 7862 1354
+- E 8788 6352 1126
+- R 7705 0208 6566
 
 #### PayPal
 
-    wul@inbox.lv
+- wul@inbox.lv
 
 #### WebMoney
 

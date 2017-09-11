@@ -2,13 +2,13 @@
 <html>
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="css/build.css?v15.07.2017">
+  <link rel="stylesheet" type="text/css" href="css/build.css?v11.09.2017">
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css"> -->
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-json.min.js"></script>
-  <script type="text/javascript" src="js/function.js?v15.07.2017"></script>
+  <script type="text/javascript" src="js/function.js?v11.09.2017"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Помощь</title>
  </head>
@@ -25,8 +25,8 @@
     <h3>GET <a href="/config.save.json">/config.save.json</a></h3>
     <p>Здесь хранятся основные настройки устройсва (Эти настройки восстанавливаются посте рестарта)</p>
     <pre><code class="language-json" id="configs-save-json">Loading...</code></pre>
-    <h3>GET <a href="/devices.list.json">/ip.list.json</a></h3>
-    <p>Количество устройст найденых в локальной сети, обновляются через GET /devices.scan.json</p>
+    <h3>GET <a href="/ip.list.json">/ip.list.json</a></h3>
+    <p>Количество устройст найденых в локальной сети.</p>
     <pre><code class="language-json" id="devices-list-json">Loading...</code></pre>
     <h3>GET <a href="/modules.json">/modules.json</a></h3>
     <pre><code class="language-json" id="modules-json">Loading...</code></pre>
@@ -69,4 +69,5 @@
   }
   listCookies();
  </script>
+
 </html>

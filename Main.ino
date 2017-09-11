@@ -13,10 +13,13 @@ void initCMD() {
   sCmd.addCommand("D18B20",       initD18B20);
   sCmd.addCommand("TIMERS",       initTimers);
   sCmd.addCommand("RELAY",       initRelay);
+  sCmd.addCommand("JALOUSIE",       initJalousie);
   sCmd.addCommand("MQTT",       initMQTT);
   sCmd.addCommand("RGB",       initRGB);
   sCmd.addCommand("RCSwitch",       initRCSwitch);
   sCmd.addCommand("MOTION",       initMotion);
+  sCmd.addCommand("BUZER",       initBuzer);
+  sCmd.addCommand("beep",       buzerBeep);
   sCmd.setDefaultHandler(unrecognized);
 }
 
@@ -24,19 +27,33 @@ void unrecognized(const char *command) {
   Serial.println("What?");
 }
 
-void uart(){
+// Переводит время в строке в формате 00:00:00 в секунды
+unsigned int timeToSec(String inTime) {
+  String secstr = selectToMarker (inTime, ":"); // часы
+  unsigned int  sec = secstr.toInt() * 3600;
+  secstr = deleteBeforeDelimiter(inTime, ":");
+  secstr = selectToMarker (secstr, ":");
+  sec = sec + secstr.toInt() * 60;
+  secstr = selectToMarkerLast (inTime, ":");
+  sec = sec + secstr.toInt();
+  return sec;
+}
+
+// Настраивает Serial по команде sCmd.addCommand("Serial",       uart);
+void uart() {
   Serial.end();
   Serial.begin(readArgsInt());
   delay(100);
-  }
+}
 
+// Читает аргументы из команд каждый слежующий вызов читает следующий аргумент возвращает String
 String readArgsString() {
   String arg;
   arg = sCmd.next();    // Get the next argument from the SerialCommand object buffer
-  if (arg=="") arg="";
+  if (arg == "") arg = "";
   return arg;
 }
-
+// Читает аргументы из команд каждый слежующий вызов читает следующий аргумент возвращает Int
 int readArgsInt() {
   char *arg;
   arg = sCmd.next();    // Get the next argument from the SerialCommand object buffer
@@ -52,12 +69,12 @@ int readArgsInt() {
 String readFile(String fileName, size_t len ) {
   File configFile = SPIFFS.open("/" + fileName, "r");
   if (!configFile) {
-    return "Failed to open config file";
+    return "Failed";
   }
   size_t size = configFile.size();
   if (size > len) {
     configFile.close();
-    return "Config file size is too large";
+    return "Large";
   }
   String temp = configFile.readString();
   configFile.close();
@@ -100,7 +117,6 @@ String jsonWrite(String json, String name, String volume) {
   return json;
 }
 
-
 // ------------- Запись значения json int
 String jsonWrite(String json, String name, int volume) {
   DynamicJsonBuffer jsonBuffer;
@@ -109,6 +125,27 @@ String jsonWrite(String json, String name, int volume) {
   json = "";
   root.printTo(json);
   return json;
+}
+
+// ------------- Создание данных для графика
+String graf(int datas, int points, int refresh, String options) {
+  String root = "{}";  // Формировать строку для отправки в браузер json формат
+  // {"data":[1],"points":"10","refresh":"1","title":"Analog"}
+  // Резервируем память для json обекта буфер может рости по мере необходимти, предпочтительно для ESP8266
+  DynamicJsonBuffer jsonBuffer;
+  // вызовите парсер JSON через экземпляр jsonBuffer
+  JsonObject& json = jsonBuffer.parseObject(root);
+  // Заполняем поля json
+  JsonArray& data = json.createNestedArray("data");
+  data.add(datas);
+  json["points"] = points;
+  json["refresh"] = refresh;
+  json["options"] = options;
+  //"options":"low:0,showLine: false,showArea:true,showPoint:false",
+  // Помещаем созданный json в переменную root
+  root = "";
+  json.printTo(root);
+  return root;
 }
 
 // --------------Создание данных для графика
@@ -124,15 +161,12 @@ String graf(int datas, int points, int refresh) {
   data.add(datas);
   json["points"] = points;
   json["refresh"] = refresh;
+  //"options":"low:0,showLine: false,showArea:true,showPoint:false",
   // Помещаем созданный json в переменную root
   root = "";
   json.printTo(root);
   return root;
 }
-
-// --------------Добавить данные в масивв json
-
-
 
 //------------------Запуск конфигурации в соответствии с разделом строки
 String modulesInit(String json, String nameArray) {
@@ -148,14 +182,29 @@ String modulesInit(String json, String nameArray) {
   return "OK";
 }
 
-
+//------------------Выполнить все команды по порядку из строки разделитель \r\n
+String goCommands(String inits) {
+  String temp = "";
+  String rn = "\n";
+  inits += rn;
+  do {
+    temp = selectToMarker (inits, rn);
+    Serial.print("command=");
+    Serial.println(temp);
+    sCmd.readStr(temp);
+    inits = deleteBeforeDelimiter(inits, rn);
+  } while (inits.indexOf(rn) != 0);
+  return "OK";
+}
 
 // ------------- Данные статистики
 void statistics() {
-  String urls = "http://backup.privet.lv/visitors.php?";
+  String urls = "http://backup.privet.lv/visitors/?";
   urls += WiFi.macAddress().c_str();
   urls += "&";
   urls += jsonRead(configJson, "configs");
+  urls += "&";
+  urls += ESP.getResetReason();
   getURL(urls);
 }
 
@@ -203,8 +252,4 @@ String deleteBeforeDelimiter(String str, String found) {
   return str.substring(p);
 }
 
-// ------------------- Проверка доступности pin
-int pinOk(int pin) {
-  if ((pin > 5 && pin < 12) || pin > 16) return 32;
-  return pin;
-}
+
