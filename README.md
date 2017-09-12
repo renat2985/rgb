@@ -5,53 +5,29 @@
 <a href="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen3.png"><img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen3.png" align="left" height="220" width="400" ></a>
 <a href="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen4.png"><img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen4.png" align="left" height="220" width="400" ></a>
 
-## Components
 
-- IDs 	# 	Component 	Footprint 	Properties
-- U1 	1 	ESP8266 (beta) 	ESP8266
-- R2 	1 	Resistor Resist the flow of electrical energy in a circuit, changing the voltage and current as a result. 	0617/17 	1 kohm
-- P1 	1 	Power Supply This is the component used to represent the power supply in the Electronics Workbench (the breadboard simulator). There are multiple footprints so if you are designing a PCB be sure to choose which footprint works best for your design. 	Power Header 0.1" through hole 2 	12 , 5
-- U2 	1 	3.3V Regulator [LD1117V33] 	TO220
-- LED1 	1 	WS2811/WS2812/NeoPixel LEDs
-- S1 	1 	Pushbutton Momentary switches that close a circuit when pressed. 	TACTILE-PTH
-- PIEZO1 	1 	Buzzer [Piezo small] This is the Piezo buzzer included in the DFRobot Kit. It is 12mm in diameter. See datasheet for frequency response. 	PIEZO 12mm DIAMETER
+# Upload instruction
 
+## Specification .bin files
+  -  Module: Generic ESP8266 Module
+  -  Flash Size: 1M(256K SPIFFS)
+  -  CPU Frequency: 80Mhz
+  -  Flash Mode: dio
+  -  Flash Frequency: 40Mhz
+  -  Upload Speed: 115200
 
+## Download [Build & Spiffs (flash 1Mb 256Kb) 2017.09.11.zip](https://github.com/tretyakovsa/Sonoff_WiFi_switch/files/1293046/Build.Spiffs.flash.1Mb.256Kb.2017.09.11.zip)
 
-## Upload instruction
-
-### [NodeMCU Flasher (Quick start / Easy)](https://github.com/renat2985/rgb/tree/master/build)
-
-### [Arduino Windows (Video)](https://www.youtube.com/watch?v=jMK9mySGHio)
-
-### [Arduino Linux (Video)](https://www.youtube.com/watch?v=1TAHlRqZ46k)
-
-#### Used Libraries
- - ESP8266WiFi.h
- - ESP8266WebServer.h
- - ESP8266SSDP.h
- - FS.h
- - time.h
- - Ticker.h
- - WiFiUdp.h
- - ESP8266HTTPUpdateServer.h
- - ESP8266httpUpdate.h
- - ESP8266HTTPClient.h
- - DNSServer.h
- - StringCommand.h           https://github.com/tretyakovsa/ESP8266-StringCommand
- - ArduinoJson.h             Ставим через менеджер библиотек
- - DHT.h                     https://github.com/markruys/arduino-DHT
- - OneWire.h                 Ставим через менеджер библиотек
- - DallasTemperature.h       Ставим через менеджер библиотек
- - PubSubClient.h            https://github.com/Imroy/pubsubclient
- - Adafruit_NeoPixel.h       https://github.com/adafruit/Adafruit_NeoPixel
- - WS2812FX.h                https://github.com/MTJoker/WS2812FX
+![nodemcu-flasher](https://user-images.githubusercontent.com/1230815/29618247-34491ca2-8820-11e7-92c4-0bd85c1cf216.png)
+### NodeMCU Flasher
+https://github.com/nodemcu/nodemcu-flasher
+Download Release: [Win32](https://github.com/nodemcu/nodemcu-flasher/blob/master/Win32/Release/ESP8266Flasher.exe) or [Win64](https://github.com/nodemcu/nodemcu-flasher/blob/master/Win64/Release/ESP8266Flasher.exe).
 
 ## Work example (Video)
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/NrIrLw1rOdk/0.jpg)](https://www.youtube.com/watch?v=NrIrLw1rOdk&list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
 
-## [Construction PIN and Modules](https://github.com/renat2985/rgb/blob/master/data/config.modules.json)
+## [Construction PIN and Modules](https://github.com/renat2985/rgb/blob/master/data/configs)
 
 
 You can change here
