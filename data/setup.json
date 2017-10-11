@@ -1,6 +1,6 @@
 {
  "configs": [
-  "/config.live.json",
+  "/config.setup.json",
   "/lang/lang.{{lang}}.json",
   "/modules.json"
  ],
@@ -17,7 +17,7 @@
    "state": "{{lang}}",
    "name":"languages",
    "action": "/lang?set=[[languages]]",
-   "response":"page.htm?setup",
+   "response":"page.htm?{{urlArray0}}",
    "style": "margin-top:-47px;float:right;width:70px",
    "title": {"ru":"RU","en":"EN","lv":"LV","ua":"UA"}
   },
@@ -63,7 +63,7 @@
 
   {
    "type": "dev",
-   "title": "{{LangSetting4}}",
+   "title": "{{LangSetting}}",
    "class": "alert alert-dismissible alert-info"
   },
 
@@ -77,7 +77,7 @@
    "name":"ssdp",
    "state": "{{SSDP}}",
    "style": "width:50%;display:inline",
-   "pattern": "[0-9a-zA-Zа-яА-Я.\\- ]{1,20}"
+   "pattern": "[0-9a-zA-Zа-яА-Я.\\-]{1,20}"
   },
   {
    "type": "input",
@@ -119,6 +119,24 @@
    "pattern": ".{8,20}"
   },
 
+  {
+   "type": "select",
+   "state": "{{wifiConnect}}",
+   "name":"wifi-connect",
+   "action": "wifi?connect=[[wifi-connect]]&led=[[wifi-blink]]",
+   "style": "width:65%;display:inline;height:auto;font-weight:normal;",
+   "class":"btn btn-sm",
+   "title": {"10":"{{LangWiFi2}} 10 {{LangSec}}","15":"{{LangWiFi2}} 15 {{LangSec}}","30":"{{LangWiFi2}} 30 {{LangSec}}","60":"{{LangWiFi2}} 1 {{LangMin.}}","120":"{{LangWiFi2}} 2 {{LangMin.}}"}
+  },
+  {
+   "type": "select",
+   "state": "{{wifiBlink}}",
+   "name":"wifi-blink",
+   "action": "wifi?connect=[[wifi-connect]]&blink=[[wifi-blink]]",
+   "style": "width:35%;display:inline;height:auto;font-weight:normal;",
+   "class":"btn btn-sm",
+   "title": {"":"Blink {{LangOff.}}","12":"Blink GPIO 12","13":"Blink GPIO 13","14":"Blink GPIO 14","15":"Blink GPIO 15","16":"Blink GPIO 16"}
+  },
 
   {
    "type": "checkbox",
@@ -126,11 +144,6 @@
    "name":"checkboxIP",
    "state": "{{checkboxIP}}",
    "style": "display:block"
-  },
-  {
-   "type": "text",
-   "title": "Если вы хотите задать статический IP, вам необходимо заполнить поля Default Getway и Subnet Mask.",
-   "class": "alert alert-warning"
   },
   {
    "type": "input",
@@ -222,7 +235,7 @@
   {
    "type": "button",
    "module":"",
-   "response":"[[times1]]",
+   "response":"[[&#116imes1]]",
    "title": "{{LangTime2}}",
    "class": "btn btn-block btn-primary",
    "action": "Time"
@@ -327,6 +340,12 @@
    "type": "h2",
    "module": "mqtt",
    "title": "MQTT"
+  },
+  {
+   "type": "text",
+   "module": "ddns",
+   "title": "Work on <a href=\"https://play.google.com/store/apps/details?id=ru.esp8266.iotmanager\">IoT Manager</a>. Try it now. :)",
+   "class": "alert alert-info"
   },
   {
    "type": "input",

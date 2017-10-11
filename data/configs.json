@@ -1,6 +1,6 @@
 {
  "configs": [
-  "/config.live.json",
+  "/config.setup.json",
   "/lang/lang.{{lang}}.json",
   "/modules.json"
  ],
@@ -17,7 +17,7 @@
    "state": "{{lang}}",
    "name":"languages",
    "action": "/lang?set=[[languages]]",
-   "response":"page.htm?chart",
+   "response":"page.htm?{{urlArray0}}",
    "style": "margin-top:-47px;float:right;width:70px",
    "title": {"ru":"RU","en":"EN","lv":"LV","ua":"UA"}
   },
@@ -60,6 +60,8 @@
   {
    "type": "hr"
   },
+
+
   {
    "type": "h2",
    "title": "{{LangType}} {{configs}}"

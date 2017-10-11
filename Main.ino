@@ -16,17 +16,62 @@ void initCMD() {
   sCmd.addCommand("JALOUSIE",       initJalousie);
   sCmd.addCommand("MQTT",       initMQTT);
   sCmd.addCommand("RGB",       initRGB);
-  sCmd.addCommand("RCSwitch",       initRCSwitch);
+  sCmd.addCommand("RF-RECEIVED",       rfReceived);
+  sCmd.addCommand("RF-TRANSMITTER",     rfReceived);
   sCmd.addCommand("MOTION",       initMotion);
   sCmd.addCommand("BUZER",       initBuzer);
   sCmd.addCommand("beep",       buzerBeep);
+  sCmd.addCommand("print",       printTest);
   sCmd.setDefaultHandler(unrecognized);
 }
 
 void unrecognized(const char *command) {
   Serial.println("What?");
 }
-
+// По комманде print печатает аргумент для тастов
+void printTest() {
+  Serial.println("Test " + readArgsString());
+}
+// ----------------- Процедуры статуса
+// Меняем любой статус в /config.live.json configJson
+// Если нужновызвать проверку скрипта то присвоить ответ переенной flag
+boolean sendStatus(String Name, String volume) {
+  configJson = jsonWrite(configJson, Name, volume);
+  return true;
+}
+boolean sendStatus(String Name, int volume) {
+  configJson = jsonWrite(configJson, Name, volume);
+  return true;
+}
+// Читаем любой стстус /config.live.json configJson
+// Вернет String
+String getStatus(String Name) {
+  return jsonRead(configJson, Name);
+}
+// Вернет int
+int getStatusInt(String Name) {
+  return jsonReadtoInt(configJson, Name);
+}
+// ----------------- Процедуры Параметров
+// Меняем любой статус в /config.live.json configJson
+// Если нужновызвать проверку скрипта то присвоить ответ переенной flag
+boolean sendOptions(String Name, String volume) {
+  configOptions = jsonWrite(configOptions, Name, volume);
+  return true;
+}
+boolean sendOptions(String Name, int volume) {
+  configOptions = jsonWrite(configOptions, Name, volume);
+  return true;
+}
+// Читаем любой стстус /config.live.json configJson
+// Вернет String
+String getOptions(String Name) {
+  return jsonRead(configOptions, Name);
+}
+// Вернет int
+int getOptionsInt(String Name) {
+  return jsonReadtoInt(configOptions, Name);
+}
 // Переводит время в строке в формате 00:00:00 в секунды
 unsigned int timeToSec(String inTime) {
   String secstr = selectToMarker (inTime, ":"); // часы
@@ -37,6 +82,11 @@ unsigned int timeToSec(String inTime) {
   secstr = selectToMarkerLast (inTime, ":");
   sec = sec + secstr.toInt();
   return sec;
+}
+
+
+void saveConfigSetup (){
+  writeFile("config.save.json", configSetup );
 }
 
 // Настраивает Serial по команде sCmd.addCommand("Serial",       uart);
@@ -176,7 +226,6 @@ String modulesInit(String json, String nameArray) {
   int k = nestedArray.size();
   for (int i = 0; i <= k - 1; i++) {
     String temp =  All[nameArray][i]["type"];
-    Serial.println( temp );
     sCmd.readStr(temp);
   }
   return "OK";
@@ -189,8 +238,6 @@ String goCommands(String inits) {
   inits += rn;
   do {
     temp = selectToMarker (inits, rn);
-    Serial.print("command=");
-    Serial.println(temp);
     sCmd.readStr(temp);
     inits = deleteBeforeDelimiter(inits, rn);
   } while (inits.indexOf(rn) != 0);
@@ -202,9 +249,11 @@ void statistics() {
   String urls = "http://backup.privet.lv/visitors/?";
   urls += WiFi.macAddress().c_str();
   urls += "&";
-  urls += jsonRead(configJson, "configs");
+  urls += jsonRead(configSetup, "configs");
   urls += "&";
   urls += ESP.getResetReason();
+  urls += "&";
+  urls += jsonRead(configSetup, "spiffsData");
   getURL(urls);
 }
 
@@ -232,6 +281,12 @@ void modulesReg(String modName) {
   data.add(modName);
   modules = "";
   json.printTo(modules);
+}
+
+// -------------- Регистрация команд
+//
+void commandsReg(String comName, String modName) {
+  regCommands = jsonWrite(regCommands, comName, modName);
 }
 
 // --------------------Выделяем строку до маркера

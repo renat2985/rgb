@@ -9,13 +9,12 @@
 */
 
 void initRGB() {
-  configJson = jsonWrite(configJson, "colorRGB", "ff6600");
-  configJson = jsonWrite(configJson, "speedRGB", 100);
-  configJson = jsonWrite(configJson, "brightnessRGB", 255);
-  configJson = jsonWrite(configJson, "modeRGB", 0);
-  configJson = jsonWrite(configJson, "timeRGB", 0);
-  configJson = jsonWrite(configJson, "timeBUZ", 0);
-  //Serial.end();
+  sendStatus("colorRGB",  "ff6600");
+  sendStatus("speedRGB", 100);
+  sendStatus("brightnessRGB", 255);
+  sendStatus("modeRGB", 0);
+  sendStatus("timeRGB", 0);
+  sendStatus("timeBUZ", 0);
   // Настраивается по запросу /set?
   HTTP.on("/set", handle_RGB);
   HTTP.on("/rgb", LedRGB);
@@ -26,19 +25,26 @@ void initRGB() {
   sCmd.addCommand("rgbnot",    rgbNot);
   sCmd.addCommand("rgbon",    rgbOn);
   sCmd.addCommand("rgboff",    rgbOff);
-
-  ws2812fx.setPin(readArgsInt());
+  commandsReg("rgbon","rgb");
+  commandsReg("rgboff","rgb");
+  commandsReg("rgbnot","rgb");
+  byte pin = readArgsInt();
+  if (pin == 1 || pin == 3)  Serial.end();
+  ws2812fx.setPin(pin);
   ws2812fx.updateLength(readArgsInt());
   ws2812fx.init();
-  ws2812fx.setMode(jsonReadtoInt(configJson, "modeRGB")); // Режим
+  ws2812fx.setMode(getStatusInt("modeRGB")); // Режим
   // Начальный цвет
   uint32_t  tmp = strtol(("0x" + jsonRead(configJson, "colorRGB")).c_str(), NULL, 0);
   if (tmp >= 0x000000 && tmp <= 0xFFFFFF) {
     ws2812fx.setColor(tmp);
   }
-  ws2812fx.setSpeed(jsonReadtoInt(configJson, "speedRGB")); // Скорость
-  ws2812fx.setBrightness(jsonReadtoInt(configJson, "brightnessRGB")); //Яркость
+  ws2812fx.setSpeed(getStatusInt("speedRGB")); // Скорость
+  ws2812fx.setBrightness(getStatusInt("brightnessRGB")); //Яркость
   //регистрируем модуль
+  int state = readArgsInt();
+  sendStatus("stateRGB", state);
+  if (state) {command = "rgbon";}
   modulesReg("rgb");
 }
 
@@ -49,7 +55,7 @@ void handle_RGB() {
   //Получаем цвет
   String colorRGB = HTTP.arg("c");
   if (colorRGB != "") {
-    configJson = jsonWrite(configJson, "colorRGB", colorRGB);
+    flag = sendStatus("colorRGB", colorRGB);
     uint32_t  tmp = strtol(("0x" + colorRGB).c_str(), NULL, 0);
     if (tmp >= 0x000000 && tmp <= 0xFFFFFF) {
       ws2812fx.setColor(tmp);
@@ -58,31 +64,31 @@ void handle_RGB() {
   //Получаем скорость
   String speedRGB = HTTP.arg("s");
   if (speedRGB != "") {
-    configJson = jsonWrite(configJson, "speedRGB", speedRGB);
+    flag = sendStatus("speedRGB", speedRGB.toInt());
     ws2812fx.setSpeed(speedRGB.toInt());
   }
   //Получаем яркость
   String brightnessRGB = HTTP.arg("b");
   if (brightnessRGB != "") {
-    configJson = jsonWrite(configJson, "brightnessRGB", brightnessRGB);
+    flag = sendStatus("brightnessRGB", brightnessRGB.toInt());
     ws2812fx.setBrightness(brightnessRGB.toInt());
 
   }
   //Получаем режим
   String modeRGB = HTTP.arg("m");
   if (modeRGB != "") {
-    configJson = jsonWrite(configJson, "modeRGB", modeRGB);
+    flag = sendStatus("modeRGB", modeRGB.toInt());
     ws2812fx.setMode(modeRGB.toInt() % ws2812fx.getModeCount());
   }
   //Получаем время таймера
   String timeRGB = HTTP.arg("time");
   if (timeRGB != "") {
-    configJson = jsonWrite(configJson, "timeRGB", timeRGB);
+    flag = sendStatus("timeRGB", timeRGB.toInt());
   }
   //Получаем время сигнала
   String timeBUZ = HTTP.arg("s");
   if (timeBUZ != "") {
-    configJson = jsonWrite(configJson, "timeBUZ", timeBUZ);
+    flag = sendStatus("timeBUZ", timeBUZ.toInt());
   }
   command = "rgbon";
   String  state = "{}";
@@ -91,36 +97,34 @@ void handle_RGB() {
   HTTP.send(200, "text/plain", state);
 }
 
-
 void rgbNot() {
-
-  if (jsonReadtoInt(configJson, "stateRGB")) {
+  flag = sendStatus("stateRGB", !getStatusInt("stateRGB"));
+  if (!getStatusInt("stateRGB")){
     ws2812fx.stop();
-  }
-  else {
+    }
+    else{
     ws2812fx.stop();
     ws2812fx.start();
-  }
-  configJson = jsonWrite(configJson, "stateRGB", !jsonReadtoInt(configJson, "stateRGB"));
-
+      }
+  topicPub("/RGB_not/status", String(getStatusInt("stateRGB")), 1 );
 }
 
 void rgbOn() {
 
-  if (!jsonReadtoInt(configJson, "stateRGB")) {
-    ws2812fx.start();
+  if (!getStatusInt("stateRGB")) {
     configJson = jsonWrite(configJson, "stateRGB", 1);
-
+    flag = sendStatus("stateRGB", 1);
+    ws2812fx.start();
   }
 
 }
 
 void rgbOff() {
 
-  if (jsonReadtoInt(configJson, "stateRGB")) {
+ if (getStatusInt("stateRGB")) {
+    configJson = jsonWrite(configJson, "stateRGB", 1);
+    flag = sendStatus("stateRGB", 0);
     ws2812fx.stop();
-    configJson = jsonWrite(configJson, "stateRGB", 0);
-
   }
 
 }
@@ -128,7 +132,7 @@ void rgbOff() {
 void LedRGB() {
   command = "rgbnot";
   String state = "{}";
-  if (jsonReadtoInt(configJson, "stateRGB")) {
+  if (getStatusInt("stateRGB")) {
     state = jsonWrite(state, "title", "{{LangOn}}");
     state = jsonWrite(state, "class", "btn btn-block btn-lg btn-primary");
   }

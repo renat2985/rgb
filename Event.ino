@@ -1,7 +1,23 @@
+// ------------------- Инициализация  Динамика
+void initBuzer() {
+  int pin = readArgsInt();
+  sendOptions("pinBuzer", pin);
+  pinMode(pin, OUTPUT);
+  sendStatus("stateBuzer", readArgsInt());
+  analogWrite(pin,   getStatusInt("stateBuzer"));
+  analogWriteFreq(0);
+}
+
+void buzerBeep() {
+  analogWrite(jsonReadtoInt(configLive, "pinBuzer"), readArgsInt());
+  analogWriteFreq(readArgsInt());
+}
+
+
 // -----------------  Аналоговый вход A0
 void initA0() {
   HTTP.on("/analog.json", HTTP_GET, []() {
-    HTTP.send(200, "text/json", graf(analogRead(A0), 10, 3000, "low:0"));
+    HTTP.send(200, "application/json", graf(analogRead(A0), 10, 3000, "low:0"));
   });
   modulesReg("analog");
 }
@@ -10,14 +26,14 @@ void initTach() {
   // Кнопка будет работать по прерыванию
   uint8_t TACH_PIN = 0;
   attachInterrupt(TACH_PIN, Tach_0, RISING); //прерывание сработает, когда состояние вывода изменится с низкого уровня на высокий
-  configJson = jsonWrite(configJson, "TachCommand", readArgsString());
+  configOptions = jsonWrite(configOptions, "TachCommand", readArgsString());
 }
 // Выполняется при нажатии на кнопку
 void Tach_0() {
   static unsigned long millis_prev;
   // Устроняем дребезг контакта
   if (millis() - 500 > millis_prev) {
-    command = jsonRead(configJson, "TachCommand");
+    command = jsonRead(configOptions, "TachCommand");
   }
   millis_prev = millis();
 }
@@ -28,18 +44,18 @@ void initMotion() {
   pinMode(pin, INPUT);
   attachInterrupt(pin, motionOn, RISING); //прерывание сработает, когда состояние вывода изменится с низкого уровня на высокий
   String cmd = readArgsString();
-  configJson = jsonWrite(configJson, "Command", cmd);
+  configOptions = jsonWrite(configOptions, "Command", cmd);
   modulesReg("movement");
 }
 
 void motionOn() {
   motion.attach(120, motionOff);
-  command = jsonRead(configJson, "Command") + "on";
+  command = jsonRead(configOptions, "Command") + "on";
 
 }
 void motionOff() {
   motion.detach();
-  command = jsonRead(configJson, "Command") + "off";
+  command = jsonRead(configOptions, "Command") + "off";
 
 }
 
@@ -52,13 +68,12 @@ void initDHT() {
   String temp = "";
   temp += dht.getTemperature();
   if (temp != "nan") {
-    //Serial.println("ok");
     HTTP.on("/temperature.json", HTTP_GET, []() {
       float temp = dht.getTemperature();
       if (temp == 'NaN') {
         temp = 0;
       }
-      HTTP.send(200, "text/json", graf(temp, 10, 3000, "low:0"));
+      HTTP.send(200, "application/json", graf(temp, 10, 3000, "low:0"));
     });
     modulesReg("temperature");
     HTTP.on("/humidity.json", HTTP_GET, []() {
@@ -66,7 +81,7 @@ void initDHT() {
       if (temp == 'NaN') {
         temp = 0;
       }
-      HTTP.send(200, "text/json", graf(temp, 10, 3000, "low:0"));
+      HTTP.send(200, "application/json", graf(temp, 10, 3000, "low:0"));
     });
     modulesReg("humidity");
   }
@@ -79,7 +94,6 @@ void initD18B20() {
   d18b20.requestTemperatures();
   float ok = d18b20.getTempCByIndex(0);
   d18b20.setResolution(12);
-  //Serial.println(ok);
   if (ok != -127) {
     HTTP.on("/temperature.json", HTTP_GET, []() {
       d18b20.requestTemperatures();
@@ -87,26 +101,22 @@ void initD18B20() {
       if (temp == -127) {
         temp = 0;
       }
-      HTTP.send(200, "text/json", graf(temp, 10, 3000));
+      HTTP.send(200, "application/json", graf(temp, 10, 3000));
     });
     modulesReg("temperature");
   }
 }
 // ----------------------Приемник на 433мГ
-void initRCSwitch() {
+void rfReceived() {
   byte pin = readArgsInt();
   if (pin == 1 || pin == 3)  Serial.end();
   mySwitch.enableReceive(pin);
-  //Serial.print("initRCSwitch ");
   // задача опрашивать RC код
-  ts.add(3, 100, [&](void*) {
+  ts.add(3, 5, [&](void*) {
     RCRCreceiv();
   }, nullptr, true);
-
-  HTTP.on("rcreceivi.json", HTTP_GET, []() {
-    HTTP.send(200, "text/json", jsonWrite("{}", "Received", jsonRead(configJson, "Received")));
-  });
-  modulesReg("RCreceivi");
+  sendStatus("Received", 0);
+  modulesReg("rfReceived");
 }
 
 void RCRCreceiv() {
@@ -116,9 +126,7 @@ void RCRCreceiv() {
       configJson = jsonWrite(configJson, "Received", 0);
     } else {
       int codeRC = mySwitch.getReceivedValue();
-      //Serial.print("Received ");
-      //Serial.println(codeRC);
-      configJson = jsonWrite(configJson, "Received", codeRC);
+      flag = sendStatus("Received", codeRC);
     }
     mySwitch.resetAvailable();
   }

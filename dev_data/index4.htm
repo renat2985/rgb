@@ -2,10 +2,10 @@
 <html>
  <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <script src="js/build.chart.js?v11.09.2017" charset="utf-8"></script>
+  <script src="js/build.chart.js?v11.10.2017" charset="utf-8"></script>
   <!-- <link rel="stylesheet" type="text/css" href="css/chartist.min.css">
 <script src="js/chartist.min.js" charset="utf-8"></script> -->
-  <link rel="stylesheet" type="text/css" href="css/build.css?v11.09.2017">
+  <link rel="stylesheet" type="text/css" href="css/build.css?v11.10.2017">
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +24,7 @@
 
    window.onload = function() {
     if (window.location.hash.substring(1)) {
-     deviceList('first', decodeURIComponent(window.location.hash.substring(1)));
+     deviceList('first');
     } else {
      deviceList('first');
     }
@@ -32,35 +32,28 @@
     loadCommits();
    }
 
-   function findDevice(submit) {
-    document.getElementById('content').innerHTML='<div class="alert alert-dismissible alert-info"><div class="loader"><\/div><strong><center>Пожалуйста подождите, идет сканирование сети.<\/center><\/strong><\/div>';
-    ajax(window.location.hostname,'devices.scan.json',submit, '1');
-    deviceList('search');
-   }
-
    function deviceList(stage,sorting) {
     document.getElementById('content').innerHTML='';
     var xhttp=createXmlHttpObject();
-    xhttp.open("GET", "/ip.list.json?"+Math.floor(Math.random()*10000), true);
+    xhttp.open("GET", "/ssdp.list.json?"+Math.floor(Math.random()*10000), true);
     xhttp.send(null);
-    xhttp.onload = function(e) {
+    xhttp.onload = function() {
      var ipDevice=JSON.parse(xhttp.responseText);
-     for(i = 0;i<ipDevice.ssdpList.length;i++) {
-      loadModule(ipDevice.ssdpList[i].ip,stage,sorting);
+     // ipDevice = Object.keys(ipDevice).sort(function(a,b){return ipDevice[a]-ipDevice[b]});
+     for (var i in ipDevice) {
+      loadModule(ipDevice[i],stage,sorting);
      }
-     if (ipDevice.ssdpList.length == 0) {
+     if (ipDevice[i] == '0.0.0.0') {
       location.href = "/page.htm?first-connect";
      }
     }
    }
 
-
-
    function loadModule(ipval,stage,sorting) {
     var xhttp=createXmlHttpObject();
     xhttp.open("GET", "http://"+ipval+"/modules.json", true);
     xhttp.send(null);
-    xhttp.onload = function(e) {
+    xhttp.onload = function() {
      var ipModule=JSON.parse(xhttp.responseText);
      var allModules = [];
      var allSpace = [];
@@ -69,101 +62,96 @@
       loadBlock(ipval,ipModule.space,'first',ipModule.module);
      }
      // Сортировка
-     if (stage == 'first' && sorting == null || searchModule(ipModule.module,sorting) == 'yes' || ipModule.space == sorting) {
-      loadBlock(ipval,ipModule.space,'first',ipModule.module);
-
+     if (stage == 'first' && sorting == null || searchModule(ipModule.module,sorting) == 'yes') {
+      loadBlock(ipval,'first',ipModule.module);
      }
-
-     if(!document.getElementById(ipModule.space)){
-      document.getElementById("content").innerHTML += '<h2>'+ipModule.space+'<\/h2><hr><div class="row" id="'+ipModule.space+'"><\/div>';
-     }
-
-     // }
     }
    }
 
-
-   function loadBlock(ipval, content, stage, modules) {
-
+   function loadBlock(ipval, stage, modules) {
     var xhttp=createXmlHttpObject();
     xhttp.open("GET", "http://"+ipval+"/config.live.json?"+Math.floor(Math.random()*10000), true);
     xhttp.send(null);
-    xhttp.onload = function(e) {
-     var jsonResponse1 = JSON.parse(xhttp.responseText);
-
-     xhttp.open("GET", "http://"+ipval+"/lang/lang."+jsonResponse1.lang+".json", true);
+    xhttp.onload = function() {
+     var jsonResponse0 = JSON.parse(xhttp.responseText);
+     xhttp.open("GET", "http://"+ipval+"/config.options.json?"+Math.floor(Math.random()*10000), true);
      xhttp.send(null);
-     xhttp.onload = function(e) {
+     xhttp.onload = function() {
+      var jsonResponse1 = JSON.parse(xhttp.responseText);
+      xhttp.open("GET", "http://"+ipval+"/lang/lang."+jsonResponse1.lang+".json", true);
+      xhttp.send(null);
+      xhttp.onload = function() {
+       var jsonResponse2=JSON.parse(xhttp.responseText);
+       jsonResponse = Object.assign(jsonResponse0, jsonResponse1, jsonResponse2);
 
-      var jsonResponse2=JSON.parse(xhttp.responseText);
-      jsonResponse = Object.assign(jsonResponse1, jsonResponse2);
-
-      if (searchModule(modules,"relay") == 'yes'){
-       for (var i = 1; i < 5; i++) {
-        if (searchModule(modules,"relay"+i) != 'yes'){
-         jsonResponse["relay"+i] = 'hidden';
+       if (searchModule(modules,"relay") == 'yes'){
+        for (var i = 1; i < 5; i++) {
+         if (searchModule(modules,"relay"+i) != 'yes'){
+          jsonResponse["relay"+i] = 'hidden';
+         }
+        }
+        loadBlock2('relay','timer.save',ipval, jsonResponse.space, stage, jsonResponse);
+       }
+       if (searchModule(modules,"rgb") == 'yes'){
+        loadBlock2('rgb','timer.save',ipval, jsonResponse.space, stage, jsonResponse);
+       }
+       if (searchModule(modules,"jalousie") == 'yes'){
+        loadBlock2('jalousie','timer.save',ipval, jsonResponse.space, stage, jsonResponse);
+       }
+       if (searchModule(modules,"leakag") == 'yes'){
+        loadBlock2('leakag','timer.save',ipval, jsonResponse.space, stage, jsonResponse);
+       }
+       if (searchModule(modules,"temperature") == 'yes'){
+        loadBlock2('temperature','temperature',ipval, jsonResponse.space, stage, jsonResponse);
+       }
+       if (searchModule(modules,"humidity") == 'yes'){
+        loadBlock2('humidity','humidity',ipval, jsonResponse.space, stage, jsonResponse);
+       }
+       if (searchModule(modules,"analog") == 'yes'){
+        loadBlock2('analog','analog',ipval, jsonResponse.space, stage, jsonResponse);
+       }
+       if (!stage && jsonResponse.space == "relay" || jsonResponse.space == "rgb" || jsonResponse.space == "jalousie" || jsonResponse.space == "leakag"){
+        loadBlock2(jsonResponse.space,'timer.save',ipval, jsonResponse.space, stage, jsonResponse);
+       }
+       if (window.location.hostname == ipval && stage == 'first') {
+        var new_string2;
+        var bodyData = document.getElementsByTagName('body')[0].innerHTML;
+        for (var key in jsonResponse) {
+         new_string2 = bodyData.replace(new RegExp('{{'+key+'}}', 'g'), jsonResponse[key]);
+         bodyData = new_string2;
+        }
+        document.getElementsByTagName('body')[0].innerHTML = new_string2;
+        if (searchModule(modules,"upgrade") == 'yes'){
+         loadBuild(jsonResponse.spiffsData, jsonResponse.LangUpgrade);
         }
        }
-       loadBlock2('relay','timer.save',ipval, content, stage, jsonResponse);
       }
-      if (searchModule(modules,"rgb") == 'yes'){
-       loadBlock2('rgb','timer.save',ipval, content, stage, jsonResponse);
-      }
-      if (searchModule(modules,"jalousie") == 'yes'){
-       loadBlock2('jalousie','timer.save',ipval, content, stage, jsonResponse);
-      }
-      if (searchModule(modules,"leakag") == 'yes'){
-       loadBlock2('leakag','timer.save',ipval, content, stage, jsonResponse);
-      }
-      if (searchModule(modules,"temperature") == 'yes'){
-       loadBlock2('temperature','temperature',ipval, content, stage, jsonResponse);
-      }
-      if (searchModule(modules,"humidity") == 'yes'){
-       loadBlock2('humidity','humidity',ipval, content, stage, jsonResponse);
-      }
-      if (searchModule(modules,"analog") == 'yes'){
-       loadBlock2('analog','analog',ipval, content, stage, jsonResponse);
-      }
-      if (!stage && content == "relay" || content == "rgb" || content == "jalousie" || content == "leakag"){
-       loadBlock2(content,'timer.save',ipval, content, stage, jsonResponse);
-      }
-
-      if (window.location.hostname == ipval && stage == 'first') {
-       var new_string2;
-       var bodyData = document.getElementsByTagName('body')[0].innerHTML;
-       for (var key in jsonResponse) {
-        new_string2 = bodyData.replace(new RegExp('{{'+key+'}}', 'g'), jsonResponse[key]);
-        bodyData = new_string2;
-       }
-       document.getElementsByTagName('body')[0].innerHTML = new_string2;
-       if (searchModule(modules,"upgrade") == 'yes'){
-        loadBuild(jsonResponse.spiffsData, jsonResponse.LangUpgrade);
-       }
-      }
-
      }
     }
-
    }
 
    function loadBlock2(page, jsonPage, ipval, content, stage, jsonResponse){
     if (stage == 'first'){
+     var element = document.getElementById(content);
+     if (typeof(element) != 'undefined' && element != null && element != ''){
+      //  document.getElementById(content).innerHTML+='<div id="block-'+ipval+'-'+page+'"><div class="col-md-6"><div class="block"><div class="loader"><\/div> <center><a href="http://'+ipval+'">http://'+ipval+'<\/a><\/center><\/div><\/div><\/div>';
+     } else {
+      document.getElementById("content").innerHTML += '<h2 id="'+content+'-title">'+content+'<\/h2><hr><div class="row" id="'+content+'"><\/div>';
+      document.getElementById("space-button").innerHTML += '<a href="#'+content+'-title" class="btn btn-default">'+content+'<\/a>';
+     }
      document.getElementById(content).innerHTML+='<div id="block-'+ipval+'-'+page+'"><div class="col-md-6"><div class="block"><div class="loader"><\/div> <center><a href="http://'+ipval+'">http://'+ipval+'<\/a><\/center><\/div><\/div><\/div>';
     }
-
     var xhttp=createXmlHttpObject();
     xhttp.open("GET", "http://"+ipval+"/block-"+page+".htm", true);
     xhttp.send(null);
-    xhttp.onload = function(e) {
+    xhttp.onload = function() {
      var data = xhttp.responseText;
-
      var xmlHttp=createXmlHttpObject();
      xmlHttp.open("GET", "http://"+ipval+"/"+jsonPage+".json", true);
      xmlHttp.send(null);
-     xmlHttp.onload = function(e) {
+     xmlHttp.onload = function() {
       var timers=JSON.parse(xmlHttp.responseText);
       var timerList = '';
-
       if (timers.timer) {
        timers.timer.sort(function(a,b){return (a.time > b.time) ? 1 : ((b.time > a.time) ? -1 : 0);});
        for (var i = 0; i < timers.timer.length; i++) {
@@ -180,18 +168,15 @@
        jsonResponse.timerList = (timerList?timerList:'<li>'+jsonResponse.LangNoTimers+'<\/li>');
       }
       jsonResponse = Object.assign(jsonResponse, timers);
-
       var theCookies = document.cookie.split(';');
       for (var i = 1 ; i <= theCookies.length; i++) {
        jsonResponse[theCookies[i-1].split("=")[0].replace(/^ /,'')] = theCookies[i-1].split("=")[1];
       }
-
       jsonResponse.ip = ipval;
-      jsonResponse.state = (jsonResponse.state=='0'?jsonResponse.LangOn:jsonResponse.LangOff);
+      jsonResponse.stateRelay = (jsonResponse.stateRelay=='0'?jsonResponse.LangOn:jsonResponse.LangOff);
       jsonResponse.stateRGB = (jsonResponse.stateRGB=='0'?jsonResponse.LangOn:jsonResponse.LangOff);
       jsonResponse.stateJalousie = (jsonResponse.stateJalousie=='0'?jsonResponse.LangOpen:jsonResponse.LangClose);
       jsonResponse.stateLeakag = (jsonResponse.stateLeakag=='0'?jsonResponse.LangOn:jsonResponse.LangOff);
-
       if (page == 'analog') {
        jsonResponse.analogId = 'analogjson'+ipval.replace(/[^a-z0-9]/gi,'');
        setTimeout("loadChart('"+jsonResponse.analogId+"','http://"+ipval+"/analog.json')", 500);
@@ -204,23 +189,15 @@
        jsonResponse.sensorId = 'humidityjson'+ipval.replace(/[^a-z0-9]/gi,'');
        setTimeout("loadChart('"+jsonResponse.sensorId+"','http://"+ipval+"/humidity.json')", 500);
       }
-
       var new_string;
       for (var key in jsonResponse) {
        new_string = data.replace(new RegExp('{{'+key+'}}', 'g'), jsonResponse[key]);
        data = new_string;
       }
       document.getElementById("block-"+ipval+"-"+page).innerHTML=new_string;
-
-      //if (jsonPage == 'analog') {
-      // loadChart('ct-analog','analog.json');
-      //}
-
      }
-
     }
    }
-
 
    function ajax(ipHost, pagename, submit, loadB) {
     var old_submit = submit.value;
@@ -233,29 +210,13 @@
     var xhttp=createXmlHttpObject();
     xhttp.open("GET", "http://"+ipHost+"/"+pagename, true);
     xhttp.send(null);
-    xhttp.onload = function(e) {
+    xhttp.onload = function() {
      submit.value=old_submit;
      submit_disabled(false);
-
-     //if (!loadB) {
-     // loadBlock(ipHost, pagename);
-     //}
-
-
      var response=JSON.parse(xhttp.responseText);
-     //if (response.class && response.class!='undefined') {submit.className = response.class.replace(/btn-block btn-lg/,'');}
-     //if (response.style && response.style!='undefined') {submit.style = response.style;}
      if (response.title && response.title!='undefined') {
       if (submit.tagName == 'INPUT') {submit.value = jsonResponse[response.title.slice(2, -2)];}
      }
-
-     // function loadBlock(ipval, content, stage, modules) {
-     // ipval, content, stage, modules
-     // loadBlock(ipval, content, stage, modules) {
-     //alert(ipHost+'block-'+ipHost+'-'+pagename);
-     //  if (!loadB) {
-     // loadBlock2(ipHost,'block-'+ipHost+'-'+pagename, '','[\''+pagename+'\']');
-     //  }
     }
    }
 
@@ -320,11 +281,11 @@
     var xmlHttp=createXmlHttpObject();
     xmlHttp.open('GET','https://api.github.com/repos/tretyakovsa/Sonoff_WiFi_switch/contents/build',true);
     xmlHttp.send(null);
-    xmlHttp.onload = function(e) {
+    xmlHttp.onload = function() {
      var jsonBuild=JSON.parse(xmlHttp.responseText);
      jsonBuild.sort(function(a,b){return (a.name< b.name) ? 1 : ((b.name < a.name) ? -1 : 0);});
      if (jsonBuild[0].name != spiffs) {
-      document.getElementById('update').innerHTML = '<a href="/upgrade?spiffs=http://backup.privet.lv/esp/sonoff/'+jsonBuild[0].name+'&build=http://backup.privet.lv/esp/sonoff/build.0x00000'+jsonBuild[0].name.substring(14)+'" onclick="return confirm(\''+LangUpgrade+'\')"><i class="warning-img"><\/i><\/a>';
+      document.getElementById('update').innerHTML = '<a href="/upgrade?spiffs=http://backup.privet.lv/esp/sonoff/'+jsonBuild[0].name+'&build=http://backup.privet.lv/esp/sonoff/build.0x00000'+jsonBuild[0].name.substring(14)+'" onclick="return confirm(\''+LangUpgrade+' \\n - New build: '+jsonBuild[0].name.split('_')[4].slice(0,-4)+' \\n - You build: '+spiffs.split('_')[4].slice(0,-4)+'\')" title="'+LangUpgrade+'"><i class="warning-img"><\/i><\/a>';
      }
     }
    }
@@ -333,7 +294,7 @@
     var xmlHttp=createXmlHttpObject();
     xmlHttp.open('GET','https://api.github.com/repos/tretyakovsa/Sonoff_WiFi_switch/issues',true);
     xmlHttp.send(null);
-    xmlHttp.onload = function(e) {
+    xmlHttp.onload = function() {
      document.getElementById('issues').innerHTML = '';
      var jsonIssues=JSON.parse(xmlHttp.responseText);
      jsonIssues.sort(function(a,b){return (a.updated_at< b.updated_at) ? 1 : ((b.updated_at < a.updated_at) ? -1 : 0);});
@@ -354,12 +315,11 @@
     }
    }
 
-
    function loadCommits(){
     var xmlHttp=createXmlHttpObject();
     xmlHttp.open('GET','https://api.github.com/repos/tretyakovsa/Sonoff_WiFi_switch/commits',true);
     xmlHttp.send(null);
-    xmlHttp.onload = function(e) {
+    xmlHttp.onload = function() {
      document.getElementById('commits').innerHTML = '';
      var jsonCommits=JSON.parse(xmlHttp.responseText);
      //  jsonCommits.sort(function(a,b){return (a.updated_at< b.updated_at) ? 1 : ((b.updated_at < a.updated_at) ? -1 : 0);});
@@ -388,7 +348,7 @@
   <div class="container device index">
    <div class="header">
     <div class="btn-group pull-right" style="margin-top:35px;">
-     <a href="#" class="btn btn-default" onclick="deviceList('first');"><i class="refresh-img"></i></a>
+     <a href="#" class="btn btn-default" onclick="deviceList('first');" title="{{LangRefresh}}"><i class="refresh-img"></i></a>
      <a href="#" class="btn btn-default dropdown-toggle" onclick="toggle('help');"><i class="help-img"></i> <span class="hidden-xs">{{LangHelp}}</span> <span class="caret"></span></a>
      <ul class="dropdown-menu hidden" id="help"><li><a href="https://github.com/tretyakovsa/Sonoff_WiFi_switch/issues" target="_blank"><b>Sonoff</b> (Relay)</a></li><li><a href="https://github.com/renat2985/rgb/issues" target="_blank"><b>RGB</b> (WS2811-12/NeoPixel)</a></li><li><a href="https://github.com/tretyakovsa/jaluzi/issues" target="_blank"><b>Jalousie</b> (Motor)</a></li></ul>
      <!--      <a href="#" class="btn btn-default dropdown-toggle" onclick="toggle('language-set');loadLang('language-set');return false">{{lang}} <span class="caret"></span></a>
@@ -396,15 +356,22 @@
     </div>
     <div class="pull-right" style="margin-top:35px;margin-right:5px">
      <div class="btn-group">
-      <a href="#" class="btn btn-warning dropdown-toggle" onclick="toggle('skins');">{{LangDesign}} <span class="caret"></span></a>
+      <a href="#" class="btn btn-warning dropdown-toggle" onclick="toggle('skins');"><span class="hidden-xs">{{LangDesign}}</span> <span class="caret"></span></a>
       <ul class="dropdown-menu hidden" id="skins"><li><a href="/skins?set=index.htm"><b>Default</b></a></li><li><a href="/skins?set=index2.htm"><b>Inline</b></a></li><li><a href="/skins?set=index3.htm"><b>Block</b></a></li><li><a href="/skins?set=index4.htm"><b>Life</b></a></li></ul>
      </div>
     </div>
     <h1>{{space}}<br><small class="show">{{SSDP}}<sup id="update"></sup></small></h1>
    </div>
+   <div class="col-sm-12 col-md-9 btn-group btn-block" id="space-button" style="margin-top:-10px"></div>
    <div class="col-sm-12 col-md-9" id="content"></div>
    <div class="col-sm-12 col-md-3">
     <div class="col-md-12">
+     <div class="block">
+      <h5 class="alert-warning">{{LangScenary}}</h5>
+      <div class="alert alert-dismissible alert-info {{g94244}}"><button class="close" onclick="hide('g94244',this);" type="button">×</button>{{LangScenery1}}</div>
+      <a class="btn btn-block btn-default" href="/page.htm?scenary">{{LangAddScenery}}</a>
+     </div>
+     <hr>
      <div class="block">
       <h5 class="alert-default">Issues</h5>
       <div id="issues">{{LangLoading}}</div>
@@ -418,5 +385,6 @@
     <div class="row"></div>
    </div>
   </div>
+  <a href="#news" class="btn btn-default" style="position:fixed;right:5px;bottom:5px;">top</a>
  </body>
 </html>

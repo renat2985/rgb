@@ -33,8 +33,10 @@ void FS_init(void) {
       HTTP.send(404, "text/plain", "FileNotFound");
   });
   HTTP.on("/skins", HTTP_GET, []() {
-    configJson = jsonWrite(configJson, "setIndex", HTTP.arg("set"));
-    writeFile("config.save.json", configJson );
+    String set=HTTP.arg("set");
+    //configJson = jsonWrite(configJson, "setIndex", set);
+    configSetup = jsonWrite(configSetup, "setIndex", set);
+    saveConfigSetup();
     HTTP.send(307, "Temporary Redirect\r\nLocation: /\r\nConnection: Close\r\n", "");
   });
 
@@ -45,7 +47,7 @@ String getContentType(String filename) {
   if (HTTP.hasArg("download")) return "application/octet-stream";
   else if (filename.endsWith(".htm")) return "text/html";
   else if (filename.endsWith(".html")) return "text/html";
-  else if (filename.endsWith(".json")) return "text/json";
+  else if (filename.endsWith(".json")) return "application/json";
   else if (filename.endsWith(".css")) return "text/css";
   else if (filename.endsWith(".js")) return "application/javascript";
   else if (filename.endsWith(".png")) return "image/png";
@@ -60,7 +62,7 @@ String getContentType(String filename) {
 }
 
 bool handleFileRead(String path) {
-  String setIndex =  jsonRead(configJson, "setIndex");
+  String setIndex =  jsonRead(configSetup, "setIndex");
   if (setIndex == "") setIndex = "index.htm";
   if (path.endsWith("/")) path += setIndex;
   String contentType = getContentType(path);
@@ -130,7 +132,7 @@ void handleFileList() {
     return;
   }
   String path = HTTP.arg("dir");
-  HTTP.send(200, "text/json", FileList(path));
+  HTTP.send(200, "application/json", FileList(path));
 }
 
 // Создаем список файлов каталога

@@ -21,7 +21,7 @@
 #include <DallasTemperature.h>       //Ставим через менеджер библиотек
 #include <Adafruit_NeoPixel.h>       //https://github.com/adafruit/Adafruit_NeoPixel
 #include <WS2812FX.h>                //https://github.com/MTJoker/WS2812FX
-#include <RCSwitch.h>                //Ставим через менеджер библиотек
+#include <RCSwitch.h>                //https://github.com/sui77/rc-switch/
 
 
 #define d18b20PIN 14
@@ -65,71 +65,82 @@ String command = "";
 
 String Lang = "";                    // файлы языка web интерфейса
 String chipID = "";
-String configJson = "";
-String configLive = "{}";
+String configJson = "{}";            // Здесь все статусы
+String configOptions = "{}";         // Здесь опции для всех страниц
+String configSetup = "{}";           // Здесь данные для setup
+String configLive = "{}";            // Здесь внутренние данные обмен пинами и тд
+String ssdpList = "{}";
+String regCommands = "{}";
 String jsonTimer = "{}";
+String previousSetup;
+String Scenary;
 String Timerset = "";
 String modules = "{\"ip\":\"\",\"SSDP\":\"\",\"space\":\"\",\"module\":[]}";
 String addressList = "{\"ssdpList\":[]}";
 String sensorsList = "{}";
 String prefix   = "/IoTmanager";
-//boolean ddnsTest = true;
+boolean flag = false;
+boolean thenOk;
 
 
 void setup() {
 
-  //Serial.println (ESP.getResetReason());
-  Serial.begin(115200);
-  delay(100);
+  //Serial.begin(115200);
+  //delay(100);
   TickerScheduler(1);
-  Serial.println ("");
-  Serial.println ("Load");
   initCMD();
   chipID = String( ESP.getChipId() ) + "-" + String( ESP.getFlashChipId() );
   FS_init();         // Включаем работу с файловой системой
-  configJson = readFile("config.save.json", 1024);
-  String configs = jsonRead(configJson, "configs");
-  configs.toLowerCase();
+  // ----------------- начинаем загрузку
+  configSetup = readFile("config.save.json", 4096);
 
+ //previousSetup = configSetup;
+  //configSetup ="{}";
+  //Serial.println(configSetup);
+//savePrevious();
+
+
+
+
+  configSetup = jsonWrite(configSetup, "time", "00:00:00");
+  //configJson = jsonWrite(configJson, "setIndex", jsonRead(configSetup, "setIndex"));
+  configOptions = jsonWrite(configOptions, "lang", jsonRead(configSetup, "lang"));
+  configOptions = jsonWrite(configOptions, "SSDP", jsonRead(configSetup, "SSDP"));
+  configOptions = jsonWrite(configOptions, "space", jsonRead(configSetup, "space"));
+  configOptions = jsonWrite(configOptions, "spiffsData", jsonRead(configSetup, "spiffsData"));
+  configOptions = jsonWrite(configOptions, "buildData", jsonRead(configSetup, "buildData"));
+  String configs = jsonRead(configSetup, "configs");
+  configs.toLowerCase();
+  // ----------- Грузим конфигурацию устройства
   String test = readFile("configs/"+configs+".txt", 4096);
-  //Serial.print(test);
   test.replace("\r\n", "\n");
    test +="\n";
-  //Serial.print(test);
+   // ----------- запускаем необходимые всегда модули
    sCmd.readStr("wifi 12");
    sCmd.readStr("Upgrade");
    sCmd.readStr("SSDP");
    sCmd.readStr("HTTP");
+   // ----------- Выполняем запуск кофигурации
+goCommands(test);
+  test = "";
+  configSetup = jsonWrite(configSetup, "mac", WiFi.macAddress().c_str());
+  configSetup = jsonWrite(configSetup, "ip", WiFi.localIP().toString());
 
-  Serial.println(goCommands(test));
-  //Serial.println(modules);
-  //Serial.println(modules.lastIndexOf("[]"));
-  /*
-  if(modules.lastIndexOf("[]")!=-1){
-    String rn = "\n";
-    //test ="Serial 115200"+rn;
-    test ="wifi 12"+rn;
-    test +="Upgrade"+rn;
-    test +="SSDP"+rn;
-    test +="HTTP"+rn;
-    Serial.println(goCommands(test));
-    }
-   */
-  Serial.println (configLive);
-  Serial.println ("Start");
-  configJson = jsonWrite(configJson, "mac", WiFi.macAddress().c_str());
+  initScenary();
 }
 
 void loop() {
   ts.update();
-  sCmd.readStr(command);     // We don't do much, just process serial commands
+  sCmd.readStr(command);
   command = "";
   dnsServer.processNextRequest();
   HTTPWAN.handleClient();
-  delay(1);
+  yield();
   HTTP.handleClient();
-  delay(1);
+  yield();
   handleUDP();
   handleMQTT();
   ws2812fx.service();
+  handleScenary();
+  //RCRCreceiv();
 }

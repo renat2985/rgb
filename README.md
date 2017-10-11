@@ -25,7 +25,22 @@ Download Release: [Win32](https://github.com/nodemcu/nodemcu-flasher/blob/master
 
 ## Work example (Video)
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/NrIrLw1rOdk/0.jpg)](https://www.youtube.com/watch?v=NrIrLw1rOdk&list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/rNLlpkg2BGI/0.jpg)](https://www.youtube.com/playlist?list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
+
+
+## Features
+- NTP
+- DDNS
+- MQTT
+- TIMERS
+- DHT11, DHT22, AM2302, RHT03, D18B20
+- A0
+- Tachе
+- RELAY
+- JALOUSIE
+- WS2811/WS2812/NeoPixel LEDs
+- MOTION
+- RC Switch
 
 ## [Construction PIN and Modules](https://github.com/renat2985/rgb/blob/master/data/configs)
 
@@ -60,7 +75,7 @@ You can change here
 If you like this project, you can give me a cup of coffee :)
 
 
-### Web Developer
+### Web Developer (Ренат К.)
 #### AdvCash
 
 - U 0586 7862 1354
@@ -69,7 +84,7 @@ If you like this project, you can give me a cup of coffee :)
 
 #### PayPal
 
-- wul@inbox.lv
+- [wul@inbox.lv](https://www.paypal.me/renat2985/5)
 
 #### WebMoney
 
@@ -77,7 +92,7 @@ If you like this project, you can give me a cup of coffee :)
 - R466173026928
 - E555861976545
 
-### Arduino Developer
+### Arduino Developer (Сергей Т.)
 
 #### YandexMoney
 
