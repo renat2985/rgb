@@ -16,7 +16,7 @@
   -  Flash Frequency: 40Mhz
   -  Upload Speed: 115200
 
-## Download [Build & Spiffs (flash 1Mb 256Kb) 2017.10.11.zip](https://github.com/renat2985/rgb/files/1375162/Build.Spiffs.flash.1Mb.256Kb.2017.10.11.zip)
+## Download [Build & Spiffs (flash 1Mb 256Kb) 2017.10.11.zip](https://github.com/renat2985/rgb/files/1378153/Build.Spiffs.flash.1Mb.256Kb.2017.10.11.zip)
 
 ![nodemcu-flasher](https://user-images.githubusercontent.com/1230815/29618247-34491ca2-8820-11e7-92c4-0bd85c1cf216.png)
 ### NodeMCU Flasher
