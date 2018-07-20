@@ -62,9 +62,9 @@ You can change here
 
 ## Мобильное приложение
 
-У нас появилось мобильное приложение. Большое спасибо Андрею.
+Мобильное приложение. Большое спасибо Андрею.
 Репозиторий: [https://github.com/tutaf/iot-room-finder](https://github.com/tutaf/iot-room-finder)
-Скачать можно по этой ссылке: [http://backup.privet.lv/esp/rgb-finder.apk](http://backup.privet.lv/esp/rgb-finder.apk)
+Скачать можно по этой ссылке: [http://backup.privet.lv/esp/iot-room-finder.apk](http://backup.privet.lv/esp/iot-room-finder.apk)
 Запуская приложение, в локальную сеть оно отправляет UPnP пакет. Та ESP которая первая ответит откроется в вашем браузере. Таким образом вам не нужно запоминать IP адреса устройство.
 
 ## Othe...
