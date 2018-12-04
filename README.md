@@ -10,13 +10,12 @@
 
 ## Specification .bin files
   -  Module: Generic ESP8266 Module
-  -  Flash Size: 1M(256K SPIFFS)
-  -  CPU Frequency: 80Mhz
+  -  Flash Size: 1Mbetyz
   -  Flash Mode: dio
   -  Flash Frequency: 40Mhz
-  -  Upload Speed: 115200
+  -  Upload Speed: 921600
 
-## Download [Build & Spiffs (flash 1Mb 256Kb) 2017.10.11.zip](https://github.com/renat2985/rgb/files/1378153/Build.Spiffs.flash.1Mb.256Kb.2017.10.11.zip)
+# Download [Build.Spiffs.flash.1Mb.256Kb.2018.12.03.zip](https://github.com/renat2985/rgb/releases/download/3.0/Build.Spiffs.flash.1Mb.256Kb.2018.12.03.zip)
 
 ![nodemcu-flasher](https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/nodemcu-flasher.png)
 ### NodeMCU Flasher
@@ -33,22 +32,19 @@ Download Release: [Win32](https://github.com/nodemcu/nodemcu-flasher/blob/master
 - DDNS
 - MQTT
 - TIMERS
-- DHT11, DHT22, AM2302, RHT03, D18B20
+- DHT11, DHT22, AM2302, RHT03, DS18B20
 - A0
-- Tachе
-- RELAY
+- TACH 8 max (button, movement, gercon, othe)
+- RELAY 4 max
 - JALOUSIE
 - WS2811/WS2812/NeoPixel LEDs
-- MOTION
-- RC Switch
+- RGB 5050/3528/2835
+- RF-RECEIVED
+- RF-TRANSMITTER
+- RF-LIVOLO
+- IR-RECEIVED
+- IR-TRANSMITTER
 
-## [Construction PIN and Modules](https://github.com/renat2985/rgb/blob/master/data/configs)
-
-
-You can change here
-```
-/data/configs/*.txt
-```
 
 [https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
 
