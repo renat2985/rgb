@@ -45,17 +45,6 @@ Download Release: [Win32](https://github.com/nodemcu/nodemcu-flasher/blob/master
 - IR-RECEIVED
 - IR-TRANSMITTER
 
-
-[https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811](https://circuits.io/circuits/2546437-esp8266-and-rgb-ws2811)
-
-### Breadboard
-
-![alt](https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/breadboard.gif)
-
-### Schematic
-
-![alt](https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/schematic.gif)
-
 ## Мобильное приложение
 
 Репозиторий: [https://github.com/tutaf/iot-room-finder](https://github.com/tutaf/iot-room-finder)
@@ -68,7 +57,6 @@ Download Release: [Win32](https://github.com/nodemcu/nodemcu-flasher/blob/master
 #### Jalousie: [https://github.com/tretyakovsa/jaluzi](https://github.com/tretyakovsa/jaluzi)
 
 #### Sonoff: [https://github.com/tretyakovsa/Sonoff_WiFi_switch](https://github.com/tretyakovsa/Sonoff_WiFi_switch)
-
 
 #### Themes you can download here: [http://bootswatch.com/](http://bootswatch.com/)
 
@@ -95,15 +83,6 @@ If you like this project, you can give me a cup of coffee :)
 - R466173026928
 - E555861976545
 
-### Arduino Developer (Сергей Т.)
-
 #### YandexMoney
 
 - 410011740665305
-
-#### WebMoney
-
-- Z343206590467
-- R124424038680
-- U883416626152
-- E211342115147
