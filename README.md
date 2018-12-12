@@ -65,8 +65,6 @@ Download Release: [Win32](https://github.com/nodemcu/nodemcu-flasher/blob/master
 
 If you like this project, you can give me a cup of coffee :)
 
-
-### Web Developer (Ренат К.)
 #### AdvCash
 
 - U 0586 7862 1354
