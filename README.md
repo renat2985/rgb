@@ -10,7 +10,7 @@
 
 ## Specification .bin files
   -  Module: Generic ESP8266 Module
-  -  Flash Size: 1Mbetyz
+  -  Flash Size: 1MByte
   -  Flash Mode: dio
   -  Flash Frequency: 40Mhz
   -  Upload Speed: 921600
