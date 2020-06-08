@@ -58,7 +58,7 @@ Download Release: [Win32](https://github.com/nodemcu/nodemcu-flasher/blob/master
 
 #### Sonoff: [https://github.com/tretyakovsa/Sonoff_WiFi_switch](https://github.com/tretyakovsa/Sonoff_WiFi_switch)
 
-#### Themes you can download here: [http://bootswatch.com/](http://bootswatch.com/)
+#### Themes you can download here: [https://bootswatch.com/3/](https://bootswatch.com/3/)
 
 
 ## Donation
