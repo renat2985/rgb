@@ -61,31 +61,20 @@ Download Release: [Win32](https://github.com/nodemcu/nodemcu-flasher/blob/master
 #### Themes you can download here: [https://bootswatch.com/3/](https://bootswatch.com/3/)
 
 
-## Donation
+## :battery: Donation
 
-If you like this project, you can give me a cup of coffee :)
+If you like this project, you can give me a cup of coffee :coffee:
 
-#### AdvCash
+#### Bitcoin:
 
-- U 0586 7862 1354
-- E 8788 6352 1126
-- R 7705 0208 6566
+- 19xg6pA4RzSW3o4ZUyTyn5t4tY3tqLXHbe
 
 #### PayPal
 
-- [Send 5Eur](https://www.paypal.me/renat2985/5)
-
-#### Revolut
-
-- [Send 2Eur](https://rev.money/r/ABpLzS4IIV)
-- [Send 5Eur](https://rev.money/r/7iw2mWpy3n)
+- [https://www.paypal.me/RKevrels](https://www.paypal.me/RKevrels/5)
 
 #### WebMoney
 
 - Z242847016348
 - R466173026928
 - E555861976545
-
-#### YandexMoney
-
-- 410011740665305
