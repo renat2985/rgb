@@ -1,19 +1,24 @@
 # esp8266 and WS2811/WS2812/NeoPixel LEDs (Arduino)
 
-<a href="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen1.png"><img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen1.png" align="left" height="220" width="400" ></a>
-<a href="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen2.png"><img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen2.png" align="left" height="220" width="400" ></a>
-<a href="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen3.png"><img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen3.png" align="left" height="220" width="400" ></a>
-<a href="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen4.png"><img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen4.png" align="left" height="220" width="400" ></a>
+<p align="center">
+<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen1.png" width=35% height=35%>
+<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen2.png" width=35% height=35%>
+<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen3.png" width=35% height=35%>
+<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen4.png" width=35% height=35%>
+</p>
+
 
 
 # Upload instruction
 
 ## Specification .bin files
+```
   -  Module: Generic ESP8266 Module
   -  Flash Size: 1MByte
   -  Flash Mode: dio
   -  Flash Frequency: 40Mhz
   -  Upload Speed: 921600
+```
 
 # Download [Build.Spiffs.flash.1Mb.256Kb.2018.12.03.zip](https://github.com/renat2985/rgb/releases/download/3.0/Build.Spiffs.flash.1Mb.256Kb.2018.12.03.zip)
 
@@ -72,9 +77,3 @@ If you like this project, you can give me a cup of coffee :coffee:
 #### PayPal
 
 - [https://www.paypal.me/RKevrels](https://www.paypal.me/RKevrels/5)
-
-#### WebMoney
-
-- Z242847016348
-- R466173026928
-- E555861976545
