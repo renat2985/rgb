@@ -70,10 +70,6 @@ Download Release: [Win32](https://github.com/nodemcu/nodemcu-flasher/blob/master
 
 If you like this project, you can give me a cup of coffee :coffee:
 
-#### Bitcoin:
-
-- 19xg6pA4RzSW3o4ZUyTyn5t4tY3tqLXHbe
-
-#### PayPal
-
-- [https://www.paypal.me/RKevrels](https://www.paypal.me/RKevrels/5)
+- Bitcoin (BTC): 19xg6pA4RzSW3o4ZUyTyn5t4tY3tqLXHbe
+- TonCoin: UQBY_xXK_25L-UHq_h2ocfhS0c_lZoA4PIHxt-SktxLa_So7 
+- PayPal [https://www.paypal.me/RKevrels](https://www.paypal.me/RKevrels/5)
