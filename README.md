@@ -59,7 +59,7 @@
 
 
 
-## Другие наши проекты:
+## Другие наши проекты
 
   - Jalousie: [https://github.com/tretyakovsa/jaluzi](https://github.com/tretyakovsa/jaluzi)
 
