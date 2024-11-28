@@ -1,10 +1,10 @@
 # **Офлайн умный дом** на базе ESP8266 и светодиодов WS2811/WS2812/NeoPixel
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen1.png" width=35% height=35%>
-<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen2.png" width=35% height=35%>
-<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen3.png" width=35% height=35%>
-<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen4.png" width=35% height=35%>
+<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen1.png" width="35%" height="35%">
+<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen2.png" width="35%" height="35%">
+<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen3.png" width="35%" height="35%">
+<img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen4.png" width="35%" height="35%">
 </p>
 
 
@@ -26,6 +26,14 @@
 
 ## Установка
 
+### 🚀 Веб установка (рекомендуется)
+
+### Откройте этот сайт и следуйте инструкциям
+
+## [https://renat2985.github.io/rgb/](https://renat2985.github.io/rgb/)
+
+### Или используйте NodeMCU Flasher
+
 1. **Загрузка прошивки**: Скачайте файл прошивки [Build.Spiffs.flash.1Mb.256Kb.2018.12.03.zip](https://github.com/renat2985/rgb/releases/download/3.0/Build.Spiffs.flash.1Mb.256Kb.2018.12.03.zip)
 
 2. **Инструмент прошивки**: Скачайте [NodeMCU Flasher](https://github.com/nodemcu/nodemcu-flasher) для Windows ([Win32](https://github.com/nodemcu/nodemcu-flasher/blob/master/Win32/Release/ESP8266Flasher.exe) или [Win64](https://github.com/nodemcu/nodemcu-flasher/blob/master/Win64/Release/ESP8266Flasher.exe)).
@@ -36,7 +44,7 @@
    - **Частота флеша**: 40 МГц
    - **Скорость загрузки**: 921600
      
-     ![nodemcu-flasher](https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/nodemcu-flasher.png)
+     <img src="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/nodemcu-flasher.png" width="200px">
 
 ## Примеры использования
 

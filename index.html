@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ESP Flasher by onclick.lv</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <script src="//code.tidio.co/ydhdvlf6aykdakmpvyziz3ry0ffsbohh.js"></script>
+</head>
+<style>
+  @import url(https://rsms.me/inter/inter-ui.css);.text-danger{color:#f96332}#submit:focus,input{color:#f2f2f2}::selection{background:#2d2f36}::-webkit-selection{background:#2d2f36}::-moz-selection{background:#2d2f36}body{background:#fff;font-family:'Inter UI',sans-serif;margin:0;padding:20px}.page{background:#e2e2e5;display:flex;flex-direction:column;height:calc(100% - 40px);position:absolute;place-content:center;width:calc(100% - 40px)}.left,.right{position:relative}.container{display:flex;height:320px;margin:0 auto;width:640px}.left{background:#fff;height:calc(100% - 40px);top:20px;width:50%}.login{font-size:30px;font-weight:900;margin:50px 40px 40px}.eula,label{font-size:14px}.eula,.form{margin:40px}.eula{color:#999;line-height:1.5}.right{background:#474a59;box-shadow:0 0 40px 16px rgba(0,0,0,.22);color:#f1f1f2;width:50%}.form,svg{position:absolute}@media (max-width:767px){.page{height:auto;margin-bottom:20px;padding-bottom:20px}.container{flex-direction:column;height:630px;width:320px}.left{height:100%;left:20px;width:calc(100% - 40px);max-height:270px}.right{flex-shrink:0;height:100%;width:100%;max-height:350px}}svg{width:320px}path{fill:none;stroke:url(#linearGradient);stroke-width:4;stroke-dasharray:240 1386}label{color:#c2c2c5;display:block;height:16px;margin-top:20px;margin-bottom:5px}input{background:0 0;border:0;font-size:20px;height:30px;line-height:30px;outline:0!important;width:100%}input::-moz-focus-inner{border:0}#submit{color:#707075;margin-top:40px;transition:color .3s}#submit:active{color:#d0d0d2}
+</style>
+
+<body>
+  <!-- partial:index.partial.html -->
+  <div class="page">
+    <div class="container">
+      <div class="left">
+        <img src="https://raw.githubusercontent.com/renat2985/rgb/master/tutorial/screen1.png" style="width:100%;">
+      </div>
+      <div class="right">
+        <a target="_blank" href="https://github.com/renat2985/rgb" style="float: right;color: #fff;margin: 10px;"><i class="fa fa-github"></i></a>
+        <a href="#" onclick="tidioChatApi.display(true);tidioChatApi.open();tidioChatApi.messageFromVisitor('Мне нужна помощь с RGB Smart home');" style="float: right;color: #fff;margin:10px;"><i class="fa fa-comments-o"></i></a>
+        <div class="form">
+          <p><b>RGB Smart Home</b></p>
+          <p>Connect the ESP, click on Connect, in the pop-up window select the required COM port and click Connect.</p>
+          <esp-web-install-button manifest="./manifest.json">
+            <span slot="unsupported" class="text-danger">Your browser does not support installing things on ESP devices. Use Google Chrome or Microsoft Edge.</span>
+          </esp-web-install-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js'></script>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</body>
+
+</html>
