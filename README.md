@@ -50,7 +50,9 @@
 
 ## Примеры использования
 
-Пример работы системы можно посмотреть в [этом видео](https://github.com/renat2985/rgb).
+
+Пример работы системы можно посмотреть в [этом видео](https://github.com/renat2985/rgb), здесь мы сделали большое количество видео по обучению.
+Так же советуем почитать [wiki](https://github.com/renat2985/rgb/wiki), там вы тоже найдете много полезного.
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/rNLlpkg2BGI/0.jpg)](https://www.youtube.com/playlist?list=PL6NJTNxbvy-IPTDQk8XjTV41oRrFafrRi)
 
