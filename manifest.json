@@ -1,6 +1,6 @@
 {
   "name": "RGB Smart home",
-  "version": "1.0",
+  "version": "3.0",
   "new_install_prompt_erase": true,
   "builds": [
     {
