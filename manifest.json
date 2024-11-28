@@ -7,7 +7,7 @@
       "chipFamily": "ESP8266",
       "parts": [
         { "path": "./build/build.0x00000_flash_size_1Mb.256Kb_2017.10.11.bin", "offset": 0 },
-        { "path": "./build/spiffs.0xBB000_flash_size_1Mb.256Kb_2017.10.11.bin","offset": 766976 }
+        { "path": "./build/spiffs.0xBB000_flash_size_1Mb.256Kb_2017.10.11.bin","offset": 765952 }
       ]
     }
   ]

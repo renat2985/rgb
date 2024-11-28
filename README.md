@@ -28,9 +28,9 @@
 
 ### 🚀 Веб установка (рекомендуется)
 
-### Откройте этот сайт и следуйте инструкциям
+   - Откройте этот сайт и следуйте инструкциям
 
-## [https://renat2985.github.io/rgb/](https://renat2985.github.io/rgb/)
+   - [https://renat2985.github.io/rgb/](https://renat2985.github.io/rgb/)
 
 ### Или используйте NodeMCU Flasher
 
@@ -44,7 +44,7 @@
    - **Частота флеша**: 40 МГц
    - **Скорость загрузки**: 921600
      
-     <img src="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/nodemcu-flasher.png" width="200px">
+     <img src="https://raw.githubusercontent.com/tretyakovsa/Sonoff_WiFi_switch/master/tutorial/nodemcu-flasher.png" width="400px">
 
 ## Примеры использования
 
